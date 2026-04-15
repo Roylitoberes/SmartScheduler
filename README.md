@@ -6,4 +6,4 @@ SMARTSCHEDULER is a .NET MAUI cross-platform scheduling application designed to 
 
 ## 📱 Download APK
 
-[![Download APK](https://img.shields.io/badge/Download-APK-green?style=for-the-badge&logo=android)](https://github.com/Roylitoberes/SmartScheduler/releases/download/v1.0/com.companyname.myfirstmauiapp.apk)
+[![Download APK](https://img.shields.io/badge/Download-APK-green?style=for-the-badge&logo=android)](https://github.com/Roylitoberes/SmartScheduler/releases/latest/download/com.companyname.myfirstmauiapp.apk)
