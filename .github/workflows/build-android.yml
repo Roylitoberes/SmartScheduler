@@ -26,7 +26,7 @@ jobs:
     - name: Decode Keystore
       shell: pwsh
       run: |
-        $bytes = [Convert]::FromBase64String("${{ secrets.KEYSTORE_BASE64 }}")
+        $bytes = [Convert]::FromBase64String("${{ secrets.ANDROID_KEYSTORE_BASE64 }}")
         [IO.File]::WriteAllBytes("keystore.keystore", $bytes)
 
     - name: Build APK (Signed)
@@ -35,12 +35,12 @@ jobs:
           -p:AndroidPackageFormat=apk `
           -p:AndroidKeyStore=true `
           -p:AndroidSigningKeyStore=keystore.keystore `
-          -p:AndroidSigningKeyAlias=${{ secrets.KEY_ALIAS }} `
-          -p:AndroidSigningKeyPass=${{ secrets.KEY_PASSWORD }} `
-          -p:AndroidSigningStorePass=${{ secrets.KEYSTORE_PASSWORD }}
+          -p:AndroidSigningKeyAlias=${{ secrets.ANDROID_KEY_ALIAS }} `
+          -p:AndroidSigningKeyPass=${{ secrets.ANDROID_KEY_ALIAS_PASSWORD }} `
+          -p:AndroidSigningStorePass=${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
 
     - name: Upload APK
       uses: actions/upload-artifact@v4
       with:
         name: SmartScheduler-APK
-        path: "**/com.companyname.myfirstmauiapp-Signed.apk"
+        path: "**/*.apk"
