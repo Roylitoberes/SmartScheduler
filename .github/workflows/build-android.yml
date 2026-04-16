@@ -43,4 +43,4 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: SmartScheduler-APK
-        path: "**/*.apk"
+        path: "**/com.companyname.myfirstmauiapp-Signed.apk"
