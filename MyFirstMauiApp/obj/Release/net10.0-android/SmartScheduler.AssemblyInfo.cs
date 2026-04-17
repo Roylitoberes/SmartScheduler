@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SmartScheduler")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0+3ce3cc4e85e634fab5ca0e2d7433383259ea6efb")]
 [assembly: System.Reflection.AssemblyProductAttribute("SmartScheduler")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SmartScheduler")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
