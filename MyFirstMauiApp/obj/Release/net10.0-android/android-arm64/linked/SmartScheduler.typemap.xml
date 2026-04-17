@@ -1,8 +1,0 @@
-<api type="release" assembly-name="SmartScheduler" mvid="67ac7aa10bee4c01bb19793c9decfbf1">
-  <module assembly-name="SmartScheduler" mvid="67ac7aa10bee4c01bb19793c9decfbf1" mvid-bytes="oXqsZ+4LAUy7GXk8nez78Q==">
-    <types-scratch>
-      <entry key="crc642146c9879e6033f2/MainActivity" java-name="crc642146c9879e6033f2/MainActivity" managed-type-name="MyFirstMauiApp.MainActivity" token="33554599" />
-      <entry key="crc642146c9879e6033f2/MainApplication" java-name="crc642146c9879e6033f2/MainApplication" managed-type-name="MyFirstMauiApp.MainApplication" token="33554600" />
-    </types-scratch>
-  </module>
-</api>

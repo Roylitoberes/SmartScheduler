@@ -1,9 +1,0 @@
-<api type="release" assembly-name="Plugin.LocalNotification" mvid="501a9dfc90474664b55b30437f16ef8e">
-  <module assembly-name="Plugin.LocalNotification" mvid="501a9dfc90474664b55b30437f16ef8e" mvid-bytes="/J0aUEeQZEa1WzBDfxbvjg==">
-    <types-scratch>
-      <entry key="plugin/LocalNotification/GeofenceTransitionsIntentReceiver" java-name="plugin/LocalNotification/GeofenceTransitionsIntentReceiver" managed-type-name="Plugin.LocalNotification.Platforms.GeofenceTransitionsIntentReceiver" token="33554456" />
-      <entry key="plugin/LocalNotification/NotificationActionReceiver" java-name="plugin/LocalNotification/NotificationActionReceiver" managed-type-name="Plugin.LocalNotification.Platforms.NotificationActionReceiver" token="33554458" />
-      <entry key="plugin/LocalNotification/ScheduledAlarmReceiver" java-name="plugin/LocalNotification/ScheduledAlarmReceiver" managed-type-name="Plugin.LocalNotification.Platforms.ScheduledAlarmReceiver" token="33554475" />
-    </types-scratch>
-  </module>
-</api>

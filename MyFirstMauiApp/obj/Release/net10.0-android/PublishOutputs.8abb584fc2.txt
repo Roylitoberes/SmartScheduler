@@ -1,3 +1,0 @@
-C:\first app\MyFirstMauiApp\MyFirstMauiApp\bin\Release\net10.0-android\publish\com.companyname.myfirstmauiapp-Signed.apk
-C:\first app\MyFirstMauiApp\MyFirstMauiApp\bin\Release\net10.0-android\publish\com.companyname.myfirstmauiapp.apk
-C:\first app\MyFirstMauiApp\MyFirstMauiApp\bin\Release\net10.0-android\publish\_Microsoft.Android.Resource.Designer.dll
