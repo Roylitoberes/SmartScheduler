@@ -8,10 +8,9 @@ jobs:
   build:
     runs-on: windows-latest
 
-    # ✅ VERY IMPORTANT FIX
     defaults:
       run:
-        working-directory: MyFirstMauiApp
+        working-directory: MyFirstMauiApp/MyFirstMauiApp
 
     steps:
     - name: Checkout
@@ -28,14 +27,12 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore SmartScheduler.csproj
 
-    # ✅ FIXED: now saves inside correct folder
     - name: Decode Keystore
       shell: pwsh
       run: |
         $bytes = [Convert]::FromBase64String("${{ secrets.ANDROID_KEYSTORE_BASE64 }}")
         [IO.File]::WriteAllBytes("keystore.keystore", $bytes)
 
-    # ✅ FIXED: no more wrong path
     - name: Build APK (Signed)
       run: |
         dotnet publish SmartScheduler.csproj -f net10.0-android -c Release `
@@ -46,9 +43,8 @@ jobs:
           -p:AndroidSigningKeyPass=${{ secrets.ANDROID_KEY_ALIAS_PASSWORD }} `
           -p:AndroidSigningStorePass=${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
 
-    # ✅ FIXED: correct output path
     - name: Upload APK
       uses: actions/upload-artifact@v4
       with:
         name: SmartScheduler-APK
-        path: MyFirstMauiApp/bin/Release/net10.0-android/*.apk
+        path: MyFirstMauiApp/MyFirstMauiApp/bin/Release/net10.0-android/*.apk
