@@ -8,39 +8,45 @@ jobs:
   build:
     runs-on: windows-latest
 
+    # ✅ VERY IMPORTANT FIX
+    defaults:
+      run:
+        working-directory: MyFirstMauiApp
+
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+    - name: Checkout
+      uses: actions/checkout@v4
 
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: 10.0.x
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 10.0.x
 
-      - name: Install MAUI workload
-        run: dotnet workload install maui
+    - name: Install MAUI workload
+      run: dotnet workload install maui
 
-      - name: Restore dependencies
-        run: dotnet restore MyFirstMauiApp/MyFirstMauiApp/*.csproj
+    - name: Restore dependencies
+      run: dotnet restore SmartScheduler.csproj
 
-      - name: Decode Keystore
-        shell: pwsh
-        run: |
-          $bytes = [Convert]::FromBase64String("${{ secrets.ANDROID_KEYSTORE_BASE64 }}")
-          [IO.File]::WriteAllBytes("MyFirstMauiApp/MyFirstMauiApp/keystore.keystore", $bytes)
-
-      - name: Build APK (Signed)
-        run: |
-          dotnet publish MyFirstMauiApp/MyFirstMauiApp/*.csproj -f net10.0-android -c Release `
-            -p:AndroidPackageFormat=apk `
-            -p:AndroidKeyStore=true `
-            -p:AndroidSigningKeyStore=MyFirstMauiApp/MyFirstMauiApp/keystore.keystore `
-            -p:AndroidSigningKeyAlias=${{ secrets.ANDROID_KEY_ALIAS }} `
-            -p:AndroidSigningKeyPass=${{ secrets.ANDROID_KEY_ALIAS_PASSWORD }} `
-            -p:AndroidSigningStorePass=${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
-
-      - name: Upload APK
-        uses: actions/upload-artifact@v4
-        with:
-          name: SmartScheduler-APK
-          path: MyFirstMauiApp/MyFirstMauiApp/bin/Release/net10.0-android/*.apk
+    # ✅ FIXED: now saves inside correct folder
+    - name: Decode Keystore
+      shell: pwsh
+      run: |
+        $bytes = [Convert]::FromBase64String("${{ secrets.ANDROID_KEYSTORE_BASE64 }}")
+        [IO.File]::WriteAllBytes("keystore.keystore", $bytes)
+    # ✅ FIXED: no more wrong path
+    - name: Build APK (Signed)
+      run: |
+        dotnet publish SmartScheduler.csproj -f net10.0-android -c Release `
+          -p:AndroidPackageFormat=apk `
+          -p:AndroidKeyStore=true `
+          -p:AndroidSigningKeyStore=keystore.keystore `
+          -p:AndroidSigningKeyAlias=${{ secrets.ANDROID_KEY_ALIAS }} `
+          -p:AndroidSigningKeyPass=${{ secrets.ANDROID_KEY_ALIAS_PASSWORD }} `
+          -p:AndroidSigningStorePass=${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+    # ✅ FIXED: correct output path
+    - name: Upload APK
+      uses: actions/upload-artifact@v4
+      with:
+        name: SmartScheduler-APK
+        path: MyFirstMauiApp/bin/Release/net10.0-android/*.apk
