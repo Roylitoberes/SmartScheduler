@@ -1,0 +1,36 @@
+<api type="release" assembly-name="Xamarin.GooglePlayServices.Basement" mvid="4ff87e1e6bf844bdb054db4dfb95eb55">
+  <module assembly-name="Xamarin.GooglePlayServices.Basement" mvid="4ff87e1e6bf844bdb054db4dfb95eb55" mvid-bytes="Hn74T/hrvUSwVNtN+5XrVQ==">
+    <duplicates>
+      <entry java-name="com/google/android/gms/dynamic/IObjectWrapper" managed-type-name="Android.Gms.Dynamic.IObjectWrapperInvoker" token="33554455" />
+      <entry java-name="com/google/android/gms/common/util/BiConsumer" managed-type-name="Android.Gms.Common.Util.IBiConsumerInvoker" token="33554460" />
+      <entry java-name="com/google/android/gms/common/internal/IAccountAccessor" managed-type-name="Android.Gms.Common.Internal.IAccountAccessorInvoker" token="33554462" />
+      <entry java-name="com/google/android/gms/common/internal/ICancelToken" managed-type-name="Android.Gms.Common.Internal.ICancelTokenInvoker" token="33554464" />
+      <entry java-name="com/google/android/gms/common/internal/safeparcel/AbstractSafeParcelable" managed-type-name="Android.Gms.Common.Internal.SafeParcel.AbstractSafeParcelableInvoker" token="33554466" />
+      <entry java-name="com/google/android/gms/common/api/Result" managed-type-name="Android.Gms.Common.Apis.IResultInvoker" token="33554468" />
+      <entry java-name="com/google/android/gms/common/api/ResultCallback" managed-type-name="Android.Gms.Common.Apis.IResultCallbackInvoker" token="33554470" />
+      <entry java-name="com/google/android/gms/common/api/ResultCallbacks" managed-type-name="Android.Gms.Common.Apis.ResultCallbacksInvoker" token="33554473" />
+      <entry java-name="com/google/android/gms/common/api/internal/LifecycleFragment" managed-type-name="Android.Gms.Common.Apis.Internal.ILifecycleFragmentInvoker" token="33554477" />
+      <entry java-name="com/google/android/gms/common/api/internal/StatusExceptionMapper" managed-type-name="Android.Gms.Common.Apis.Internal.IStatusExceptionMapperInvoker" token="33554479" />
+    </duplicates>
+    <types-scratch>
+      <entry key="com/google/android/gms/dynamic/IObjectWrapper" java-name="com/google/android/gms/dynamic/IObjectWrapper" managed-type-name="Android.Gms.Dynamic.IObjectWrapper" token="33554454" skip-in-java-to-managed="True" />
+      <entry key="com/google/android/gms/common/ConnectionResult" java-name="com/google/android/gms/common/ConnectionResult" managed-type-name="Android.Gms.Common.ConnectionResult" token="33554456" />
+      <entry key="com/google/android/gms/common/Feature" java-name="com/google/android/gms/common/Feature" managed-type-name="Android.Gms.Common.Feature" token="33554457" />
+      <entry key="com/google/android/gms/common/GoogleApiAvailabilityLight" java-name="com/google/android/gms/common/GoogleApiAvailabilityLight" managed-type-name="Android.Gms.Common.GoogleApiAvailabilityLight" token="33554458" />
+      <entry key="com/google/android/gms/common/util/BiConsumer" java-name="com/google/android/gms/common/util/BiConsumer" managed-type-name="Android.Gms.Common.Util.IBiConsumer" token="33554459" skip-in-java-to-managed="True" />
+      <entry key="com/google/android/gms/common/internal/IAccountAccessor" java-name="com/google/android/gms/common/internal/IAccountAccessor" managed-type-name="Android.Gms.Common.Internal.IAccountAccessor" token="33554461" skip-in-java-to-managed="True" />
+      <entry key="com/google/android/gms/common/internal/ICancelToken" java-name="com/google/android/gms/common/internal/ICancelToken" managed-type-name="Android.Gms.Common.Internal.ICancelToken" token="33554463" skip-in-java-to-managed="True" />
+      <entry key="com/google/android/gms/common/internal/safeparcel/AbstractSafeParcelable" java-name="com/google/android/gms/common/internal/safeparcel/AbstractSafeParcelable" managed-type-name="Android.Gms.Common.Internal.SafeParcel.AbstractSafeParcelable" token="33554465" />
+      <entry key="com/google/android/gms/common/api/Result" java-name="com/google/android/gms/common/api/Result" managed-type-name="Android.Gms.Common.Apis.IResult" token="33554467" skip-in-java-to-managed="True" />
+      <entry key="com/google/android/gms/common/api/ResultCallback" java-name="com/google/android/gms/common/api/ResultCallback" managed-type-name="Android.Gms.Common.Apis.IResultCallback" token="33554469" skip-in-java-to-managed="True" />
+      <entry key="com/google/android/gms/common/api/Response" java-name="com/google/android/gms/common/api/Response" managed-type-name="Android.Gms.Common.Apis.Response" token="33554471" />
+      <entry key="com/google/android/gms/common/api/ResultCallbacks" java-name="com/google/android/gms/common/api/ResultCallbacks" managed-type-name="Android.Gms.Common.Apis.ResultCallbacks" token="33554472" />
+      <entry key="com/google/android/gms/common/api/Scope" java-name="com/google/android/gms/common/api/Scope" managed-type-name="Android.Gms.Common.Apis.Scope" token="33554474" />
+      <entry key="com/google/android/gms/common/api/Status" java-name="com/google/android/gms/common/api/Status" managed-type-name="Android.Gms.Common.Apis.Statuses" token="33554475" />
+      <entry key="com/google/android/gms/common/api/internal/LifecycleFragment" java-name="com/google/android/gms/common/api/internal/LifecycleFragment" managed-type-name="Android.Gms.Common.Apis.Internal.ILifecycleFragment" token="33554476" skip-in-java-to-managed="True" />
+      <entry key="com/google/android/gms/common/api/internal/StatusExceptionMapper" java-name="com/google/android/gms/common/api/internal/StatusExceptionMapper" managed-type-name="Android.Gms.Common.Apis.Internal.IStatusExceptionMapper" token="33554478" skip-in-java-to-managed="True" />
+      <entry key="com/google/android/gms/common/api/internal/LifecycleActivity" java-name="com/google/android/gms/common/api/internal/LifecycleActivity" managed-type-name="Android.Gms.Common.Apis.Internal.LifecycleActivity" token="33554480" />
+      <entry key="com/google/android/gms/common/api/internal/LifecycleCallback" java-name="com/google/android/gms/common/api/internal/LifecycleCallback" managed-type-name="Android.Gms.Common.Apis.Internal.LifecycleCallback" token="33554481" />
+    </types-scratch>
+  </module>
+</api>

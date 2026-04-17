@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SmartScheduler.Views.OnboardingPage"
+             NavigationPage.HasNavigationBar="False"
+             BackgroundColor="#F8F9FF">
+
+    <Grid>
+        <!-- Background Gradient -->
+        <Grid.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="#8B5CF6" Offset="0.0" />
+                <GradientStop Color="#D946EF" Offset="0.5" />
+                <GradientStop Color="#F472B6" Offset="1.0" />
+            </LinearGradientBrush>
+        </Grid.Background>
+
+        <CarouselView x:Name="OnboardingCarousel"
+                      Loop="False"
+                      IndicatorView="IndicatorView"
+                      CurrentItemChanged="OnCurrentItemChanged">
+
+            <CarouselView.ItemsSource>
+                <x:Array Type="{x:Type ContentView}">
+                    <!-- Slide 1: Study Tasks -->
+                    <ContentView>
+                        <VerticalStackLayout Spacing="30" 
+                                             HorizontalOptions="Center" 
+                                             VerticalOptions="Center"
+                                             Padding="40">
+                            <Border StrokeThickness="0"
+                                    BackgroundColor="White"
+                                    Padding="20"
+                                    HeightRequest="120"
+                                    WidthRequest="120"
+                                    HorizontalOptions="Center">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="30"/>
+                                </Border.StrokeShape>
+                                <Image Source="studytask_2.jpg" 
+                                       HeightRequest="80" 
+                                       WidthRequest="80"
+                                       HorizontalOptions="Center"
+                                       VerticalOptions="Center"/>
+                            </Border>
+                            <Label Text="📚 Study Tasks"
+                                   FontSize="28"
+                                   FontAttributes="Bold"
+                                   TextColor="White"
+                                   HorizontalOptions="Center"/>
+                            <Label Text="Organize your study schedule, track assignments, and never miss a deadline."
+                                   FontSize="16"
+                                   TextColor="White"
+                                   Opacity="0.9"
+                                   HorizontalOptions="Center"
+                                   HorizontalTextAlignment="Center"/>
+                        </VerticalStackLayout>
+                    </ContentView>
+
+                    <!-- Slide 2: Wishlist -->
+                    <ContentView>
+                        <VerticalStackLayout Spacing="30" 
+                                             HorizontalOptions="Center" 
+                                             VerticalOptions="Center"
+                                             Padding="40">
+                            <Border StrokeThickness="0"
+                                    BackgroundColor="White"
+                                    Padding="20"
+                                    HeightRequest="120"
+                                    WidthRequest="120"
+                                    HorizontalOptions="Center">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="30"/>
+                                </Border.StrokeShape>
+                                <Image Source="wishlist_1.jpg" 
+                                       HeightRequest="80" 
+                                       WidthRequest="80"
+                                       HorizontalOptions="Center"
+                                       VerticalOptions="Center"/>
+                            </Border>
+                            <Label Text="🎁 Wishlist"
+                                   FontSize="28"
+                                   FontAttributes="Bold"
+                                   TextColor="White"
+                                   HorizontalOptions="Center"/>
+                            <Label Text="Save your dream items, track prices, and plan your purchases."
+                                   FontSize="16"
+                                   TextColor="White"
+                                   Opacity="0.9"
+                                   HorizontalOptions="Center"
+                                   HorizontalTextAlignment="Center"/>
+                        </VerticalStackLayout>
+                    </ContentView>
+
+                    <!-- Slide 3: Personal Activities -->
+                    <ContentView>
+                        <VerticalStackLayout Spacing="30" 
+                                             HorizontalOptions="Center" 
+                                             VerticalOptions="Center"
+                                             Padding="40">
+                            <Border StrokeThickness="0"
+                                    BackgroundColor="White"
+                                    Padding="20"
+                                    HeightRequest="120"
+                                    WidthRequest="120"
+                                    HorizontalOptions="Center">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="30"/>
+                                </Border.StrokeShape>
+                                <Image Source="personal_3.jpg" 
+                                       HeightRequest="80" 
+                                       WidthRequest="80"
+                                       HorizontalOptions="Center"
+                                       VerticalOptions="Center"/>
+                            </Border>
+                            <Label Text="🧘 Personal Activities"
+                                   FontSize="28"
+                                   FontAttributes="Bold"
+                                   TextColor="White"
+                                   HorizontalOptions="Center"/>
+                            <Label Text="Track your personal goals, habits, and daily activities."
+                                   FontSize="16"
+                                   TextColor="White"
+                                   Opacity="0.9"
+                                   HorizontalOptions="Center"
+                                   HorizontalTextAlignment="Center"/>
+                        </VerticalStackLayout>
+                    </ContentView>
+
+                    <!-- Slide 4: Events -->
+                    <ContentView>
+                        <VerticalStackLayout Spacing="30" 
+                                             HorizontalOptions="Center" 
+                                             VerticalOptions="Center"
+                                             Padding="40">
+                            <Border StrokeThickness="0"
+                                    BackgroundColor="White"
+                                    Padding="20"
+                                    HeightRequest="120"
+                                    WidthRequest="120"
+                                    HorizontalOptions="Center">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="30"/>
+                                </Border.StrokeShape>
+                                <Image Source="events_4.jpg" 
+                                       HeightRequest="80" 
+                                       WidthRequest="80"
+                                       HorizontalOptions="Center"
+                                       VerticalOptions="Center"/>
+                            </Border>
+                            <Label Text="📅 Events"
+                                   FontSize="28"
+                                   FontAttributes="Bold"
+                                   TextColor="White"
+                                   HorizontalOptions="Center"/>
+                            <Label Text="Manage your events, set reminders, and never miss important dates."
+                                   FontSize="16"
+                                   TextColor="White"
+                                   Opacity="0.9"
+                                   HorizontalOptions="Center"
+                                   HorizontalTextAlignment="Center"/>
+                        </VerticalStackLayout>
+                    </ContentView>
+
+                    <!-- Slide 5: Files -->
+                    <ContentView>
+                        <VerticalStackLayout Spacing="30" 
+                                             HorizontalOptions="Center" 
+                                             VerticalOptions="Center"
+                                             Padding="40">
+                            <Border StrokeThickness="0"
+                                    BackgroundColor="White"
+                                    Padding="20"
+                                    HeightRequest="120"
+                                    WidthRequest="120"
+                                    HorizontalOptions="Center">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="30"/>
+                                </Border.StrokeShape>
+                                <Image Source="files.jpg" 
+                                       HeightRequest="80" 
+                                       WidthRequest="80"
+                                       HorizontalOptions="Center"
+                                       VerticalOptions="Center"/>
+                            </Border>
+                            <Label Text="📁 File Manager"
+                                   FontSize="28"
+                                   FontAttributes="Bold"
+                                   TextColor="White"
+                                   HorizontalOptions="Center"/>
+                            <Label Text="Store and organize your files with smart reminders."
+                                   FontSize="16"
+                                   TextColor="White"
+                                   Opacity="0.9"
+                                   HorizontalOptions="Center"
+                                   HorizontalTextAlignment="Center"/>
+                        </VerticalStackLayout>
+                    </ContentView>
+                </x:Array>
+            </CarouselView.ItemsSource>
+
+            <CarouselView.ItemTemplate>
+                <DataTemplate>
+                    <ContentView Content="{Binding}" />
+                </DataTemplate>
+            </CarouselView.ItemTemplate>
+        </CarouselView>
+
+        <!-- Indicators -->
+        <StackLayout VerticalOptions="End" 
+                     HorizontalOptions="Center" 
+                     Margin="0,0,0,80">
+            <IndicatorView x:Name="IndicatorView"
+                           IndicatorColor="White"
+                           SelectedIndicatorColor="#D946EF"
+                           IndicatorSize="12"
+                           HorizontalOptions="Center"/>
+        </StackLayout>
+
+        <!-- Skip and Next Buttons -->
+        <Grid VerticalOptions="End" 
+              HorizontalOptions="Fill" 
+              Padding="30,0,30,30"
+              Margin="0,0,0,20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Button x:Name="SkipButton"
+                    Text="Skip"
+                    BackgroundColor="Transparent"
+                    TextColor="White"
+                    FontSize="16"
+                    FontAttributes="Bold"
+                    HorizontalOptions="Start"
+                    Clicked="OnSkipClicked"/>
+
+            <Button x:Name="NextButton"
+                    Grid.Column="1"
+                    Text="Next"
+                    BackgroundColor="White"
+                    TextColor="#6B32A1"
+                    FontSize="16"
+                    FontAttributes="Bold"
+                    CornerRadius="25"
+                    HeightRequest="50"
+                    WidthRequest="120"
+                    HorizontalOptions="End"
+                    Clicked="OnNextClicked"/>
+
+            <Button x:Name="GetStartedButton"
+                    Grid.ColumnSpan="2"
+                    Text="Get Started"
+                    BackgroundColor="White"
+                    TextColor="#6B32A1"
+                    FontSize="16"
+                    FontAttributes="Bold"
+                    CornerRadius="25"
+                    HeightRequest="50"
+                    WidthRequest="150"
+                    HorizontalOptions="Center"
+                    IsVisible="False"
+                    Clicked="OnGetStartedClicked"/>
+        </Grid>
+    </Grid>
+</ContentPage>

@@ -1,0 +1,10 @@
+<api type="release" assembly-name="Xamarin.AndroidX.VersionedParcelable" mvid="1b8e31cf71b54be7896b01f312b7fb4c">
+  <module assembly-name="Xamarin.AndroidX.VersionedParcelable" mvid="1b8e31cf71b54be7896b01f312b7fb4c" mvid-bytes="zzGOG7Vx50uJawHzErf7TA==">
+    <duplicates>
+      <entry java-name="androidx/versionedparcelable/CustomVersionedParcelable" managed-type-name="AndroidX.VersionedParcelable.CustomVersionedParcelableInvoker" token="33554437" />
+    </duplicates>
+    <types-scratch>
+      <entry key="androidx/versionedparcelable/CustomVersionedParcelable" java-name="androidx/versionedparcelable/CustomVersionedParcelable" managed-type-name="AndroidX.VersionedParcelable.CustomVersionedParcelable" token="33554436" />
+    </types-scratch>
+  </module>
+</api>

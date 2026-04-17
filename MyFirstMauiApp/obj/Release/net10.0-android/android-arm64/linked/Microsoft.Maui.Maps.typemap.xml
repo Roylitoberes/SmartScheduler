@@ -1,0 +1,7 @@
+<api type="release" assembly-name="Microsoft.Maui.Maps" mvid="20bdb99a524340dcaa78e8b87edf0bb0">
+  <module assembly-name="Microsoft.Maui.Maps" mvid="20bdb99a524340dcaa78e8b87edf0bb0" mvid-bytes="mrm9IENS3ECqeOi4ft8LsA==">
+    <types-scratch>
+      <entry key="crc64a5df8ade113ad624/MapCallbackHandler" java-name="crc64a5df8ade113ad624/MapCallbackHandler" managed-type-name="Microsoft.Maui.Maps.Handlers.MapCallbackHandler" token="33554455" />
+    </types-scratch>
+  </module>
+</api>

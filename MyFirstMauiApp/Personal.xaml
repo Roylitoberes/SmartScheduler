@@ -1,0 +1,446 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:MyFirstMauiApp.ViewModels"
+             xmlns:local="clr-namespace:MyFirstMauiApp.Converters"
+             xmlns:services="clr-namespace:MyFirstMauiApp.Services"
+             x:Class="MyFirstMauiApp.Personal"
+             Title="Personal Activities"
+             x:Name="PersonalPage"
+             BackgroundColor="#F5F7FA">
+
+    <ContentPage.BindingContext>
+        <vm:PersonalViewModel />
+    </ContentPage.BindingContext>
+
+    <ContentPage.Resources>
+        <Color x:Key="PrimaryColor">#6366F1</Color>
+        <Color x:Key="SecondaryColor">#8B5CF6</Color>
+        <Color x:Key="SuccessColor">#10B981</Color>
+        <Color x:Key="DangerColor">#EF4444</Color>
+        <Color x:Key="WarningColor">#F59E0B</Color>
+        <Color x:Key="TextPrimary">#1F2937</Color>
+        <Color x:Key="TextSecondary">#6B7280</Color>
+        <Color x:Key="BackgroundColor">#F9FAFB</Color>
+        <Color x:Key="SurfaceColor">#FFFFFF</Color>
+
+        <!-- Add all converters here -->
+        <local:StatusColorConverter x:Key="StatusColorConverter" />
+        <local:ProgressBarColorConverter x:Key="ProgressBarColorConverter" />
+        <local:InvertedBoolConverter x:Key="InvertedBoolConverter" />
+        <local:NotCompletedConverter x:Key="NotCompletedConverter" />
+        <local:CompletedConverter x:Key="CompletedConverter" />
+
+        <Style TargetType="Button" x:Key="PrimaryButton">
+            <Setter Property="BackgroundColor" Value="{StaticResource PrimaryColor}" />
+            <Setter Property="TextColor" Value="White" />
+            <Setter Property="CornerRadius" Value="8" />
+            <Setter Property="Padding" Value="15,10" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="FontAttributes" Value="Bold" />
+        </Style>
+
+        <Style TargetType="Button" x:Key="SecondaryButton">
+            <Setter Property="BackgroundColor" Value="#F3F4F6" />
+            <Setter Property="TextColor" Value="{StaticResource TextPrimary}" />
+            <Setter Property="CornerRadius" Value="8" />
+            <Setter Property="Padding" Value="15,10" />
+            <Setter Property="FontSize" Value="14" />
+        </Style>
+
+        <Style TargetType="Entry" x:Key="EntryStyle">
+            <Setter Property="BackgroundColor" Value="#F9FAFB" />
+            <Setter Property="PlaceholderColor" Value="{StaticResource TextSecondary}" />
+            <Setter Property="TextColor" Value="{StaticResource TextPrimary}" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="HeightRequest" Value="45" />
+        </Style>
+
+        <Style TargetType="Editor" x:Key="EditorStyle">
+            <Setter Property="BackgroundColor" Value="#F9FAFB" />
+            <Setter Property="PlaceholderColor" Value="{StaticResource TextSecondary}" />
+            <Setter Property="TextColor" Value="{StaticResource TextPrimary}" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="HeightRequest" Value="80" />
+        </Style>
+    </ContentPage.Resources>
+
+    <Grid BackgroundColor="{StaticResource BackgroundColor}" RowDefinitions="Auto,Auto,*">
+
+        <!-- Statistics Cards Row -->
+        <Grid Grid.Row="0" Padding="20,20,20,10" ColumnDefinitions="*,*,*" ColumnSpacing="10">
+            <Border Grid.Column="0" BackgroundColor="{StaticResource SurfaceColor}" StrokeThickness="0" Padding="15">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="12" />
+                </Border.StrokeShape>
+                <Border.Shadow>
+                    <Shadow Brush="#20000000" Offset="0,2" Radius="4" />
+                </Border.Shadow>
+                <VerticalStackLayout Spacing="4">
+                    <Label Text="Total Activity" FontSize="12" TextColor="{StaticResource TextSecondary}" />
+                    <Label Text="{Binding TotalActivitiesCount}" FontSize="24" FontAttributes="Bold" TextColor="{StaticResource PrimaryColor}" />
+                    <Label Text="All time" FontSize="10" TextColor="{StaticResource TextSecondary}" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Border Grid.Column="1" BackgroundColor="{StaticResource SurfaceColor}" StrokeThickness="0" Padding="15">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="12" />
+                </Border.StrokeShape>
+                <Border.Shadow>
+                    <Shadow Brush="#20000000" Offset="0,2" Radius="4" />
+                </Border.Shadow>
+                <VerticalStackLayout Spacing="4">
+                    <Label Text="Pending" FontSize="12" TextColor="{StaticResource TextSecondary}" />
+                    <Label Text="{Binding PendingCount}" FontSize="24" FontAttributes="Bold" TextColor="{StaticResource WarningColor}">
+                        <Label.Triggers>
+                            <DataTrigger TargetType="Label" Binding="{Binding PendingCount}" Value="0">
+                                <Setter Property="TextColor" Value="{StaticResource TextSecondary}" />
+                            </DataTrigger>
+                        </Label.Triggers>
+                    </Label>
+                    <Label Text="Not completed" FontSize="10" TextColor="{StaticResource TextSecondary}" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Border Grid.Column="2" BackgroundColor="{StaticResource SurfaceColor}" StrokeThickness="0" Padding="15">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="12" />
+                </Border.StrokeShape>
+                <Border.Shadow>
+                    <Shadow Brush="#20000000" Offset="0,2" Radius="4" />
+                </Border.Shadow>
+                <VerticalStackLayout Spacing="4">
+                    <Label Text="Completed" FontSize="12" TextColor="{StaticResource TextSecondary}" />
+                    <Label Text="{Binding CompletedCount}" FontSize="24" FontAttributes="Bold" TextColor="{StaticResource SuccessColor}">
+                        <Label.Triggers>
+                            <DataTrigger TargetType="Label" Binding="{Binding CompletedCount}" Value="0">
+                                <Setter Property="TextColor" Value="{StaticResource TextSecondary}" />
+                            </DataTrigger>
+                        </Label.Triggers>
+                    </Label>
+                    <Label Text="Done" FontSize="10" TextColor="{StaticResource TextSecondary}" />
+                </VerticalStackLayout>
+            </Border>
+        </Grid>
+
+        <!-- Current Activity Section with Progress Tracking -->
+        <VerticalStackLayout Grid.Row="1" Padding="20,10,20,0" Spacing="15">
+            <Border BackgroundColor="{StaticResource SurfaceColor}" StrokeThickness="0" Padding="15" IsVisible="{Binding HasCurrentActivity}">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="12" />
+                </Border.StrokeShape>
+                <Border.Shadow>
+                    <Shadow Brush="#20000000" Offset="0,2" Radius="4" />
+                </Border.Shadow>
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="Current Activity:" FontSize="12" TextColor="{StaticResource TextSecondary}" />
+                    <Label Text="{Binding CurrentActivity.Title}" FontSize="18" FontAttributes="Bold" TextColor="{StaticResource PrimaryColor}" />
+
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                        <Label Grid.Column="0" Text="{Binding CurrentActivityDurationLabel}" FontSize="12" TextColor="{StaticResource TextSecondary}" />
+                        <Label Grid.Column="1" Text="{Binding CurrentActivityRemainingLabel}" FontSize="12" TextColor="{StaticResource TextSecondary}" />
+                    </Grid>
+
+                    <VerticalStackLayout Spacing="8">
+                        <ProgressBar Progress="{Binding CurrentActivityProgress}" 
+                                   HeightRequest="8"
+                                   BackgroundColor="#E5E7EB">
+                            <ProgressBar.ProgressColor>
+                                <Binding Path="CurrentActivityProgress" Converter="{StaticResource ProgressBarColorConverter}" />
+                            </ProgressBar.ProgressColor>
+                        </ProgressBar>
+                        <Label Text="{Binding CurrentActivityProgressText}" 
+                               FontSize="12" 
+                               HorizontalOptions="Center" 
+                               TextColor="{StaticResource TextSecondary}" />
+                    </VerticalStackLayout>
+
+                    <Label Text="Current Timer:" FontSize="12" TextColor="{StaticResource TextSecondary}" />
+                    <Label Text="{Binding CurrentTimer}" FontSize="32" FontAttributes="Bold" TextColor="{StaticResource PrimaryColor}" />
+
+                    <Label Text="{Binding CurrentTimerDetailLabel}" FontSize="11" TextColor="{StaticResource TextSecondary}" />
+
+                    <Grid ColumnDefinitions="*,*,*,*" ColumnSpacing="8">
+                        <Button Grid.Column="0" Text="⏸ Pause" Command="{Binding PauseTimerCommand}" 
+                               BackgroundColor="#FEF3C7" TextColor="{StaticResource WarningColor}" 
+                               CornerRadius="20" Padding="12,8" FontSize="12" FontAttributes="Bold" />
+                        <Button Grid.Column="1" Text="⏹ Stop" Command="{Binding StopTimerCommand}" 
+                               BackgroundColor="#FEE2E2" TextColor="{StaticResource DangerColor}" 
+                               CornerRadius="20" Padding="12,8" FontSize="12" FontAttributes="Bold" />
+                        <Button Grid.Column="2" Text="⟳ Reset" Command="{Binding ResetTimerCommand}" 
+                               BackgroundColor="#F3F4F6" TextColor="{StaticResource TextPrimary}" 
+                               CornerRadius="20" Padding="12,8" FontSize="12" FontAttributes="Bold" />
+                        <Button Grid.Column="3" Text="✓ Complete Early" Command="{Binding CompleteEarlyCommand}" 
+                               BackgroundColor="#D1FAE5" TextColor="{StaticResource SuccessColor}" 
+                               CornerRadius="20" Padding="12,8" FontSize="12" FontAttributes="Bold" />
+                    </Grid>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Show placeholder when no current activity -->
+            <Border BackgroundColor="{StaticResource SurfaceColor}" StrokeThickness="0" Padding="15" IsVisible="{Binding HasCurrentActivity, Converter={StaticResource InvertedBoolConverter}}">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="12" />
+                </Border.StrokeShape>
+                <VerticalStackLayout Spacing="8" HorizontalOptions="Center">
+                    <Label Text="⏱️" FontSize="32" HorizontalOptions="Center" />
+                    <Label Text="No active timer" FontSize="14" TextColor="{StaticResource TextSecondary}" HorizontalOptions="Center" />
+                    <Label Text="Select an activity to start tracking" FontSize="12" TextColor="{StaticResource TextSecondary}" HorizontalOptions="Center" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="10">
+                <Button Grid.Column="0" Text="+ New Activity" Command="{Binding ShowAddActivityCommand}" Style="{StaticResource PrimaryButton}" />
+                <Border Grid.Column="1" BackgroundColor="#F3F4F6" Padding="0">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="8" />
+                    </Border.StrokeShape>
+                    <Picker Title="Filter" ItemsSource="{Binding Filters}" SelectedItem="{Binding SelectedFilter}" BackgroundColor="Transparent" WidthRequest="120" />
+                </Border>
+            </Grid>
+        </VerticalStackLayout>
+
+        <!-- Activities List with Enhanced Progress Tracking -->
+        <ScrollView Grid.Row="2" Padding="20,0,20,20">
+            <VerticalStackLayout Spacing="10">
+                <CollectionView ItemsSource="{Binding FilteredActivities}">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Vertical" ItemSpacing="10" />
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Border BackgroundColor="{StaticResource SurfaceColor}" StrokeThickness="0" Padding="15">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="12" />
+                                </Border.StrokeShape>
+                                <Border.Shadow>
+                                    <Shadow Brush="#10000000" Offset="0,2" Radius="3" />
+                                </Border.Shadow>
+                                <VerticalStackLayout Spacing="12">
+                                    <Grid ColumnDefinitions="*,Auto">
+                                        <VerticalStackLayout Grid.Column="0" Spacing="4">
+                                            <Label Text="{Binding Title}" FontSize="16" FontAttributes="Bold" TextColor="{StaticResource TextPrimary}" />
+                                            <Label Text="{Binding Category}" FontSize="12" TextColor="{StaticResource PrimaryColor}" />
+                                        </VerticalStackLayout>
+                                        <Border Grid.Column="1" BackgroundColor="{Binding Status, Converter={StaticResource StatusColorConverter}}" Padding="8,4">
+                                            <Border.StrokeShape>
+                                                <RoundRectangle CornerRadius="12" />
+                                            </Border.StrokeShape>
+                                            <Label Text="{Binding Status}" FontSize="11" FontAttributes="Bold" TextColor="White" />
+                                        </Border>
+                                    </Grid>
+
+                                    <!-- Progress Bar for Activity -->
+                                    <VerticalStackLayout Spacing="4">
+                                        <ProgressBar Progress="{Binding ProgressPercentage}" 
+                                                   HeightRequest="6"
+                                                   BackgroundColor="#E5E7EB">
+                                            <ProgressBar.ProgressColor>
+                                                <Binding Path="ProgressPercentage" Converter="{StaticResource ProgressBarColorConverter}" />
+                                            </ProgressBar.ProgressColor>
+                                        </ProgressBar>
+                                        <Label Text="{Binding ProgressPercentageText}" 
+                                               FontSize="11" 
+                                               HorizontalOptions="Center" 
+                                               TextColor="{StaticResource TextSecondary}" />
+                                    </VerticalStackLayout>
+
+                                    <HorizontalStackLayout Spacing="15">
+                                        <HorizontalStackLayout Spacing="4">
+                                            <Label Text="📅" FontSize="12" />
+                                            <Label Text="{Binding Date, StringFormat='{}{0:MMM dd}'}" FontSize="12" TextColor="{StaticResource TextSecondary}" />
+                                        </HorizontalStackLayout>
+                                        <HorizontalStackLayout Spacing="4">
+                                            <Label Text="⏰" FontSize="12" />
+                                            <Label Text="{Binding Time}" FontSize="12" TextColor="{StaticResource TextSecondary}" />
+                                        </HorizontalStackLayout>
+                                        <HorizontalStackLayout Spacing="4">
+                                            <Label Text="⏱️" FontSize="12" />
+                                            <Label Text="{Binding Duration, StringFormat='{0} min'}" FontSize="12" TextColor="{StaticResource TextSecondary}" />
+                                        </HorizontalStackLayout>
+                                        <HorizontalStackLayout Spacing="4" IsVisible="{Binding IsInProgress}">
+                                            <Label Text="⏲️" FontSize="12" />
+                                            <Label Text="{Binding ElapsedTimeLabel}" FontSize="12" TextColor="{StaticResource TextSecondary}" />
+                                        </HorizontalStackLayout>
+                                    </HorizontalStackLayout>
+
+                                    <HorizontalStackLayout Spacing="8">
+                                        <Button IsVisible="{Binding Status, Converter={StaticResource NotCompletedConverter}}" 
+                                                Text="{Binding TimerButtonText}" 
+                                                Command="{Binding BindingContext.ActivityTimerCommand, Source={x:Reference PersonalPage}}" 
+                                                CommandParameter="{Binding .}" 
+                                                BackgroundColor="#EFF6FF" 
+                                                TextColor="{StaticResource PrimaryColor}" 
+                                                CornerRadius="20" 
+                                                Padding="15,8" 
+                                                FontSize="12" 
+                                                FontAttributes="Bold" />
+                                        <Button IsVisible="{Binding Status, Converter={StaticResource NotCompletedConverter}}" 
+                                                Text="✓ Complete" 
+                                                Command="{Binding BindingContext.CompleteCommand, Source={x:Reference PersonalPage}}" 
+                                                CommandParameter="{Binding .}" 
+                                                BackgroundColor="#D1FAE5" 
+                                                TextColor="{StaticResource SuccessColor}" 
+                                                CornerRadius="20" 
+                                                Padding="15,8" 
+                                                FontSize="12" 
+                                                FontAttributes="Bold" />
+                                        <Button IsVisible="{Binding Status, Converter={StaticResource CompletedConverter}}" 
+                                                Text="▶ Restart Timer" 
+                                                Command="{Binding BindingContext.RestartActivityCommand, Source={x:Reference PersonalPage}}" 
+                                                CommandParameter="{Binding .}" 
+                                                BackgroundColor="#EFF6FF" 
+                                                TextColor="{StaticResource PrimaryColor}" 
+                                                CornerRadius="20" 
+                                                Padding="15,8" 
+                                                FontSize="12" 
+                                                FontAttributes="Bold" />
+                                        <Button Text="🗑 Delete" 
+                                                Command="{Binding BindingContext.DeleteCommand, Source={x:Reference PersonalPage}}" 
+                                                CommandParameter="{Binding .}" 
+                                                BackgroundColor="#FEE2E2" 
+                                                TextColor="{StaticResource DangerColor}" 
+                                                CornerRadius="20" 
+                                                Padding="15,8" 
+                                                FontSize="12" 
+                                                FontAttributes="Bold" />
+                                    </HorizontalStackLayout>
+                                </VerticalStackLayout>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- Add Activity Popup -->
+        <Grid IsVisible="{Binding IsAddActivityVisible}" 
+              BackgroundColor="#80000000" 
+              Padding="20">
+
+            <Border BackgroundColor="{StaticResource SurfaceColor}" 
+                    StrokeThickness="0" 
+                    Padding="0"
+                    VerticalOptions="Center" 
+                    HorizontalOptions="Center" 
+                    WidthRequest="380"
+                    MaximumHeightRequest="600">
+
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="20" />
+                </Border.StrokeShape>
+
+                <Border.Shadow>
+                    <Shadow Brush="#40000000" Offset="0,4" Radius="10" />
+                </Border.Shadow>
+
+                <ScrollView>
+                    <VerticalStackLayout Padding="20" Spacing="15">
+
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Label Grid.Column="0" 
+                                   Text="Add New Activity" 
+                                   FontSize="20" 
+                                   FontAttributes="Bold" 
+                                   TextColor="{StaticResource TextPrimary}" />
+                            <Button Grid.Column="1" 
+                                    Text="✕" 
+                                    Command="{Binding CancelAddActivityCommand}" 
+                                    BackgroundColor="Transparent" 
+                                    TextColor="{StaticResource TextSecondary}" 
+                                    FontSize="18" 
+                                    Padding="10" />
+                        </Grid>
+
+                        <Entry Placeholder="Activity Title" 
+                               Text="{Binding NewActivity.Title, Mode=TwoWay}" 
+                               Style="{StaticResource EntryStyle}" />
+
+                        <Border BackgroundColor="#F9FAFB">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="8" />
+                            </Border.StrokeShape>
+                            <Picker Title="Select Category" 
+                                    ItemsSource="{Binding Categories}" 
+                                    SelectedItem="{Binding NewActivity.Category, Mode=TwoWay}" 
+                                    BackgroundColor="Transparent" />
+                        </Border>
+
+                        <Editor Placeholder="Description (optional)" 
+                                Text="{Binding NewActivity.Description, Mode=TwoWay}" 
+                                Style="{StaticResource EditorStyle}" />
+
+                        <Border BackgroundColor="#F9FAFB" Padding="10">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="8" />
+                            </Border.StrokeShape>
+                            <DatePicker Date="{Binding NewActivity.Date, Mode=TwoWay}" 
+                                       TextColor="{StaticResource TextPrimary}" />
+                        </Border>
+
+                        <Border BackgroundColor="#F9FAFB" Padding="10">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="8" />
+                            </Border.StrokeShape>
+                            <TimePicker Time="{Binding NewActivity.Time, Mode=TwoWay}" 
+                                       TextColor="{StaticResource TextPrimary}" />
+                        </Border>
+
+                        <Entry Placeholder="Duration (minutes)" 
+                               Keyboard="Numeric" 
+                               Text="{Binding NewActivity.Duration, Mode=TwoWay}" 
+                               Style="{StaticResource EntryStyle}" />
+
+                        <Grid ColumnDefinitions="Auto,*,Auto" Margin="0,5,0,0">
+                            <Label Grid.Column="0" Text="⏱️" FontSize="16" VerticalOptions="Center" />
+                            <Label Grid.Column="1" Text="Auto-track progress while timer runs" TextColor="{StaticResource TextPrimary}" VerticalOptions="Center" Margin="5,0,0,0" />
+                        </Grid>
+
+                        <Grid ColumnDefinitions="Auto,*,Auto" Margin="0,5,0,0">
+                            <Label Grid.Column="0" Text="🔔" FontSize="16" VerticalOptions="Center" />
+                            <Label Grid.Column="1" Text="Enable Reminder" TextColor="{StaticResource TextPrimary}" VerticalOptions="Center" Margin="5,0,0,0" />
+                            <Switch Grid.Column="2" IsToggled="{Binding NewActivity.Reminder, Mode=TwoWay}" ThumbColor="{StaticResource PrimaryColor}" OnColor="{StaticResource PrimaryColor}" />
+                        </Grid>
+
+                        <VerticalStackLayout Spacing="5" Margin="0,5,0,0">
+                            <Label Text="Snooze interval (minutes)" FontSize="14" TextColor="{StaticResource TextPrimary}" />
+                            <Border BackgroundColor="#F9FAFB" Padding="0">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="8" />
+                                </Border.StrokeShape>
+                                <Picker Title="Select snooze time" 
+                                        ItemsSource="{x:Static services:PersonalNotificationService.SnoozeOptions}"
+                                        SelectedItem="{Binding NewActivity.SnoozeMinutes, Mode=TwoWay}"
+                                        BackgroundColor="Transparent" />
+                            </Border>
+                        </VerticalStackLayout>
+
+                        <VerticalStackLayout Spacing="5" Margin="0,5,0,0">
+                            <Label Text="Repeat" FontSize="14" TextColor="{StaticResource TextPrimary}" />
+                            <Border BackgroundColor="#F9FAFB" Padding="0">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="8" />
+                                </Border.StrokeShape>
+                                <Picker Title="Select repeat option" 
+                                        ItemsSource="{x:Static services:PersonalNotificationService.RepeatOptions}"
+                                        SelectedItem="{Binding NewActivity.RepeatOption, Mode=TwoWay}"
+                                        BackgroundColor="Transparent" />
+                            </Border>
+                        </VerticalStackLayout>
+
+                        <Label Text="ⓘ Timer will track progress automatically. Progress bar updates in real-time as timer runs."
+                               FontSize="11"
+                               TextColor="{StaticResource TextSecondary}"
+                               Margin="0,5,0,0" />
+
+                        <Grid ColumnDefinitions="*,*" ColumnSpacing="10" Margin="0,15,0,0">
+                            <Button Grid.Column="0" Text="Cancel" Command="{Binding CancelAddActivityCommand}" Style="{StaticResource SecondaryButton}" />
+                            <Button Grid.Column="1" Text="Save Activity" Command="{Binding SaveActivityCommand}" Style="{StaticResource PrimaryButton}" />
+                        </Grid>
+                    </VerticalStackLayout>
+                </ScrollView>
+            </Border>
+        </Grid>
+    </Grid>
+</ContentPage>

@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>MyFirstMauiApp</name>
+    </assembly>
+    <members>
+        <member name="M:MyFirstMauiApp.Services.NotificationService.Schedule(MyFirstMauiApp.Models.StudyTask)">
+            <summary>
+            Schedules a local notification for a study task
+            </summary>
+        </member>
+        <member name="M:MyFirstMauiApp.Services.NotificationService.Cancel(MyFirstMauiApp.Models.StudyTask)">
+            <summary>
+            Cancels a scheduled notification
+            </summary>
+        </member>
+        <member name="T:MyFirstMauiApp.Resource">
+            <summary>
+            Android Resource Designer class.
+            Exposes the Android Resource designer assembly into the project Namespace.
+            </summary>
+        </member>
+    </members>
+</doc>

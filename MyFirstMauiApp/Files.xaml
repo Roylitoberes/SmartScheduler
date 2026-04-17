@@ -1,0 +1,559 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:sys="clr-namespace:System;assembly=netstandard"
+             xmlns:converters="clr-namespace:MyFirstMauiApp.Converters"
+             x:Class="MyFirstMauiApp.Files"
+             Title="File Manager"
+             BackgroundColor="#F8F9FA">
+
+    <ContentPage.Resources>
+        <converters:InverseBoolConverter x:Key="InverseBoolConverter"/>
+
+        <Style TargetType="Border" x:Key="CardStyle">
+            <Setter Property="StrokeThickness" Value="0"/>
+            <Setter Property="BackgroundColor" Value="White"/>
+            <Setter Property="Padding" Value="16"/>
+            <Setter Property="StrokeShape" Value="RoundRectangle 16"/>
+            <Setter Property="Shadow">
+                <Setter.Value>
+                    <Shadow Brush="#E0E0E0" 
+                            Radius="8" 
+                            Offset="0,2"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="Button" x:Key="ActionButtonStyle">
+            <Setter Property="BackgroundColor" Value="Transparent"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="WidthRequest" Value="44"/>
+            <Setter Property="HeightRequest" Value="44"/>
+            <Setter Property="CornerRadius" Value="22"/>
+        </Style>
+
+        <Style TargetType="Button" x:Key="FloatingButtonStyle">
+            <Setter Property="BackgroundColor" Value="#1E88E5"/>
+            <Setter Property="TextColor" Value="White"/>
+            <Setter Property="FontSize" Value="28"/>
+            <Setter Property="FontAttributes" Value="Bold"/>
+            <Setter Property="WidthRequest" Value="60"/>
+            <Setter Property="HeightRequest" Value="60"/>
+            <Setter Property="CornerRadius" Value="30"/>
+        </Style>
+
+        <Style TargetType="Border" x:Key="StatCardStyle">
+            <Setter Property="StrokeThickness" Value="0"/>
+            <Setter Property="BackgroundColor" Value="White"/>
+            <Setter Property="Padding" Value="12"/>
+            <Setter Property="StrokeShape" Value="RoundRectangle 12"/>
+            <Setter Property="Shadow">
+                <Setter.Value>
+                    <Shadow Brush="#E0E0E0" 
+                            Radius="4" 
+                            Offset="0,2"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </ContentPage.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Fixed Top Section -->
+        <Grid Grid.Row="0"
+              BackgroundColor="White"
+              RowDefinitions="Auto, Auto, Auto"
+              Padding="0,0,0,8">
+
+            <Label Grid.Row="0"
+                   Text="📁 My Files"
+                   FontSize="28"
+                   FontAttributes="Bold"
+                   TextColor="#1E88E5"
+                   Margin="20,16,20,8"/>
+
+            <Grid Grid.Row="1"
+                  Padding="20,0,20,12">
+                <Border StrokeThickness="0"
+                        BackgroundColor="#F0F2F5"
+                        Padding="12,10"
+                        StrokeShape="RoundRectangle 25">
+                    <Grid ColumnDefinitions="Auto, *">
+                        <Label Text="🔍"
+                               FontSize="18"
+                               VerticalOptions="Center"
+                               Margin="0,0,8,0"/>
+                        <Entry x:Name="SearchEntry"
+                               Grid.Column="1"
+                               Placeholder="Search files..."
+                               PlaceholderColor="#9AA0A6"
+                               BackgroundColor="Transparent"
+                               TextChanged="OnSearchTextChanged"
+                               FontSize="15"
+                               ClearButtonVisibility="WhileEditing"/>
+                    </Grid>
+                </Border>
+            </Grid>
+
+            <Grid Grid.Row="2"
+                  Padding="20,0,20,16"
+                  ColumnDefinitions="*, *, *"
+                  ColumnSpacing="12">
+
+                <Border Style="{StaticResource StatCardStyle}">
+                    <VerticalStackLayout Spacing="8"
+                                          HorizontalOptions="Center">
+                        <Label Text="📊"
+                               FontSize="28"
+                               HorizontalOptions="Center"/>
+                        <Label x:Name="TotalFilesLabel" 
+                               Text="0"
+                               FontSize="24"
+                               FontAttributes="Bold"
+                               TextColor="#1E88E5"
+                               HorizontalOptions="Center"/>
+                        <Label Text="Total Files"
+                               FontSize="11"
+                               TextColor="#6C757D"
+                               HorizontalOptions="Center"/>
+                    </VerticalStackLayout>
+                </Border>
+
+                <Border Grid.Column="1"
+                        Style="{StaticResource StatCardStyle}">
+                    <VerticalStackLayout Spacing="8"
+                                          HorizontalOptions="Center">
+                        <Label Text="📅"
+                               FontSize="28"
+                               HorizontalOptions="Center"/>
+                        <Label x:Name="RemindersLabel"
+                               Text="0"
+                               FontSize="24"
+                               FontAttributes="Bold"
+                               TextColor="#FF9800"
+                               HorizontalOptions="Center"/>
+                        <Label Text="Reminders"
+                               FontSize="11"
+                               TextColor="#6C757D"
+                               HorizontalOptions="Center"/>
+                    </VerticalStackLayout>
+                </Border>
+
+                <Border Grid.Column="2"
+                        Style="{StaticResource StatCardStyle}">
+                    <VerticalStackLayout Spacing="8"
+                                          HorizontalOptions="Center">
+                        <Label Text="💾"
+                               FontSize="28"
+                               HorizontalOptions="Center"/>
+                        <Label x:Name="StorageLabel"
+                               Text="0 MB"
+                               FontSize="18"
+                               FontAttributes="Bold"
+                               TextColor="#4CAF50"
+                               HorizontalOptions="Center"/>
+                        <Label Text="Storage Used"
+                               FontSize="11"
+                               TextColor="#6C757D"
+                               HorizontalOptions="Center"/>
+                    </VerticalStackLayout>
+                </Border>
+            </Grid>
+        </Grid>
+
+        <!-- Scrollable Content -->
+        <ScrollView Grid.Row="1"
+                    Padding="16,8,16,80">
+            <StackLayout Spacing="12">
+
+                <CollectionView x:Name="FilesCollectionView"
+                                SelectionMode="None"
+                                ItemsSource="{Binding FilteredFiles}">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Vertical" ItemSpacing="12"/>
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Border Style="{StaticResource CardStyle}">
+                                <Grid RowDefinitions="Auto, Auto, Auto"
+                                      ColumnDefinitions="Auto, *, Auto">
+
+                                    <Border Grid.RowSpan="3"
+                                            WidthRequest="48"
+                                            HeightRequest="48"
+                                            StrokeThickness="0"
+                                            BackgroundColor="{Binding IconColor}"
+                                            StrokeShape="RoundRectangle 12"
+                                            VerticalOptions="Center">
+                                        <Label Text="{Binding Icon}"
+                                               FontSize="24"
+                                               HorizontalOptions="Center"
+                                               VerticalOptions="Center"/>
+                                    </Border>
+
+                                    <Label Grid.Column="1"
+                                           Grid.Row="0"
+                                           FontSize="15"
+                                           FontAttributes="Bold"
+                                           TextColor="#212529"
+                                           LineBreakMode="TailTruncation"
+                                           Margin="12,0,0,0">
+                                        <Label.FormattedText>
+                                            <FormattedString>
+                                                <Span Text="{Binding FileName}"/>
+                                            </FormattedString>
+                                        </Label.FormattedText>
+                                    </Label>
+
+                                    <Label Grid.Column="1"
+                                           Grid.Row="1"
+                                           Margin="12,4,0,0">
+                                        <Label.FormattedText>
+                                            <FormattedString>
+                                                <Span Text="{Binding Category}"
+                                                      FontSize="10"
+                                                      TextColor="#6C757D"/>
+                                                <Span Text=" • "
+                                                      FontSize="10"
+                                                      TextColor="#ADB5BD"/>
+                                                <Span Text="{Binding FormattedSize}"
+                                                      FontSize="10"
+                                                      TextColor="#6C757D"/>
+                                            </FormattedString>
+                                        </Label.FormattedText>
+                                    </Label>
+
+                                    <Border Grid.Column="1"
+                                            Grid.Row="2"
+                                            Margin="12,6,0,0"
+                                            IsVisible="{Binding HasReminder}"
+                                            StrokeThickness="0"
+                                            BackgroundColor="#FFF3E0"
+                                            Padding="8,3"
+                                            StrokeShape="RoundRectangle 12"
+                                            HorizontalOptions="Start">
+                                        <Label FontSize="9"
+                                               TextColor="#FF9800">
+                                            <Label.FormattedText>
+                                                <FormattedString>
+                                                    <Span Text="⏰ "/>
+                                                    <Span Text="{Binding FormattedReminderDate}"/>
+                                                </FormattedString>
+                                            </Label.FormattedText>
+                                        </Label>
+                                    </Border>
+
+                                    <Label Grid.Column="1"
+                                           Grid.Row="2"
+                                           Margin="12,6,0,0"
+                                           IsVisible="{Binding HasReminder, Converter={StaticResource InverseBoolConverter}}"
+                                           Text="📅 No schedule"
+                                           FontSize="9"
+                                           TextColor="#ADB5BD"/>
+
+                                    <StackLayout Grid.Column="2"
+                                                 Grid.RowSpan="3"
+                                                 Orientation="Horizontal"
+                                                 Spacing="4"
+                                                 VerticalOptions="Center">
+                                        <Button Text="👁"
+                                                Style="{StaticResource ActionButtonStyle}"
+                                                TextColor="#1E88E5"
+                                                Clicked="OnViewFileClicked"
+                                                CommandParameter="{Binding}"/>
+                                        <Button Text="🗑"
+                                                Style="{StaticResource ActionButtonStyle}"
+                                                TextColor="#F44336"
+                                                Clicked="OnDeleteFileClicked"
+                                                CommandParameter="{Binding}"/>
+                                    </StackLayout>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+                <Grid IsVisible="{Binding FilteredFiles.Count, Converter={StaticResource InverseBoolConverter}}"
+                      Padding="20">
+                    <Border StrokeThickness="0"
+                            BackgroundColor="#F8F9FA"
+                            Padding="40"
+                            StrokeShape="RoundRectangle 20">
+                        <VerticalStackLayout Spacing="16"
+                                              HorizontalOptions="Center">
+                            <Label Text="📭"
+                                   FontSize="48"
+                                   HorizontalOptions="Center"/>
+                            <Label Text="No Files Yet"
+                                   FontSize="18"
+                                   FontAttributes="Bold"
+                                   TextColor="#6C757D"
+                                   HorizontalOptions="Center"/>
+                            <Label Text="Tap the upload button to add your first file"
+                                   FontSize="13"
+                                   TextColor="#9AA0A6"
+                                   HorizontalOptions="Center"/>
+                        </VerticalStackLayout>
+                    </Border>
+                </Grid>
+            </StackLayout>
+        </ScrollView>
+
+        <!-- Floating Upload Button -->
+        <Grid Grid.RowSpan="2"
+              VerticalOptions="End"
+              HorizontalOptions="End"
+              Margin="0,0,20,20">
+            <Button Text="+"
+                    Style="{StaticResource FloatingButtonStyle}"
+                    Clicked="OnUploadFileClicked">
+                <Button.Shadow>
+                    <Shadow Brush="#40000000" 
+                            Radius="15" 
+                            Offset="0,4"/>
+                </Button.Shadow>
+            </Button>
+        </Grid>
+
+        <!-- Upload Pop-up -->
+        <Grid x:Name="UploadPopup"
+              Grid.RowSpan="2"
+              IsVisible="False"
+              BackgroundColor="#80000000"
+              HorizontalOptions="Fill"
+              VerticalOptions="Fill">
+            <Border StrokeThickness="0"
+                    BackgroundColor="White"
+                    Padding="24"
+                    StrokeShape="RoundRectangle 24"
+                    WidthRequest="320"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center">
+                <VerticalStackLayout Spacing="20">
+
+                    <Label Text="Upload New File"
+                           FontSize="20"
+                           FontAttributes="Bold"
+                           TextColor="#1E88E5"
+                           HorizontalOptions="Center"/>
+
+                    <Button Text="📎 Choose File"
+                           BackgroundColor="#E3F2FD"
+                           TextColor="#1E88E5"
+                           FontSize="15"
+                           FontAttributes="Bold"
+                           CornerRadius="12"
+                           HeightRequest="50"
+                           Clicked="OnChooseFileClicked"/>
+
+                    <Label x:Name="SelectedFileName"
+                           Text="No file selected"
+                           FontSize="12"
+                           TextColor="#6C757D"
+                           HorizontalOptions="Center"
+                           LineBreakMode="TailTruncation"/>
+
+                    <Border StrokeThickness="1"
+                            Stroke="#E0E0E0"
+                            Padding="12"
+                            StrokeShape="RoundRectangle 12">
+                        <DatePicker x:Name="ReminderDatePicker"
+                                    MinimumDate="{Binding Source={x:Static sys:DateTime.Now}}"
+                                    Format="MM/dd/yyyy"
+                                    BackgroundColor="Transparent"/>
+                    </Border>
+
+                    <Border StrokeThickness="1"
+                            Stroke="#E0E0E0"
+                            Padding="12"
+                            StrokeShape="RoundRectangle 12">
+                        <TimePicker x:Name="ReminderTimePicker"
+                                    BackgroundColor="Transparent"/>
+                    </Border>
+
+                    <Grid ColumnDefinitions="*, *" ColumnSpacing="12">
+                        <Button Text="Save"
+                                BackgroundColor="#4CAF50"
+                                TextColor="White"
+                                FontSize="16"
+                                FontAttributes="Bold"
+                                CornerRadius="12"
+                                HeightRequest="48"
+                                Clicked="OnSaveFileClicked"/>
+
+                        <Button Text="Cancel"
+                                Grid.Column="1"
+                                BackgroundColor="#F5F5F5"
+                                TextColor="#6C757D"
+                                FontSize="16"
+                                CornerRadius="12"
+                                HeightRequest="48"
+                                Clicked="OnCancelUploadClicked"/>
+                    </Grid>
+
+                </VerticalStackLayout>
+            </Border>
+        </Grid>
+
+        <!-- File Preview Pop-up -->
+        <Grid x:Name="PreviewPopup"
+              Grid.RowSpan="2"
+              IsVisible="False"
+              BackgroundColor="#80000000"
+              HorizontalOptions="Fill"
+              VerticalOptions="Fill">
+            <Border StrokeThickness="0"
+                    BackgroundColor="White"
+                    Padding="0"
+                    StrokeShape="RoundRectangle 24"
+                    WidthRequest="380"
+                    HeightRequest="550"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid Grid.Row="0"
+                          BackgroundColor="#1E88E5"
+                          Padding="16">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Label x:Name="PreviewFileName"
+                               Text=""
+                               TextColor="White"
+                               FontSize="16"
+                               FontAttributes="Bold"
+                               VerticalOptions="Center"
+                               LineBreakMode="TailTruncation"/>
+
+                        <Button Text="✕"
+                                Grid.Column="1"
+                                BackgroundColor="Transparent"
+                                TextColor="White"
+                                FontSize="20"
+                                WidthRequest="40"
+                                Clicked="ClosePreviewPopup"/>
+                    </Grid>
+
+                    <WebView x:Name="FilePreview"
+                             Grid.Row="1"
+                             VerticalOptions="Fill"
+                             HorizontalOptions="Fill"/>
+
+                    <Grid Grid.Row="2"
+                          Padding="16"
+                          ColumnDefinitions="*, *"
+                          ColumnSpacing="12">
+                        <Button Text="Open"
+                                BackgroundColor="#1E88E5"
+                                TextColor="White"
+                                FontSize="14"
+                                FontAttributes="Bold"
+                                CornerRadius="12"
+                                HeightRequest="44"
+                                Clicked="OnOpenExternalClicked"/>
+
+                        <Button Text="Close"
+                                Grid.Column="1"
+                                BackgroundColor="#F5F5F5"
+                                TextColor="#6C757D"
+                                FontSize="14"
+                                CornerRadius="12"
+                                HeightRequest="44"
+                                Clicked="ClosePreviewPopup"/>
+                    </Grid>
+                </Grid>
+            </Border>
+        </Grid>
+
+        <!-- Vibration Control Popup -->
+        <Grid x:Name="VibrationPopup"
+              Grid.RowSpan="2"
+              IsVisible="False"
+              BackgroundColor="#80000000"
+              HorizontalOptions="Fill"
+              VerticalOptions="Fill">
+            <Border StrokeThickness="0"
+                    BackgroundColor="White"
+                    Padding="24"
+                    StrokeShape="RoundRectangle 24"
+                    WidthRequest="300"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center">
+                <VerticalStackLayout Spacing="20">
+
+                    <Label Text="🔔 REMINDER"
+                           FontSize="22"
+                           FontAttributes="Bold"
+                           TextColor="#1E88E5"
+                           HorizontalOptions="Center"/>
+
+                    <Label x:Name="VibrationFileName"
+                           Text=""
+                           FontSize="14"
+                           TextColor="#6C757D"
+                           HorizontalOptions="Center"
+                           LineBreakMode="TailTruncation"/>
+
+                    <Label Text="📳 Vibrating continuously..."
+                           FontSize="12"
+                           TextColor="#FF9800"
+                           HorizontalOptions="Center"
+                           FontAttributes="Bold"/>
+
+                    <Grid RowDefinitions="Auto, Auto" 
+                          ColumnDefinitions="*, *" 
+                          RowSpacing="12"
+                          ColumnSpacing="12">
+
+                        <Button Text="📂 Open"
+                                Grid.Row="0"
+                                Grid.Column="0"
+                                BackgroundColor="#1E88E5"
+                                TextColor="White"
+                                FontSize="14"
+                                FontAttributes="Bold"
+                                CornerRadius="12"
+                                HeightRequest="45"
+                                Clicked="OnVibrationOpenClicked"/>
+
+                        <Button Text="⏰ Snooze"
+                                Grid.Row="0"
+                                Grid.Column="1"
+                                BackgroundColor="#FF9800"
+                                TextColor="White"
+                                FontSize="14"
+                                FontAttributes="Bold"
+                                CornerRadius="12"
+                                HeightRequest="45"
+                                Clicked="OnVibrationSnoozeClicked"/>
+
+                        <Button Text="⏹️ Stop Vibration"
+                                Grid.Row="1"
+                                Grid.ColumnSpan="2"
+                                BackgroundColor="#F44336"
+                                TextColor="White"
+                                FontSize="14"
+                                FontAttributes="Bold"
+                                CornerRadius="12"
+                                HeightRequest="45"
+                                Clicked="OnVibrationStopClicked"/>
+                    </Grid>
+
+                </VerticalStackLayout>
+            </Border>
+        </Grid>
+
+    </Grid>
+</ContentPage>

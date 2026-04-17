@@ -1,0 +1,25 @@
+<api>
+  <jcw-types>
+    <type name="AwaitableTaskCompleteListener_1" package="crc6495d4f5d63cc5c882" application_java_class="android.app.Application" mono_runtime_initialization="mono.MonoPackageManager.LoadApplication (context);" extends_type="java.lang.Object" partial_assembly_qualified_name="Android.Gms.Extensions.AwaitableTaskCompleteListener`1, Xamarin.GooglePlayServices.Tasks">
+      <implemented_interfaces>
+        <interface name="com.google.android.gms.tasks.OnCompleteListener" />
+      </implemented_interfaces>
+      <constructors>
+        <constructor name="AwaitableTaskCompleteListener_1" method="n_.ctor:()V:" jni_signature="()V" managed_parameters="" retval="void" is_dynamically_registered="True" />
+      </constructors>
+      <methods>
+        <method name="onComplete" method="n_onComplete:(Lcom/google/android/gms/tasks/Task;)V:GetOnComplete_Lcom_google_android_gms_tasks_Task_Handler:Android.Gms.Tasks.IOnCompleteListenerInvoker, Xamarin.GooglePlayServices.Tasks" jni_signature="(Lcom/google/android/gms/tasks/Task;)V" params="com.google.android.gms.tasks.Task p0" retval="void" super_call="p0" activate_call="p0" />
+      </methods>
+    </type>
+  </jcw-types>
+  <acw-types partial-assembly-name="Xamarin.GooglePlayServices.Tasks" module-name="Xamarin.GooglePlayServices.Tasks.dll">
+    <type assembly-qualified-name="Android.Gms.Tasks.IContinuation, Xamarin.GooglePlayServices.Tasks, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" compat-jni-name="com.google.android.gms.tasks.Continuation" java-key="com.google.android.gms.tasks.Continuation" managed-key="Android.Gms.Tasks.IContinuation" partial-assembly-qualified-name="Android.Gms.Tasks.IContinuation, Xamarin.GooglePlayServices.Tasks" />
+    <type assembly-qualified-name="Android.Gms.Tasks.IOnCanceledListener, Xamarin.GooglePlayServices.Tasks, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" compat-jni-name="com.google.android.gms.tasks.OnCanceledListener" java-key="com.google.android.gms.tasks.OnCanceledListener" managed-key="Android.Gms.Tasks.IOnCanceledListener" partial-assembly-qualified-name="Android.Gms.Tasks.IOnCanceledListener, Xamarin.GooglePlayServices.Tasks" />
+    <type assembly-qualified-name="Android.Gms.Tasks.IOnCompleteListener, Xamarin.GooglePlayServices.Tasks, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" compat-jni-name="com.google.android.gms.tasks.OnCompleteListener" java-key="com.google.android.gms.tasks.OnCompleteListener" managed-key="Android.Gms.Tasks.IOnCompleteListener" partial-assembly-qualified-name="Android.Gms.Tasks.IOnCompleteListener, Xamarin.GooglePlayServices.Tasks" />
+    <type assembly-qualified-name="Android.Gms.Tasks.IOnFailureListener, Xamarin.GooglePlayServices.Tasks, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" compat-jni-name="com.google.android.gms.tasks.OnFailureListener" java-key="com.google.android.gms.tasks.OnFailureListener" managed-key="Android.Gms.Tasks.IOnFailureListener" partial-assembly-qualified-name="Android.Gms.Tasks.IOnFailureListener, Xamarin.GooglePlayServices.Tasks" />
+    <type assembly-qualified-name="Android.Gms.Tasks.IOnSuccessListener, Xamarin.GooglePlayServices.Tasks, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" compat-jni-name="com.google.android.gms.tasks.OnSuccessListener" java-key="com.google.android.gms.tasks.OnSuccessListener" managed-key="Android.Gms.Tasks.IOnSuccessListener" partial-assembly-qualified-name="Android.Gms.Tasks.IOnSuccessListener, Xamarin.GooglePlayServices.Tasks" />
+    <type assembly-qualified-name="Android.Gms.Tasks.IOnTokenCanceledListener, Xamarin.GooglePlayServices.Tasks, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" compat-jni-name="com.google.android.gms.tasks.OnTokenCanceledListener" java-key="com.google.android.gms.tasks.OnTokenCanceledListener" managed-key="Android.Gms.Tasks.IOnTokenCanceledListener" partial-assembly-qualified-name="Android.Gms.Tasks.IOnTokenCanceledListener, Xamarin.GooglePlayServices.Tasks" />
+    <type assembly-qualified-name="Android.Gms.Tasks.ISuccessContinuation, Xamarin.GooglePlayServices.Tasks, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" compat-jni-name="com.google.android.gms.tasks.SuccessContinuation" java-key="com.google.android.gms.tasks.SuccessContinuation" managed-key="Android.Gms.Tasks.ISuccessContinuation" partial-assembly-qualified-name="Android.Gms.Tasks.ISuccessContinuation, Xamarin.GooglePlayServices.Tasks" />
+    <type assembly-qualified-name="Android.Gms.Extensions.AwaitableTaskCompleteListener`1, Xamarin.GooglePlayServices.Tasks, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" compat-jni-name="android.gms.extensions.AwaitableTaskCompleteListener_1" java-key="crc6495d4f5d63cc5c882.AwaitableTaskCompleteListener_1" managed-key="Android.Gms.Extensions.AwaitableTaskCompleteListener`1" partial-assembly-qualified-name="Android.Gms.Extensions.AwaitableTaskCompleteListener`1, Xamarin.GooglePlayServices.Tasks" />
+  </acw-types>
+</api>

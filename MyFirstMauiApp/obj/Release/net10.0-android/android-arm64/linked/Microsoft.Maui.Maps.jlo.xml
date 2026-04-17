@@ -1,0 +1,20 @@
+<api>
+  <jcw-types>
+    <type name="MapCallbackHandler" package="crc64a5df8ade113ad624" application_java_class="android.app.Application" mono_runtime_initialization="mono.MonoPackageManager.LoadApplication (context);" extends_type="java.lang.Object" partial_assembly_qualified_name="Microsoft.Maui.Maps.Handlers.MapCallbackHandler, Microsoft.Maui.Maps">
+      <implemented_interfaces>
+        <interface name="com.google.android.gms.maps.GoogleMap.OnCameraMoveListener" />
+        <interface name="com.google.android.gms.maps.OnMapReadyCallback" />
+      </implemented_interfaces>
+      <constructors>
+        <constructor name="MapCallbackHandler" method="n_.ctor:()V:" jni_signature="()V" managed_parameters="" retval="void" is_dynamically_registered="True" />
+      </constructors>
+      <methods>
+        <method name="onCameraMove" method="n_onCameraMove:()V:GetOnCameraMoveHandler:Android.Gms.Maps.GoogleMap+IOnCameraMoveListenerInvoker, Xamarin.GooglePlayServices.Maps" jni_signature="()V" retval="void" />
+        <method name="onMapReady" method="n_onMapReady:(Lcom/google/android/gms/maps/GoogleMap;)V:GetOnMapReady_Lcom_google_android_gms_maps_GoogleMap_Handler:Android.Gms.Maps.IOnMapReadyCallbackInvoker, Xamarin.GooglePlayServices.Maps" jni_signature="(Lcom/google/android/gms/maps/GoogleMap;)V" params="com.google.android.gms.maps.GoogleMap p0" retval="void" super_call="p0" activate_call="p0" />
+      </methods>
+    </type>
+  </jcw-types>
+  <acw-types partial-assembly-name="Microsoft.Maui.Maps" module-name="Microsoft.Maui.Maps.dll">
+    <type assembly-qualified-name="Microsoft.Maui.Maps.Handlers.MapCallbackHandler, Microsoft.Maui.Maps, Version=10.0.0.0, Culture=neutral, PublicKeyToken=null" compat-jni-name="microsoft.maui.maps.handlers.MapCallbackHandler" java-key="crc64a5df8ade113ad624.MapCallbackHandler" managed-key="Microsoft.Maui.Maps.Handlers.MapCallbackHandler" partial-assembly-qualified-name="Microsoft.Maui.Maps.Handlers.MapCallbackHandler, Microsoft.Maui.Maps" />
+  </acw-types>
+</api>

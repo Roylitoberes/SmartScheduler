@@ -1,0 +1,587 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:MyFirstMauiApp.ViewModels"
+             xmlns:models="clr-namespace:MyFirstMauiApp.Models"
+             xmlns:converters="clr-namespace:MyFirstMauiApp.Converters"
+             x:Class="MyFirstMauiApp.Event"
+             Title="Events"
+             BackgroundColor="#F8FAFC"
+             NavigationPage.HasNavigationBar="False"
+             x:DataType="viewModels:EventViewModel">
+
+    <ContentPage.BindingContext>
+        <viewModels:EventViewModel />
+    </ContentPage.BindingContext>
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:PriorityColorConverter x:Key="PriorityColorConverter" />
+            <converters:StringNotEmptyConverter x:Key="StringNotEmptyConverter" />
+
+            <!-- Modern Color Palette -->
+            <Color x:Key="Primary">#6366F1</Color>
+            <Color x:Key="PrimaryLight">#818CF8</Color>
+            <Color x:Key="PrimarySoft">#EEF2FF</Color>
+            <Color x:Key="Success">#10B981</Color>
+            <Color x:Key="SuccessLight">#D1FAE5</Color>
+            <Color x:Key="Warning">#F59E0B</Color>
+            <Color x:Key="WarningLight">#FEF3C7</Color>
+            <Color x:Key="Danger">#EF4444</Color>
+            <Color x:Key="DangerLight">#FEE2E2</Color>
+            <Color x:Key="Gray900">#111827</Color>
+            <Color x:Key="Gray700">#374151</Color>
+            <Color x:Key="Gray500">#6B7280</Color>
+            <Color x:Key="Gray300">#D1D5DB</Color>
+            <Color x:Key="Gray100">#F3F4F6</Color>
+            <Color x:Key="White">#FFFFFF</Color>
+            <Color x:Key="Background">#F9FAFB</Color>
+
+            <!-- Shadows - Simplified for performance -->
+            <Shadow x:Key="SmallShadow"
+                    Brush="#1A000000"
+                    Offset="0,2"
+                    Radius="4"
+                    Opacity="0.05" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!-- Top Bar -->
+        <Border Grid.Row="0"
+                BackgroundColor="{StaticResource Primary}"
+                StrokeThickness="0"
+                Padding="20,10"
+                HeightRequest="80">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="0,0,24,24" />
+            </Border.StrokeShape>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <VerticalStackLayout Grid.Column="0"
+                                     Spacing="4"
+                                     VerticalOptions="Center">
+                    <Label Text="My Events"
+                           FontSize="28"
+                           FontAttributes="Bold"
+                           TextColor="White"
+                           Opacity="0.95" />
+                    <Label Text="Stay organized, stay ahead"
+                           FontSize="13"
+                           TextColor="White"
+                           Opacity="0.8" />
+                </VerticalStackLayout>
+
+                <!-- Notification Button -->
+                <Grid Grid.Column="1"
+                      WidthRequest="44"
+                      HeightRequest="44"
+                      VerticalOptions="Center">
+                    <Ellipse Fill="White"
+                             Opacity="0.2"
+                             WidthRequest="44"
+                             HeightRequest="44" />
+                    <ImageButton Source="bell.png"
+                                 WidthRequest="22"
+                                 HeightRequest="22"
+                                 BackgroundColor="Transparent"
+                                 HorizontalOptions="Center"
+                                 VerticalOptions="Center" />
+                    <Border BackgroundColor="{StaticResource Warning}"
+                            WidthRequest="18"
+                            HeightRequest="18"
+                            Margin="28,-2,0,0"
+                            HorizontalOptions="End"
+                            VerticalOptions="Start"
+                            StrokeShape="RoundRectangle 9">
+                        <Label Text="3"
+                               TextColor="White"
+                               FontSize="10"
+                               FontAttributes="Bold"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center" />
+                    </Border>
+                </Grid>
+            </Grid>
+        </Border>
+
+        <!-- Stats Cards -->
+        <Grid Grid.Row="1"
+              Padding="20,20"
+              ColumnSpacing="15"
+              RowSpacing="0"
+              BackgroundColor="Transparent"
+              Margin="0,-30,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <!-- Total Events Card -->
+            <Border Grid.Column="0"
+                    StrokeThickness="0"
+                    BackgroundColor="{StaticResource White}"
+                    Padding="0"
+                    StrokeShape="RoundRectangle 16">
+                <VerticalStackLayout Padding="16,12" Spacing="8">
+                    <Border BackgroundColor="{StaticResource PrimarySoft}"
+                            WidthRequest="40"
+                            HeightRequest="40"
+                            Margin="0,0,0,4"
+                            StrokeShape="RoundRectangle 20">
+                        <Label Text="📅"
+                               FontSize="20"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center" />
+                    </Border>
+                    <Label Text="{Binding UpcomingEvents.Count, StringFormat='{0}'}"
+                           FontSize="28"
+                           FontAttributes="Bold"
+                           TextColor="{StaticResource Gray900}" />
+                    <Label Text="Total Events"
+                           FontSize="13"
+                           TextColor="{StaticResource Gray500}" />
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Completed Card -->
+            <Border Grid.Column="1"
+                    StrokeThickness="0"
+                    BackgroundColor="{StaticResource White}"
+                    Padding="0"
+                    StrokeShape="RoundRectangle 16">
+                <VerticalStackLayout Padding="16,12" Spacing="8">
+                    <Border BackgroundColor="{StaticResource SuccessLight}"
+                            WidthRequest="40"
+                            HeightRequest="40"
+                            Margin="0,0,0,4"
+                            StrokeShape="RoundRectangle 20">
+                        <Label Text="✅"
+                               FontSize="20"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center" />
+                    </Border>
+                    <Label Text="{Binding CompletedEvents.Count, StringFormat='{0}'}"
+                           FontSize="28"
+                           FontAttributes="Bold"
+                           TextColor="{StaticResource Gray900}" />
+                    <Label Text="Completed"
+                           FontSize="13"
+                           TextColor="{StaticResource Gray500}" />
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Pending Card -->
+            <Border Grid.Column="2"
+                    StrokeThickness="0"
+                    BackgroundColor="{StaticResource White}"
+                    Padding="0"
+                    StrokeShape="RoundRectangle 16">
+                <VerticalStackLayout Padding="16,12" Spacing="8">
+                    <Border BackgroundColor="{StaticResource WarningLight}"
+                            WidthRequest="40"
+                            HeightRequest="40"
+                            Margin="0,0,0,4"
+                            StrokeShape="RoundRectangle 20">
+                        <Label Text="⏳"
+                               FontSize="20"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center" />
+                    </Border>
+                    <Label Text="{Binding UpcomingEvents.Count, StringFormat='{0}'}"
+                           FontSize="28"
+                           FontAttributes="Bold"
+                           TextColor="{StaticResource Gray900}" />
+                    <Label Text="Pending"
+                           FontSize="13"
+                           TextColor="{StaticResource Gray500}" />
+                </VerticalStackLayout>
+            </Border>
+        </Grid>
+
+        <!-- Search and Add -->
+        <Grid Grid.Row="2"
+              Padding="20,5,20,15"
+              ColumnSpacing="12"
+              BackgroundColor="Transparent">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <!-- Search Bar -->
+            <Border Grid.Column="0"
+                    StrokeThickness="0"
+                    BackgroundColor="{StaticResource White}"
+                    Padding="12,0"
+                    StrokeShape="RoundRectangle 14">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Image Grid.Column="0"
+                           Source="search.png"
+                           WidthRequest="18"
+                           HeightRequest="18"
+                           Margin="0,0,8,0"
+                           Opacity="0.4" />
+
+                    <Entry Grid.Column="1"
+                           Placeholder="Search events..."
+                           BackgroundColor="Transparent"
+                           Text="{Binding SearchText, Mode=TwoWay}"
+                           PlaceholderColor="{StaticResource Gray500}"
+                           TextColor="{StaticResource Gray900}"
+                           FontSize="15"
+                           HeightRequest="40" />
+                </Grid>
+            </Border>
+
+            <!-- Add Button -->
+            <Border Grid.Column="1"
+                    BackgroundColor="{StaticResource Primary}"
+                    StrokeThickness="0"
+                    WidthRequest="50"
+                    HeightRequest="50"
+                    StrokeShape="RoundRectangle 14">
+                <Button Text="+"
+                        BackgroundColor="Transparent"
+                        TextColor="White"
+                        FontSize="24"
+                        FontAttributes="Bold"
+                        CornerRadius="14"
+                        Padding="0"
+                        Margin="0"
+                        Command="{Binding AddEventCommand}" />
+            </Border>
+        </Grid>
+
+        <!-- Scrollable Content -->
+        <ScrollView Grid.Row="3"
+                    BackgroundColor="{StaticResource Background}">
+            <VerticalStackLayout Padding="20,0,20,20" Spacing="20">
+
+                <!-- Loading Indicator -->
+                <ActivityIndicator IsVisible="{Binding IsBusy}"
+                                   IsRunning="{Binding IsBusy}"
+                                   Color="{StaticResource Primary}"
+                                   HeightRequest="50" />
+
+                <!-- Upcoming Events Header -->
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <Label Grid.Column="0"
+                           Text="Upcoming Events"
+                           FontSize="20"
+                           FontAttributes="Bold"
+                           TextColor="{StaticResource Gray900}" />
+
+                    <Border Grid.Column="1"
+                            BackgroundColor="{StaticResource PrimarySoft}"
+                            Padding="8,4"
+                            StrokeShape="RoundRectangle 12">
+                        <Label Text="{Binding UpcomingEvents.Count, StringFormat='{0} items'}"
+                               FontSize="12"
+                               FontAttributes="Bold"
+                               TextColor="{StaticResource Primary}" />
+                    </Border>
+                </Grid>
+
+                <!-- Upcoming Events Collection - Optimized for performance -->
+                <CollectionView ItemsSource="{Binding UpcomingEvents}"
+                                VerticalOptions="Fill">
+                    <CollectionView.EmptyView>
+                        <Border BackgroundColor="{StaticResource White}"
+                                Padding="40,30"
+                                StrokeShape="RoundRectangle 16"
+                                Margin="0,10">
+                            <VerticalStackLayout Spacing="12">
+                                <Label Text="✨"
+                                       FontSize="32"
+                                       HorizontalOptions="Center" />
+                                <Label Text="No upcoming events"
+                                       TextColor="{StaticResource Gray500}"
+                                       FontSize="15"
+                                       HorizontalOptions="Center" />
+                            </VerticalStackLayout>
+                        </Border>
+                    </CollectionView.EmptyView>
+
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="models:EventItem">
+                            <!-- Simplified card with better performance -->
+                            <Border StrokeThickness="0"
+                                    BackgroundColor="{StaticResource White}"
+                                    Padding="16"
+                                    Margin="0,0,0,12"
+                                    StrokeShape="RoundRectangle 16">
+
+                                <VerticalStackLayout Spacing="12">
+
+                                    <!-- Header - Compact -->
+                                    <Grid ColumnSpacing="12">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <Border Grid.Column="0"
+                                                BackgroundColor="{StaticResource PrimarySoft}"
+                                                WidthRequest="40"
+                                                HeightRequest="40"
+                                                StrokeShape="RoundRectangle 10">
+                                            <Label Text="🔵"
+                                                   FontSize="20"
+                                                   HorizontalOptions="Center"
+                                                   VerticalOptions="Center" />
+                                        </Border>
+
+                                        <Label Grid.Column="1"
+                                               Text="{Binding Title}"
+                                               FontSize="16"
+                                               FontAttributes="Bold"
+                                               TextColor="{StaticResource Gray900}"
+                                               VerticalOptions="Center"
+                                               LineBreakMode="TailTruncation" />
+
+                                        <Border Grid.Column="2"
+                                                BackgroundColor="{Binding Priority, Converter={StaticResource PriorityColorConverter}}"
+                                                Padding="8,4"
+                                                StrokeShape="RoundRectangle 20">
+                                            <Label Text="{Binding Priority}"
+                                                   FontSize="10"
+                                                   FontAttributes="Bold"
+                                                   TextColor="White" />
+                                        </Border>
+                                    </Grid>
+
+                                    <!-- Date and Time - Single line -->
+                                    <Label FontSize="13"
+                                           TextColor="{StaticResource Gray700}">
+                                        <Label.FormattedText>
+                                            <FormattedString>
+                                                <Span Text="📅 " />
+                                                <Span Text="{Binding EventDate, StringFormat='{0:MMM d, yyyy}'}" />
+                                                <Span Text=" • ⏰ " />
+                                                <Span Text="{Binding EventTime, StringFormat='{0:h:mm tt}'}" />
+                                            </FormattedString>
+                                        </Label.FormattedText>
+                                    </Label>
+
+                                    <!-- Location with Map Button - Full Width -->
+                                    <Border IsVisible="{Binding Location, Converter={StaticResource StringNotEmptyConverter}}"
+                                            BackgroundColor="{StaticResource PrimarySoft}"
+                                            StrokeThickness="0"
+                                            Padding="12,8"
+                                            StrokeShape="RoundRectangle 10">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="Auto" />
+                                            </Grid.ColumnDefinitions>
+
+                                            <VerticalStackLayout Grid.Column="0" Spacing="4">
+                                                <Label Text="📍 Location"
+                                                       FontSize="11"
+                                                       FontAttributes="Bold"
+                                                       TextColor="{StaticResource Primary}"
+                                                       Opacity="0.8" />
+                                                <Label Text="{Binding Location}"
+                                                       FontSize="13"
+                                                       TextColor="{StaticResource Gray700}"
+                                                       LineBreakMode="TailTruncation" />
+                                            </VerticalStackLayout>
+
+                                            <Button Grid.Column="1"
+                                                    Text="🗺️ View on Map"
+                                                    BackgroundColor="{StaticResource Primary}"
+                                                    TextColor="White"
+                                                    FontSize="12"
+                                                    FontAttributes="Bold"
+                                                    CornerRadius="8"
+                                                    HeightRequest="44"
+                                                    WidthRequest="120"
+                                                    VerticalOptions="Center"
+                                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:EventViewModel}}, Path=ViewOnMapCommand}"
+                                                    CommandParameter="{Binding .}" />
+                                        </Grid>
+                                    </Border>
+
+                                    <!-- Description - Limited to 2 lines -->
+                                    <Label Text="{Binding Description}"
+                                           FontSize="12"
+                                           TextColor="{StaticResource Gray500}"
+                                           LineBreakMode="TailTruncation"
+                                           MaxLines="2"
+                                           IsVisible="{Binding Description, Converter={StaticResource StringNotEmptyConverter}}" />
+
+                                    <!-- Reminder - Simplified -->
+                                    <Label Text="{Binding Reminder}"
+                                           FontSize="11"
+                                           TextColor="{StaticResource Gray500}"
+                                           IsVisible="{Binding Reminder, Converter={StaticResource StringNotEmptyConverter}}">
+                                        <Label.FormattedText>
+                                            <FormattedString>
+                                                <Span Text="⏳ " />
+                                                <Span Text="{Binding Reminder}" />
+                                            </FormattedString>
+                                        </Label.FormattedText>
+                                    </Label>
+
+                                    <!-- Action Buttons - Compact (Edit removed) -->
+                                    <Grid ColumnSpacing="8" Margin="0,4,0,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <Button Grid.Column="0"
+                                                Text="Complete"
+                                                BackgroundColor="{StaticResource SuccessLight}"
+                                                TextColor="{StaticResource Success}"
+                                                FontSize="12"
+                                                FontAttributes="Bold"
+                                                CornerRadius="8"
+                                                HeightRequest="36"
+                                                CommandParameter="{Binding Id}"
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:EventViewModel}}, Path=CompleteEventCommand}" />
+
+                                        <Button Grid.Column="1"
+                                                Text="Delete"
+                                                BackgroundColor="{StaticResource DangerLight}"
+                                                TextColor="{StaticResource Danger}"
+                                                FontSize="12"
+                                                FontAttributes="Bold"
+                                                CornerRadius="8"
+                                                HeightRequest="36"
+                                                CommandParameter="{Binding Id}"
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:EventViewModel}}, Path=DeleteEventCommand}" />
+                                    </Grid>
+                                </VerticalStackLayout>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+                <!-- Completed Events Header -->
+                <Grid Margin="0,8,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <Label Grid.Column="0"
+                           Text="Completed"
+                           FontSize="20"
+                           FontAttributes="Bold"
+                           TextColor="{StaticResource Gray900}" />
+
+                    <Border Grid.Column="1"
+                            BackgroundColor="{StaticResource SuccessLight}"
+                            Padding="8,4"
+                            StrokeShape="RoundRectangle 12">
+                        <Label Text="{Binding CompletedEvents.Count, StringFormat='{0} items'}"
+                               FontSize="12"
+                               FontAttributes="Bold"
+                               TextColor="{StaticResource Success}" />
+                    </Border>
+                </Grid>
+
+                <!-- Completed Events Collection - Simplified -->
+                <CollectionView ItemsSource="{Binding CompletedEvents}"
+                                Margin="0,0,0,20"
+                                VerticalOptions="Fill">
+                    <CollectionView.EmptyView>
+                        <Border BackgroundColor="{StaticResource White}"
+                                Padding="40,30"
+                                StrokeShape="RoundRectangle 16"
+                                Margin="0,10">
+                            <VerticalStackLayout Spacing="12">
+                                <Label Text="✅"
+                                       FontSize="32"
+                                       HorizontalOptions="Center" />
+                                <Label Text="No completed events"
+                                       TextColor="{StaticResource Gray500}"
+                                       FontSize="15"
+                                       HorizontalOptions="Center" />
+                            </VerticalStackLayout>
+                        </Border>
+                    </CollectionView.EmptyView>
+
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="models:EventItem">
+                            <Border StrokeThickness="0"
+                                    BackgroundColor="{StaticResource White}"
+                                    Padding="16"
+                                    Margin="0,0,0,8"
+                                    StrokeShape="RoundRectangle 16">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <Border Grid.Column="0"
+                                            BackgroundColor="{StaticResource SuccessLight}"
+                                            WidthRequest="36"
+                                            HeightRequest="36"
+                                            Margin="0,0,12,0"
+                                            StrokeShape="RoundRectangle 10">
+                                        <Label Text="✓"
+                                               FontSize="16"
+                                               TextColor="{StaticResource Success}"
+                                               HorizontalOptions="Center"
+                                               VerticalOptions="Center" />
+                                    </Border>
+
+                                    <VerticalStackLayout Grid.Column="1" Spacing="4">
+                                        <Label Text="{Binding Title}"
+                                               FontSize="15"
+                                               FontAttributes="Bold"
+                                               TextColor="{StaticResource Gray900}"
+                                               LineBreakMode="TailTruncation" />
+                                        <Label Text="{Binding EventDate, StringFormat='{0:MMM d, yyyy} • {0:h:mm tt}'}"
+                                               FontSize="12"
+                                               TextColor="{StaticResource Gray500}" />
+                                    </VerticalStackLayout>
+
+                                    <Button Grid.Column="2"
+                                            Text="Delete"
+                                            BackgroundColor="{StaticResource DangerLight}"
+                                            TextColor="{StaticResource Danger}"
+                                            FontSize="11"
+                                            FontAttributes="Bold"
+                                            CornerRadius="8"
+                                            HeightRequest="32"
+                                            WidthRequest="60"
+                                            CommandParameter="{Binding Id}"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:EventViewModel}}, Path=DeleteEventCommand}" />
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

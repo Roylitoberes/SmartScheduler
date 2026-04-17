@@ -1,0 +1,46 @@
+<api type="release" assembly-name="Xamarin.GooglePlayServices.Location" mvid="832a24469b464204b99c30f93392c004">
+  <module assembly-name="Xamarin.GooglePlayServices.Location" mvid="832a24469b464204b99c30f93392c004" mvid-bytes="RiQqg0abBEK5nDD5M5LABA==">
+    <duplicates>
+      <entry java-name="com/google/android/gms/location/DeviceOrientationListener" managed-type-name="Android.Gms.Location.IDeviceOrientationListenerInvoker" token="33554462" />
+      <entry java-name="com/google/android/gms/location/FusedLocationProviderApi" managed-type-name="Android.Gms.Location.IFusedLocationProviderApiInvoker" token="33554464" />
+      <entry java-name="com/google/android/gms/location/FusedLocationProviderClient" managed-type-name="Android.Gms.Location.IFusedLocationProviderClientInvoker" token="33554465" />
+      <entry java-name="com/google/android/gms/location/FusedOrientationProviderClient" managed-type-name="Android.Gms.Location.IFusedOrientationProviderClientInvoker" token="33554467" />
+      <entry java-name="com/google/android/gms/location/Geofence" managed-type-name="Android.Gms.Location.IGeofenceInvoker" token="33554470" />
+      <entry java-name="com/google/android/gms/location/GeofencingApi" managed-type-name="Android.Gms.Location.IGeofencingApiInvoker" token="33554472" />
+      <entry java-name="com/google/android/gms/location/GeofencingClient" managed-type-name="Android.Gms.Location.IGeofencingClientInvoker" token="33554473" />
+      <entry java-name="com/google/android/gms/location/LocationListener" managed-type-name="Android.Gms.Location.ILocationListenerInvoker" token="33554475" />
+      <entry java-name="com/google/android/gms/location/SettingsApi" managed-type-name="Android.Gms.Location.ISettingsApiInvoker" token="33554477" />
+      <entry java-name="com/google/android/gms/location/SettingsClient" managed-type-name="Android.Gms.Location.ISettingsClientInvoker" token="33554478" />
+      <entry java-name="com/google/android/gms/location/LocationCallback" managed-type-name="Android.Gms.Location.LocationCallbackBaseInvoker" token="33554482" />
+    </duplicates>
+    <types-scratch>
+      <entry key="com/google/android/gms/location/LocationServices" java-name="com/google/android/gms/location/LocationServices" managed-type-name="Android.Gms.Location.LocationServices" token="33554449" />
+      <entry key="crc64e95e69e34d869711/LocationCallback" java-name="crc64e95e69e34d869711/LocationCallback" managed-type-name="Android.Gms.Location.LocationCallback" token="33554452" />
+      <entry key="com/google/android/gms/location/FusedLocationProviderClient" java-name="com/google/android/gms/location/FusedLocationProviderClient" managed-type-name="Android.Gms.Location.IFusedLocationProviderClient" token="33554453" skip-in-java-to-managed="True" />
+      <entry key="com/google/android/gms/location/GeofencingClient" java-name="com/google/android/gms/location/GeofencingClient" managed-type-name="Android.Gms.Location.IGeofencingClient" token="33554454" skip-in-java-to-managed="True" />
+      <entry key="com/google/android/gms/location/SettingsClient" java-name="com/google/android/gms/location/SettingsClient" managed-type-name="Android.Gms.Location.ISettingsClient" token="33554455" skip-in-java-to-managed="True" />
+      <entry key="com/google/android/gms/location/CurrentLocationRequest" java-name="com/google/android/gms/location/CurrentLocationRequest" managed-type-name="Android.Gms.Location.CurrentLocationRequest" token="33554456" />
+      <entry key="com/google/android/gms/location/DeviceOrientation" java-name="com/google/android/gms/location/DeviceOrientation" managed-type-name="Android.Gms.Location.DeviceOrientation" token="33554457" />
+      <entry key="com/google/android/gms/location/DeviceOrientationRequest" java-name="com/google/android/gms/location/DeviceOrientationRequest" managed-type-name="Android.Gms.Location.DeviceOrientationRequest" token="33554458" />
+      <entry key="com/google/android/gms/location/GeofencingRequest" java-name="com/google/android/gms/location/GeofencingRequest" managed-type-name="Android.Gms.Location.GeofencingRequest" token="33554459" />
+      <entry key="com/google/android/gms/location/GeofencingRequest$Builder" java-name="com/google/android/gms/location/GeofencingRequest$Builder" managed-type-name="Android.Gms.Location.GeofencingRequest/Builder" token="33554460" />
+      <entry key="com/google/android/gms/location/DeviceOrientationListener" java-name="com/google/android/gms/location/DeviceOrientationListener" managed-type-name="Android.Gms.Location.IDeviceOrientationListener" token="33554461" skip-in-java-to-managed="True" />
+      <entry key="com/google/android/gms/location/FusedLocationProviderApi" java-name="com/google/android/gms/location/FusedLocationProviderApi" managed-type-name="Android.Gms.Location.IFusedLocationProviderApi" token="33554463" skip-in-java-to-managed="True" />
+      <entry key="com/google/android/gms/location/FusedOrientationProviderClient" java-name="com/google/android/gms/location/FusedOrientationProviderClient" managed-type-name="Android.Gms.Location.IFusedOrientationProviderClient" token="33554466" skip-in-java-to-managed="True" />
+      <entry key="com/google/android/gms/location/Geofence$Builder" java-name="com/google/android/gms/location/Geofence$Builder" managed-type-name="Android.Gms.Location.GeofenceBuilder" token="33554468" />
+      <entry key="com/google/android/gms/location/Geofence" java-name="com/google/android/gms/location/Geofence" managed-type-name="Android.Gms.Location.IGeofence" token="33554469" skip-in-java-to-managed="True" />
+      <entry key="com/google/android/gms/location/GeofencingApi" java-name="com/google/android/gms/location/GeofencingApi" managed-type-name="Android.Gms.Location.IGeofencingApi" token="33554471" skip-in-java-to-managed="True" />
+      <entry key="com/google/android/gms/location/LocationListener" java-name="com/google/android/gms/location/LocationListener" managed-type-name="Android.Gms.Location.ILocationListener" token="33554474" skip-in-java-to-managed="True" />
+      <entry key="com/google/android/gms/location/SettingsApi" java-name="com/google/android/gms/location/SettingsApi" managed-type-name="Android.Gms.Location.ISettingsApi" token="33554476" skip-in-java-to-managed="True" />
+      <entry key="com/google/android/gms/location/LastLocationRequest" java-name="com/google/android/gms/location/LastLocationRequest" managed-type-name="Android.Gms.Location.LastLocationRequest" token="33554479" />
+      <entry key="com/google/android/gms/location/LocationAvailability" java-name="com/google/android/gms/location/LocationAvailability" managed-type-name="Android.Gms.Location.LocationAvailability" token="33554480" />
+      <entry key="com/google/android/gms/location/LocationCallback" java-name="com/google/android/gms/location/LocationCallback" managed-type-name="Android.Gms.Location.LocationCallbackBase" token="33554481" />
+      <entry key="com/google/android/gms/location/LocationRequest" java-name="com/google/android/gms/location/LocationRequest" managed-type-name="Android.Gms.Location.LocationRequest" token="33554483" />
+      <entry key="com/google/android/gms/location/LocationResult" java-name="com/google/android/gms/location/LocationResult" managed-type-name="Android.Gms.Location.LocationResult" token="33554484" />
+      <entry key="com/google/android/gms/location/LocationSettingsRequest" java-name="com/google/android/gms/location/LocationSettingsRequest" managed-type-name="Android.Gms.Location.LocationSettingsRequest" token="33554485" />
+      <entry key="com/google/android/gms/location/LocationSettingsResponse" java-name="com/google/android/gms/location/LocationSettingsResponse" managed-type-name="Android.Gms.Location.LocationSettingsResponse" token="33554486" />
+      <entry key="com/google/android/gms/location/LocationSettingsResult" java-name="com/google/android/gms/location/LocationSettingsResult" managed-type-name="Android.Gms.Location.LocationSettingsResult" token="33554487" />
+      <entry key="com/google/android/gms/location/LocationSettingsStates" java-name="com/google/android/gms/location/LocationSettingsStates" managed-type-name="Android.Gms.Location.LocationSettingsStates" token="33554488" />
+    </types-scratch>
+  </module>
+</api>

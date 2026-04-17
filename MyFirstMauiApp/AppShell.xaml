@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="MyFirstMauiApp.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:MyFirstMauiApp"
+    Title="Smart Scheduler"
+    FlyoutBehavior="Flyout"
+    Shell.NavBarIsVisible="True"
+    Shell.NavBarHasShadow="True"
+    Shell.BackgroundColor="#6B32A1"
+    Shell.TitleColor="White"
+    Shell.ForegroundColor="White"
+    Shell.FlyoutWidth="320">
+
+    <!-- Define Color Resources -->
+    <Shell.Resources>
+        <ResourceDictionary>
+            <Color x:Key="PrimaryPurple">#6B32A1</Color>
+            <Color x:Key="LightPurple">#8B5CF6</Color>
+            <Color x:Key="DarkPurple">#4C1D95</Color>
+            <Color x:Key="Pink">#D946EF</Color>
+            <Color x:Key="LightPink">#F472B6</Color>
+            <Color x:Key="Coral">#FB7185</Color>
+            <Color x:Key="BackgroundWhite">#FEF9FF</Color>
+            <Color x:Key="CardWhite">#FFFFFF</Color>
+            <Color x:Key="TextGray">#6B7280</Color>
+        </ResourceDictionary>
+    </Shell.Resources>
+
+    <!-- Flyout Header with Gradient Background -->
+    <Shell.FlyoutHeader>
+        <Border StrokeThickness="0"
+                Padding="0">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="0,0,40,40"/>
+            </Border.StrokeShape>
+            <Grid>
+                <Grid.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                        <GradientStop Color="#8B5CF6" Offset="0" />
+                        <GradientStop Color="#D946EF" Offset="0.5" />
+                        <GradientStop Color="#F472B6" Offset="1" />
+                    </LinearGradientBrush>
+                </Grid.Background>
+
+                <Grid Padding="0,40,0,30"
+                      RowDefinitions="Auto,Auto,Auto,Auto"
+                      RowSpacing="12">
+
+                    <!-- Profile Image with White Border -->
+                    <Border Grid.Row="0"
+                            StrokeThickness="4"
+                            Padding="4"
+                            HorizontalOptions="Center"
+                            HeightRequest="100"
+                            WidthRequest="100"
+                            Stroke="White">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="50"/>
+                        </Border.StrokeShape>
+                        <Image Source="{Binding UserProfilePicture}"
+                               HeightRequest="88"
+                               WidthRequest="88"
+                               Aspect="AspectFill">
+                            <Image.Clip>
+                                <EllipseGeometry Center="44,44" RadiusX="44" RadiusY="44"/>
+                            </Image.Clip>
+                        </Image>
+                    </Border>
+
+                    <!-- User Name with White Color -->
+                    <Label Grid.Row="1"
+                           Text="{Binding UserDisplayName}"
+                           FontAttributes="Bold"
+                           FontSize="22"
+                           TextColor="White"
+                           HorizontalOptions="Center"
+                           Margin="0,8,0,0" />
+
+                    <!-- User Email with White Color -->
+                    <HorizontalStackLayout Grid.Row="2"
+                                           Spacing="8"
+                                           HorizontalOptions="Center">
+                        <Label Text="📧"
+                               FontSize="14"
+                               TextColor="White"
+                               Opacity="0.9"/>
+                        <Label Text="{Binding UserEmail}"
+                               FontSize="13"
+                               TextColor="White"
+                               Opacity="0.9" />
+                    </HorizontalStackLayout>
+
+                    <!-- Decorative White Divider -->
+                    <BoxView Grid.Row="3"
+                             HeightRequest="3"
+                             WidthRequest="50"
+                             HorizontalOptions="Center"
+                             Margin="0,8,0,0"
+                             Color="White" />
+                </Grid>
+            </Grid>
+        </Border>
+    </Shell.FlyoutHeader>
+
+    <!-- Flyout Items with Styled Icons -->
+    <FlyoutItem Title="Dashboard" Icon="home.png">
+        <ShellContent ContentTemplate="{DataTemplate local:Home}" />
+    </FlyoutItem>
+
+    <FlyoutItem Title="Study Tasks" Icon="study.png">
+        <ShellContent ContentTemplate="{DataTemplate local:StudyTasksPage}" />
+    </FlyoutItem>
+
+    <FlyoutItem Title="Wishlist" Icon="wishlist.png">
+        <ShellContent ContentTemplate="{DataTemplate local:WishlistPage}" />
+    </FlyoutItem>
+
+    <FlyoutItem Title="Personal" Icon="personal.png">
+        <ShellContent ContentTemplate="{DataTemplate local:Personal}" />
+    </FlyoutItem>
+
+    <FlyoutItem Title="Events" Icon="event2.png">
+        <ShellContent ContentTemplate="{DataTemplate local:Event}" />
+    </FlyoutItem>
+
+    <FlyoutItem Title="Files" Icon="upload.png">
+        <ShellContent ContentTemplate="{DataTemplate local:Files}" />
+    </FlyoutItem>
+
+    <FlyoutItem Title="Notifications" Icon="notifications.png">
+        <ShellContent ContentTemplate="{DataTemplate local:NotificationsPage}" />
+    </FlyoutItem>
+
+    <!-- ADDED: Edit Profile Menu Item -->
+    <MenuItem Text="Edit Profile" 
+              IconImageSource="edit_profile.png"
+              Clicked="OnEditProfileClicked" />
+
+    <!-- Stylish Separator -->
+    <MenuItem Text="─────────────────────"
+              IsEnabled="False" />
+
+    <!-- Logout Menu Item with Custom Style -->
+    <MenuItem Text="Logout" 
+              IconImageSource="logout.png"
+              Clicked="OnLogoutClicked" />
+
+    <!-- Colorful Flyout Footer with Gradient -->
+    <Shell.FlyoutFooter>
+        <Border StrokeThickness="0"
+                Padding="0">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="25,25,0,0"/>
+            </Border.StrokeShape>
+            <Grid HeightRequest="80"
+                  Padding="20">
+                <Grid.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                        <GradientStop Color="#8B5CF6" Offset="0" />
+                        <GradientStop Color="#D946EF" Offset="0.5" />
+                        <GradientStop Color="#F472B6" Offset="1" />
+                    </LinearGradientBrush>
+                </Grid.Background>
+
+                <VerticalStackLayout Spacing="4"
+                                     VerticalOptions="Center">
+                    <Label Text="Smart Scheduler"
+                           FontSize="12"
+                           FontAttributes="Bold"
+                           TextColor="White"
+                           HorizontalOptions="Center"
+                           Opacity="0.95"/>
+                    <Label Text="Version 1.0.0"
+                           FontSize="10"
+                           TextColor="White"
+                           HorizontalOptions="Center"
+                           Opacity="0.8" />
+                </VerticalStackLayout>
+            </Grid>
+        </Border>
+    </Shell.FlyoutFooter>
+
+</Shell>

@@ -1,0 +1,828 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:MyFirstMauiApp.ViewModels"
+    xmlns:local="clr-namespace:MyFirstMauiApp.Converters"
+    x:Class="MyFirstMauiApp.WishlistPage"
+    Title="Wishlist"
+    BackgroundColor="#F8F9FF">
+
+    <ContentPage.BindingContext>
+        <vm:WishlistViewModel />
+    </ContentPage.BindingContext>
+
+    <ContentPage.Resources>
+        <!-- Color Resources -->
+        <Color x:Key="PrimaryPurple">#6B32A1</Color>
+        <Color x:Key="SecondaryPurple">#9B51E0</Color>
+        <Color x:Key="SoftPurple">#F3E8FF</Color>
+        <Color x:Key="SuccessGreen">#4CAF50</Color>
+        <Color x:Key="SoftGreen">#E8F5E9</Color>
+        <Color x:Key="WarningOrange">#FF9800</Color>
+        <Color x:Key="SoftOrange">#FFF4E5</Color>
+        <Color x:Key="InfoBlue">#4285F4</Color>
+        <Color x:Key="SoftBlue">#E8F0FE</Color>
+        <Color x:Key="DangerRed">#E53935</Color>
+        <Color x:Key="TextPrimary">#1A1625</Color>
+        <Color x:Key="TextSecondary">#6B7280</Color>
+        <Color x:Key="SurfaceColor">#FFFFFF</Color>
+        <Color x:Key="BackgroundLight">#F8F9FF</Color>
+
+        <!-- Converters -->
+        <local:PriorityColorConverter x:Key="PriorityColorConverter" />
+        <local:StatusColorConverter x:Key="StatusColorConverter" />
+        <local:IsZeroConverter x:Key="IsZeroConverter" />
+        <local:HasPhotoConverter x:Key="HasPhotoConverter" />
+        <local:ByteArrayToImageSourceConverter x:Key="ByteArrayToImageSourceConverter" />
+        <local:IsNotNullConverter x:Key="IsNotNullConverter" />
+        <local:IsNullConverter x:Key="IsNullConverter" />
+
+        <!-- Styles -->
+        <Style TargetType="Entry" x:Key="ModernEntry">
+            <Setter Property="BackgroundColor" Value="#F8F4FA" />
+            <Setter Property="PlaceholderColor" Value="#9B9B9B" />
+            <Setter Property="TextColor" Value="{StaticResource TextPrimary}" />
+            <Setter Property="FontSize" Value="15" />
+            <Setter Property="HeightRequest" Value="50" />
+        </Style>
+
+        <Style TargetType="Editor" x:Key="ModernEditor">
+            <Setter Property="BackgroundColor" Value="#F8F4FA" />
+            <Setter Property="PlaceholderColor" Value="#9B9B9B" />
+            <Setter Property="TextColor" Value="{StaticResource TextPrimary}" />
+            <Setter Property="FontSize" Value="15" />
+        </Style>
+
+        <Style TargetType="Picker" x:Key="ModernPicker">
+            <Setter Property="BackgroundColor" Value="#F8F4FA" />
+            <Setter Property="TextColor" Value="{StaticResource TextPrimary}" />
+            <Setter Property="FontSize" Value="15" />
+            <Setter Property="HeightRequest" Value="50" />
+        </Style>
+
+        <Style TargetType="DatePicker" x:Key="ModernDatePicker">
+            <Setter Property="BackgroundColor" Value="#F8F4FA" />
+            <Setter Property="TextColor" Value="{StaticResource TextPrimary}" />
+            <Setter Property="FontSize" Value="15" />
+            <Setter Property="HeightRequest" Value="50" />
+        </Style>
+
+        <Style TargetType="TimePicker" x:Key="ModernTimePicker">
+            <Setter Property="BackgroundColor" Value="#F8F4FA" />
+            <Setter Property="TextColor" Value="{StaticResource TextPrimary}" />
+            <Setter Property="FontSize" Value="15" />
+            <Setter Property="HeightRequest" Value="50" />
+        </Style>
+    </ContentPage.Resources>
+
+    <!-- Background Gradient -->
+    <ContentPage.Background>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+            <GradientStop Color="#F3E8FF" Offset="0" />
+            <GradientStop Color="#F8F9FF" Offset="0.4" />
+            <GradientStop Color="#E8F0FE" Offset="1" />
+        </LinearGradientBrush>
+    </ContentPage.Background>
+
+    <Grid RowDefinitions="Auto,*" RowSpacing="0">
+        <!-- HEADER SECTION -->
+        <Border
+            Grid.Row="0"
+            BackgroundColor="{StaticResource SurfaceColor}"
+            StrokeThickness="0"
+            Padding="20,20,20,30"
+            Margin="0,0,0,0">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="0,0,30,30" />
+            </Border.StrokeShape>
+            <Border.Shadow>
+                <Shadow Brush="#20000000" Offset="0,4" Radius="12" />
+            </Border.Shadow>
+
+            <VerticalStackLayout Spacing="20">
+                <!-- Title Section -->
+                <Grid ColumnDefinitions="*,Auto">
+                    <VerticalStackLayout Grid.Column="0" Spacing="4">
+                        <Label
+                            Text="✨ My Wishlist"
+                            FontSize="32"
+                            FontAttributes="Bold"
+                            TextColor="{StaticResource PrimaryPurple}" />
+                        <Label
+                            Text="Dream it, plan it, get it!"
+                            FontSize="14"
+                            TextColor="{StaticResource TextSecondary}" />
+                    </VerticalStackLayout>
+
+                    <Border
+                        Grid.Column="1"
+                        BackgroundColor="{StaticResource SoftPurple}"
+                        Padding="12,8"
+                        HorizontalOptions="End">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="20" />
+                        </Border.StrokeShape>
+                        <Label
+                            Text="🎯 Goals"
+                            FontSize="14"
+                            FontAttributes="Bold"
+                            TextColor="{StaticResource PrimaryPurple}" />
+                    </Border>
+                </Grid>
+
+                <!-- SUMMARY CARDS -->
+                <Grid ColumnDefinitions="*,*,*" ColumnSpacing="12">
+                    <!-- Planned Card -->
+                    <Border
+                        Grid.Column="0"
+                        BackgroundColor="{StaticResource SoftOrange}"
+                        StrokeThickness="0"
+                        Padding="12">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="16" />
+                        </Border.StrokeShape>
+                        <Border.Shadow>
+                            <Shadow Brush="#15000000" Offset="0,2" Radius="4" />
+                        </Border.Shadow>
+                        <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
+                            <Label Text="📝" FontSize="24" HorizontalOptions="Center" />
+                            <Label
+                                Text="Planned"
+                                FontSize="12"
+                                TextColor="#B45309"
+                                HorizontalOptions="Center" />
+                            <Label
+                                Text="{Binding TotalPlanned}"
+                                FontSize="24"
+                                FontAttributes="Bold"
+                                TextColor="#B45309"
+                                HorizontalOptions="Center" />
+                        </VerticalStackLayout>
+                    </Border>
+
+                    <!-- Wishlist Card -->
+                    <Border
+                        Grid.Column="1"
+                        BackgroundColor="{StaticResource SoftBlue}"
+                        StrokeThickness="0"
+                        Padding="12">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="16" />
+                        </Border.StrokeShape>
+                        <Border.Shadow>
+                            <Shadow Brush="#15000000" Offset="0,2" Radius="4" />
+                        </Border.Shadow>
+                        <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
+                            <Label Text="⭐" FontSize="24" HorizontalOptions="Center" />
+                            <Label
+                                Text="Wishlist"
+                                FontSize="12"
+                                TextColor="#1E4BD2"
+                                HorizontalOptions="Center" />
+                            <Label
+                                Text="{Binding TotalWishlist}"
+                                FontSize="24"
+                                FontAttributes="Bold"
+                                TextColor="#1E4BD2"
+                                HorizontalOptions="Center" />
+                        </VerticalStackLayout>
+                    </Border>
+
+                    <!-- Bought Card -->
+                    <Border
+                        Grid.Column="2"
+                        BackgroundColor="{StaticResource SoftGreen}"
+                        StrokeThickness="0"
+                        Padding="12">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="16" />
+                        </Border.StrokeShape>
+                        <Border.Shadow>
+                            <Shadow Brush="#15000000" Offset="0,2" Radius="4" />
+                        </Border.Shadow>
+                        <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
+                            <Label Text="✅" FontSize="24" HorizontalOptions="Center" />
+                            <Label
+                                Text="Bought"
+                                FontSize="12"
+                                TextColor="#2E7D32"
+                                HorizontalOptions="Center" />
+                            <Label
+                                Text="{Binding TotalBought}"
+                                FontSize="24"
+                                FontAttributes="Bold"
+                                TextColor="#2E7D32"
+                                HorizontalOptions="Center" />
+                        </VerticalStackLayout>
+                    </Border>
+                </Grid>
+
+                <!-- Add Button -->
+                <Button
+                    Text="  + Add New Item"
+                    Command="{Binding ShowPopupCommand}"
+                    BackgroundColor="{StaticResource PrimaryPurple}"
+                    TextColor="White"
+                    CornerRadius="16"
+                    HeightRequest="54"
+                    FontSize="16"
+                    FontAttributes="Bold"
+                    HorizontalOptions="Fill">
+                    <Button.ImageSource>
+                        <FontImageSource
+                            FontFamily="MaterialIcons"
+                            Glyph="&#xe145;"
+                            Color="White"
+                            Size="24" />
+                    </Button.ImageSource>
+                </Button>
+            </VerticalStackLayout>
+        </Border>
+
+        <!-- WISHLIST LIST -->
+        <ScrollView Grid.Row="1" Padding="20,10,20,20">
+            <VerticalStackLayout Spacing="15">
+                <!-- List Header -->
+                <Grid ColumnDefinitions="*,Auto" Margin="0,5,0,5">
+                    <Label
+                        Grid.Column="0"
+                        Text="📋 Your Items"
+                        FontSize="18"
+                        FontAttributes="Bold"
+                        TextColor="{StaticResource TextPrimary}" />
+                    <Label
+                        Grid.Column="1"
+                        Text="{Binding WishlistItems.Count, StringFormat='{0} items'}"
+                        FontSize="14"
+                        TextColor="{StaticResource TextSecondary}" />
+                </Grid>
+
+                <!-- Items Collection -->
+                <CollectionView
+                    ItemsSource="{Binding WishlistItems}"
+                    SelectionMode="None">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Vertical" ItemSpacing="12" />
+                    </CollectionView.ItemsLayout>
+
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Border
+                                BackgroundColor="{StaticResource SurfaceColor}"
+                                StrokeThickness="0"
+                                Padding="16">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="20" />
+                                </Border.StrokeShape>
+                                <Border.Shadow>
+                                    <Shadow Brush="#15000000" Offset="0,2" Radius="6" />
+                                </Border.Shadow>
+
+                                <VerticalStackLayout Spacing="12">
+                                    <!-- Title and Priority Row -->
+                                    <Grid ColumnDefinitions="*,Auto">
+                                        <Label
+                                            Grid.Column="0"
+                                            Text="{Binding ItemName}"
+                                            FontSize="18"
+                                            FontAttributes="Bold"
+                                            TextColor="{StaticResource TextPrimary}"
+                                            LineBreakMode="TailTruncation" />
+
+                                        <!-- Priority Badge -->
+                                        <Border
+                                            Grid.Column="1"
+                                            BackgroundColor="{Binding PriorityLevel, Converter={StaticResource PriorityColorConverter}}"
+                                            Padding="10,4">
+                                            <Border.StrokeShape>
+                                                <RoundRectangle CornerRadius="20" />
+                                            </Border.StrokeShape>
+                                            <Label
+                                                Text="{Binding PriorityLevel}"
+                                                FontSize="11"
+                                                FontAttributes="Bold"
+                                                TextColor="White" />
+                                        </Border>
+                                    </Grid>
+
+                                    <!-- Photo Display -->
+                                    <Grid IsVisible="{Binding PhotoData, Converter={StaticResource HasPhotoConverter}}">
+                                        <Border
+                                            BackgroundColor="#F8F4FA"
+                                            StrokeThickness="0"
+                                            HeightRequest="100"
+                                            Margin="0,0,0,10">
+                                            <Border.StrokeShape>
+                                                <RoundRectangle CornerRadius="12" />
+                                            </Border.StrokeShape>
+                                            <Grid>
+                                                <Image
+                                                    Source="{Binding PhotoData, Converter={StaticResource ByteArrayToImageSourceConverter}}"
+                                                    Aspect="AspectFill"
+                                                    HeightRequest="100">
+                                                    <Image.GestureRecognizers>
+                                                        <TapGestureRecognizer 
+                                                            Command="{Binding Source={RelativeSource AncestorType={x:Type vm:WishlistViewModel}}, Path=ViewPhotoCommand}" 
+                                                            CommandParameter="{Binding .}" />
+                                                    </Image.GestureRecognizers>
+                                                </Image>
+                                            </Grid>
+                                        </Border>
+                                    </Grid>
+
+                                    <!-- Description -->
+                                    <Label
+                                        Text="{Binding Description}"
+                                        FontSize="14"
+                                        TextColor="{StaticResource TextSecondary}" />
+
+                                    <!-- Price Tag -->
+                                    <Border
+                                        BackgroundColor="#F3E8FF"
+                                        Padding="10,6"
+                                        HorizontalOptions="Start">
+                                        <Border.StrokeShape>
+                                            <RoundRectangle CornerRadius="12" />
+                                        </Border.StrokeShape>
+                                        <Label
+                                            Text="{Binding EstimatedPrice, StringFormat='💰 ₱{0:N2}'}"
+                                            FontSize="14"
+                                            FontAttributes="Bold"
+                                            TextColor="{StaticResource PrimaryPurple}" />
+                                    </Border>
+
+                                    <!-- Details Grid -->
+                                    <Grid
+                                        ColumnDefinitions="*,*"
+                                        RowDefinitions="Auto,Auto"
+                                        RowSpacing="8"
+                                        ColumnSpacing="10">
+                                        <!-- Target Date -->
+                                        <Border
+                                            Grid.Row="0"
+                                            Grid.Column="0"
+                                            BackgroundColor="#F8F4FA"
+                                            Padding="8">
+                                            <Border.StrokeShape>
+                                                <RoundRectangle CornerRadius="10" />
+                                            </Border.StrokeShape>
+                                            <HorizontalStackLayout Spacing="4" HorizontalOptions="Center">
+                                                <Label Text="🎯" FontSize="12" />
+                                                <Label
+                                                    Text="{Binding TargetDate, StringFormat='{0:MMM dd}'}"
+                                                    FontSize="12"
+                                                    TextColor="{StaticResource TextSecondary}" />
+                                            </HorizontalStackLayout>
+                                        </Border>
+
+                                        <!-- Time -->
+                                        <Border
+                                            Grid.Row="0"
+                                            Grid.Column="1"
+                                            BackgroundColor="#F8F4FA"
+                                            Padding="8">
+                                            <Border.StrokeShape>
+                                                <RoundRectangle CornerRadius="10" />
+                                            </Border.StrokeShape>
+                                            <HorizontalStackLayout Spacing="4" HorizontalOptions="Center">
+                                                <Label Text="⏰" FontSize="12" />
+                                                <Label
+                                                    Text="{Binding TargetDate, StringFormat='{0:HH:mm}'}"
+                                                    FontSize="12"
+                                                    TextColor="{StaticResource TextSecondary}" />
+                                            </HorizontalStackLayout>
+                                        </Border>
+
+                                        <!-- Snooze -->
+                                        <Border
+                                            Grid.Row="1"
+                                            Grid.Column="0"
+                                            BackgroundColor="#F8F4FA"
+                                            Padding="8">
+                                            <Border.StrokeShape>
+                                                <RoundRectangle CornerRadius="10" />
+                                            </Border.StrokeShape>
+                                            <HorizontalStackLayout Spacing="4" HorizontalOptions="Center">
+                                                <Label Text="⏱️" FontSize="12" />
+                                                <Label
+                                                    Text="{Binding SnoozeIntervalMinutes, StringFormat='Snooze: {0} min'}"
+                                                    FontSize="11"
+                                                    TextColor="{StaticResource TextSecondary}" />
+                                            </HorizontalStackLayout>
+                                        </Border>
+
+                                        <!-- Repeat -->
+                                        <Border
+                                            Grid.Row="1"
+                                            Grid.Column="1"
+                                            BackgroundColor="#F8F4FA"
+                                            Padding="8">
+                                            <Border.StrokeShape>
+                                                <RoundRectangle CornerRadius="10" />
+                                            </Border.StrokeShape>
+                                            <HorizontalStackLayout Spacing="4" HorizontalOptions="Center">
+                                                <Label Text="🔄" FontSize="12" />
+                                                <Label
+                                                    Text="{Binding RepeatOption}"
+                                                    FontSize="11"
+                                                    TextColor="{StaticResource TextSecondary}" />
+                                            </HorizontalStackLayout>
+                                        </Border>
+                                    </Grid>
+
+                                    <!-- Status and Date Added -->
+                                    <HorizontalStackLayout Spacing="8">
+                                        <Border
+                                            BackgroundColor="{Binding Status, Converter={StaticResource StatusColorConverter}}"
+                                            Padding="8,4">
+                                            <Border.StrokeShape>
+                                                <RoundRectangle CornerRadius="12" />
+                                            </Border.StrokeShape>
+                                            <Label
+                                                Text="{Binding Status}"
+                                                FontSize="11"
+                                                FontAttributes="Bold"
+                                                TextColor="White" />
+                                        </Border>
+                                        <Label
+                                            Text="{Binding AddedDate, StringFormat='📅 Added: {0}'}"
+                                            FontSize="11"
+                                            TextColor="{StaticResource TextSecondary}"
+                                            VerticalOptions="Center" />
+                                    </HorizontalStackLayout>
+
+                                    <!-- Action Buttons -->
+                                    <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                                        <Button
+                                            Grid.Column="0"
+                                            Text="✓ Mark Bought"
+                                            BackgroundColor="#E8F5E9"
+                                            TextColor="{StaticResource SuccessGreen}"
+                                            CornerRadius="14"
+                                            HeightRequest="44"
+                                            FontSize="13"
+                                            FontAttributes="Bold"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type vm:WishlistViewModel}}, Path=MarkBoughtCommand}"
+                                            CommandParameter="{Binding .}" />
+
+                                        <Button
+                                            Grid.Column="1"
+                                            Text="🗑 Delete"
+                                            BackgroundColor="#FFEBEE"
+                                            TextColor="{StaticResource DangerRed}"
+                                            CornerRadius="14"
+                                            HeightRequest="44"
+                                            FontSize="13"
+                                            FontAttributes="Bold"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type vm:WishlistViewModel}}, Path=DeleteItemCommand}"
+                                            CommandParameter="{Binding .}" />
+                                    </Grid>
+                                </VerticalStackLayout>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+                <!-- Empty State -->
+                <Border
+                    IsVisible="{Binding WishlistItems.Count, Converter={StaticResource IsZeroConverter}}"
+                    BackgroundColor="{StaticResource SurfaceColor}"
+                    Padding="40"
+                    Margin="0,20">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="24" />
+                    </Border.StrokeShape>
+                    <Border.Shadow>
+                        <Shadow Brush="#15000000" Offset="0,2" Radius="6" />
+                    </Border.Shadow>
+                    <VerticalStackLayout Spacing="12" HorizontalOptions="Center">
+                        <Label Text="✨" FontSize="48" HorizontalOptions="Center" />
+                        <Label
+                            Text="Your wishlist is empty"
+                            FontSize="16"
+                            FontAttributes="Bold"
+                            TextColor="{StaticResource TextPrimary}"
+                            HorizontalOptions="Center" />
+                        <Label
+                            Text="Tap the + button to add your first wish!"
+                            FontSize="14"
+                            TextColor="{StaticResource TextSecondary}"
+                            HorizontalOptions="Center" />
+                    </VerticalStackLayout>
+                </Border>
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- ADD ITEM POPUP -->
+        <Grid
+            IsVisible="{Binding IsPopupVisible}"
+            BackgroundColor="#80000000"
+            Padding="20">
+            <Border
+                BackgroundColor="{StaticResource SurfaceColor}"
+                StrokeThickness="0"
+                Padding="25"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                WidthRequest="380"
+                MaximumHeightRequest="600">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="30" />
+                </Border.StrokeShape>
+                <Border.Shadow>
+                    <Shadow Brush="#40000000" Offset="0,8" Radius="16" />
+                </Border.Shadow>
+
+                <ScrollView MaximumHeightRequest="500">
+                    <VerticalStackLayout Spacing="18">
+                        <!-- Popup Header -->
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Label
+                                Grid.Column="0"
+                                Text="✨ Add New Wish"
+                                FontSize="22"
+                                FontAttributes="Bold"
+                                TextColor="{StaticResource PrimaryPurple}" />
+                            <Button
+                                Grid.Column="1"
+                                Text="✕"
+                                Command="{Binding ClosePopupCommand}"
+                                BackgroundColor="Transparent"
+                                TextColor="{StaticResource TextSecondary}"
+                                FontSize="20"
+                                Padding="10" />
+                        </Grid>
+
+                        <!-- Form Fields -->
+                        <Border
+                            BackgroundColor="#F8F4FA"
+                            Padding="0">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="12" />
+                            </Border.StrokeShape>
+                            <Entry
+                                Placeholder="📌 Item Name"
+                                Text="{Binding NewItemName}"
+                                BackgroundColor="Transparent"
+                                Style="{StaticResource ModernEntry}" />
+                        </Border>
+
+                        <Border
+                            BackgroundColor="#F8F4FA"
+                            Padding="0">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="12" />
+                            </Border.StrokeShape>
+                            <Editor
+                                Placeholder="📝 Description"
+                                HeightRequest="80"
+                                Text="{Binding NewDescription}"
+                                BackgroundColor="Transparent"
+                                Style="{StaticResource ModernEditor}" />
+                        </Border>
+
+                        <Border
+                            BackgroundColor="#F8F4FA"
+                            Padding="10">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="12" />
+                            </Border.StrokeShape>
+                            <Entry
+                                Placeholder="💰 Estimated Price"
+                                Keyboard="Numeric"
+                                Text="{Binding NewEstimatedPrice}"
+                                BackgroundColor="Transparent"
+                                Style="{StaticResource ModernEntry}" />
+                        </Border>
+
+                        <!-- Priority -->
+                        <Border
+                            BackgroundColor="#F8F4FA"
+                            Padding="10">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="12" />
+                            </Border.StrokeShape>
+                            <Picker
+                                Title="⚡ Priority Level"
+                                SelectedItem="{Binding NewPriorityLevel}"
+                                BackgroundColor="Transparent"
+                                Style="{StaticResource ModernPicker}">
+                                <Picker.ItemsSource>
+                                    <x:Array Type="{x:Type x:String}">
+                                        <x:String>Low</x:String>
+                                        <x:String>Medium</x:String>
+                                        <x:String>High</x:String>
+                                    </x:Array>
+                                </Picker.ItemsSource>
+                            </Picker>
+                        </Border>
+
+                        <!-- Date and Time -->
+                        <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                            <Border
+                                Grid.Column="0"
+                                BackgroundColor="#F8F4FA"
+                                Padding="10">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="12" />
+                                </Border.StrokeShape>
+                                <DatePicker
+                                    Date="{Binding NewTargetDate}"
+                                    Style="{StaticResource ModernDatePicker}"
+                                    BackgroundColor="Transparent" />
+                            </Border>
+
+                            <Border
+                                Grid.Column="1"
+                                BackgroundColor="#F8F4FA"
+                                Padding="10">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="12" />
+                                </Border.StrokeShape>
+                                <TimePicker
+                                    Time="{Binding NewTargetTime}"
+                                    Style="{StaticResource ModernTimePicker}"
+                                    BackgroundColor="Transparent" />
+                            </Border>
+                        </Grid>
+
+                        <!-- Snooze and Repeat -->
+                        <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                            <Border
+                                Grid.Column="0"
+                                BackgroundColor="#F8F4FA"
+                                Padding="10">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="12" />
+                                </Border.StrokeShape>
+                                <Picker
+                                    Title="⏱️ Snooze"
+                                    ItemsSource="{Binding SnoozeOptions}"
+                                    SelectedItem="{Binding NewSnoozeInterval}"
+                                    BackgroundColor="Transparent"
+                                    Style="{StaticResource ModernPicker}" />
+                            </Border>
+
+                            <Border
+                                Grid.Column="1"
+                                BackgroundColor="#F8F4FA"
+                                Padding="10">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="12" />
+                                </Border.StrokeShape>
+                                <Picker
+                                    Title="🔄 Repeat"
+                                    ItemsSource="{Binding RepeatOptions}"
+                                    SelectedItem="{Binding NewRepeatOption}"
+                                    BackgroundColor="Transparent"
+                                    Style="{StaticResource ModernPicker}" />
+                            </Border>
+                        </Grid>
+
+                        <!-- Status -->
+                        <Border
+                            BackgroundColor="#F8F4FA"
+                            Padding="10">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="12" />
+                            </Border.StrokeShape>
+                            <Picker
+                                Title="📊 Status"
+                                SelectedItem="{Binding NewStatus}"
+                                BackgroundColor="Transparent"
+                                Style="{StaticResource ModernPicker}">
+                                <Picker.ItemsSource>
+                                    <x:Array Type="{x:Type x:String}">
+                                        <x:String>Planned</x:String>
+                                        <x:String>Wishlist</x:String>
+                                        <x:String>Bought</x:String>
+                                    </x:Array>
+                                </Picker.ItemsSource>
+                            </Picker>
+                        </Border>
+
+                        <!-- Photo Upload Section -->
+                        <Border
+                            BackgroundColor="#F8F4FA"
+                            Padding="10">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="12" />
+                            </Border.StrokeShape>
+                            <VerticalStackLayout Spacing="10">
+                                <Label 
+                                    Text="📸 Photo" 
+                                    FontSize="14"
+                                    FontAttributes="Bold"
+                                    TextColor="{StaticResource TextSecondary}" />
+
+                                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
+                                    <!-- Photo Preview Border -->
+                                    <Border
+                                        Grid.Column="0"
+                                        BackgroundColor="#E8F0FE"
+                                        WidthRequest="80"
+                                        HeightRequest="80"
+                                        StrokeThickness="0"
+                                        HorizontalOptions="Start">
+                                        <Border.StrokeShape>
+                                            <RoundRectangle CornerRadius="12" />
+                                        </Border.StrokeShape>
+                                        <Grid>
+                                            <Image
+                                                Source="{Binding NewPhotoSource}"
+                                                Aspect="AspectFill"
+                                                WidthRequest="80"
+                                                HeightRequest="80"
+                                                IsVisible="{Binding NewPhotoSource, Converter={StaticResource IsNotNullConverter}}">
+                                                <Image.GestureRecognizers>
+                                                    <TapGestureRecognizer Command="{Binding SelectPhotoCommand}" />
+                                                </Image.GestureRecognizers>
+                                            </Image>
+                                            <Label
+                                                Text="📸"
+                                                FontSize="32"
+                                                HorizontalOptions="Center"
+                                                VerticalOptions="Center"
+                                                TextColor="#6B32A1"
+                                                IsVisible="{Binding NewPhotoSource, Converter={StaticResource IsNullConverter}}">
+                                                <Label.GestureRecognizers>
+                                                    <TapGestureRecognizer Command="{Binding SelectPhotoCommand}" />
+                                                </Label.GestureRecognizers>
+                                            </Label>
+                                        </Grid>
+                                    </Border>
+
+                                    <!-- Photo Buttons -->
+                                    <VerticalStackLayout
+                                        Grid.Column="1"
+                                        Spacing="8"
+                                        VerticalOptions="Center">
+                                        <Button
+                                            Text="📷 Capture"
+                                            Command="{Binding CapturePhotoCommand}"
+                                            BackgroundColor="{StaticResource PrimaryPurple}"
+                                            TextColor="White"
+                                            CornerRadius="10"
+                                            HeightRequest="35"
+                                            FontSize="12" />
+                                        <Button
+                                            Text="🖼️ Choose from Gallery"
+                                            Command="{Binding PickPhotoCommand}"
+                                            BackgroundColor="{StaticResource SecondaryPurple}"
+                                            TextColor="White"
+                                            CornerRadius="10"
+                                            HeightRequest="35"
+                                            FontSize="12" />
+                                        <Button
+                                            Text="🗑 Remove"
+                                            Command="{Binding RemovePhotoCommand}"
+                                            BackgroundColor="#FFEBEE"
+                                            TextColor="{StaticResource DangerRed}"
+                                            CornerRadius="10"
+                                            HeightRequest="35"
+                                            FontSize="12"
+                                            IsVisible="{Binding HasPhoto}" />
+                                    </VerticalStackLayout>
+                                </Grid>
+                            </VerticalStackLayout>
+                        </Border>
+
+                        <!-- Action Buttons -->
+                        <Grid ColumnDefinitions="*,*" ColumnSpacing="10" Margin="0,10,0,0">
+                            <Button
+                                Grid.Column="0"
+                                Text="Cancel"
+                                Command="{Binding ClosePopupCommand}"
+                                BackgroundColor="#F3F4F6"
+                                TextColor="{StaticResource TextSecondary}"
+                                CornerRadius="14"
+                                HeightRequest="50"
+                                FontSize="15"
+                                FontAttributes="Bold" />
+
+                            <Button
+                                Grid.Column="1"
+                                Text="Save Item"
+                                Command="{Binding AddNewItemCommand}"
+                                BackgroundColor="{StaticResource PrimaryPurple}"
+                                TextColor="White"
+                                CornerRadius="14"
+                                HeightRequest="50"
+                                FontSize="15"
+                                FontAttributes="Bold" />
+                        </Grid>
+
+                        <!-- Helper text -->
+                        <Label
+                            Text="You can add multiple items by clicking + again after saving"
+                            FontSize="11"
+                            TextColor="{StaticResource TextSecondary}"
+                            HorizontalOptions="Center"
+                            Margin="0,0,0,10" />
+                    </VerticalStackLayout>
+                </ScrollView>
+            </Border>
+        </Grid>
+    </Grid>
+</ContentPage>

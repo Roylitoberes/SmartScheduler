@@ -1,0 +1,955 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:MyFirstMauiApp.ViewModels"
+    xmlns:local="clr-namespace:MyFirstMauiApp.Converters"
+    x:Class="MyFirstMauiApp.StudyTasksPage"
+    Title="Study Tasks"
+    BackgroundColor="#F8F0FC">
+
+    <ContentPage.BindingContext>
+        <vm:StudyTasksViewModel />
+    </ContentPage.BindingContext>
+
+    <ContentPage.Resources>
+        <!-- Converters -->
+        <local:PriorityColorConverter x:Key="PriorityColorConverter" />
+        <local:IsZeroConverter x:Key="IsZeroConverter" />
+        <local:IsNotNullConverter x:Key="IsNotNullConverter" />
+        <local:FilterColorConverter x:Key="FilterColorConverter" />
+        <local:SortButtonColorConverter x:Key="SortButtonColorConverter" />
+        <local:UrgencyLevelConverter x:Key="UrgencyLevelConverter" />
+        <local:UrgencyColorConverter x:Key="UrgencyColorConverter" />
+
+        <!-- Color Resources -->
+        <Color x:Key="PrimaryPurple">#9B51E0</Color>
+        <Color x:Key="SecondaryPurple">#BB6BD9</Color>
+        <Color x:Key="LightPurple">#F3E8FF</Color>
+        <Color x:Key="SoftPink">#F85EBC</Color>
+        <Color x:Key="SuccessGreen">#27AE60</Color>
+        <Color x:Key="TextPrimary">#2D2D2D</Color>
+        <Color x:Key="TextSecondary">#6B7280</Color>
+        <Color x:Key="SurfaceColor">#FFFFFF</Color>
+        <Color x:Key="BackgroundLight">#F8F0FC</Color>
+        <Color x:Key="AIBlue">#4A90E2</Color>
+        <Color x:Key="AILightBlue">#E8F0FE</Color>
+
+        <!-- Styles -->
+        <Style TargetType="Entry" x:Key="ModernEntry">
+            <Setter Property="BackgroundColor" Value="#F8F4FA" />
+            <Setter Property="PlaceholderColor" Value="#9B9B9B" />
+            <Setter Property="TextColor" Value="{StaticResource TextPrimary}" />
+            <Setter Property="FontSize" Value="15" />
+            <Setter Property="HeightRequest" Value="50" />
+        </Style>
+
+        <Style TargetType="Editor" x:Key="ModernEditor">
+            <Setter Property="BackgroundColor" Value="#F8F4FA" />
+            <Setter Property="PlaceholderColor" Value="#9B9B9B" />
+            <Setter Property="TextColor" Value="{StaticResource TextPrimary}" />
+            <Setter Property="FontSize" Value="15" />
+        </Style>
+
+        <Style TargetType="Picker" x:Key="ModernPicker">
+            <Setter Property="BackgroundColor" Value="#F8F4FA" />
+            <Setter Property="TextColor" Value="{StaticResource TextPrimary}" />
+            <Setter Property="FontSize" Value="15" />
+            <Setter Property="HeightRequest" Value="50" />
+        </Style>
+
+        <Style TargetType="DatePicker" x:Key="ModernDatePicker">
+            <Setter Property="BackgroundColor" Value="#F8F4FA" />
+            <Setter Property="TextColor" Value="{StaticResource TextPrimary}" />
+            <Setter Property="FontSize" Value="15" />
+            <Setter Property="HeightRequest" Value="50" />
+        </Style>
+
+        <Style TargetType="TimePicker" x:Key="ModernTimePicker">
+            <Setter Property="BackgroundColor" Value="#F8F4FA" />
+            <Setter Property="TextColor" Value="{StaticResource TextPrimary}" />
+            <Setter Property="FontSize" Value="15" />
+            <Setter Property="HeightRequest" Value="50" />
+        </Style>
+    </ContentPage.Resources>
+
+    <!-- Background Gradient -->
+    <ContentPage.Background>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+            <GradientStop Color="#F3E8FF" Offset="0"/>
+            <GradientStop Color="#F8F0FC" Offset="0.4"/>
+            <GradientStop Color="#FFE6F0" Offset="1"/>
+        </LinearGradientBrush>
+    </ContentPage.Background>
+
+    <Grid RowDefinitions="Auto,*" RowSpacing="0">
+
+        <!-- HEADER SECTION WITH WAVE EFFECT -->
+        <Border Grid.Row="0"
+                BackgroundColor="{StaticResource SurfaceColor}"
+                StrokeThickness="0"
+                Padding="20,20,20,30"
+                Margin="0,0,0,0">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="0,0,30,30" />
+            </Border.StrokeShape>
+            <Border.Shadow>
+                <Shadow Brush="#20000000" Offset="0,4" Radius="12" />
+            </Border.Shadow>
+
+            <VerticalStackLayout Spacing="20">
+
+                <!-- Title Section -->
+                <Grid ColumnDefinitions="*,Auto">
+                    <VerticalStackLayout Grid.Column="0" Spacing="4">
+                        <Label Text="📚 Study Tasks" 
+                               FontSize="32" 
+                               FontAttributes="Bold" 
+                               TextColor="{StaticResource PrimaryPurple}" />
+                        <Label Text="Stay organized and track your progress" 
+                               FontSize="14" 
+                               TextColor="{StaticResource TextSecondary}" />
+                    </VerticalStackLayout>
+                    <Border Grid.Column="1"
+                            BackgroundColor="{StaticResource LightPurple}"
+                            Padding="12,8"
+                            HorizontalOptions="End">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding ToggleAIPanelCommand}" />
+                        </Border.GestureRecognizers>
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="20" />
+                        </Border.StrokeShape>
+                        <Label Text="📊 Overview" 
+                               FontSize="14" 
+                               FontAttributes="Bold"
+                               TextColor="{StaticResource PrimaryPurple}" />
+                    </Border>
+                </Grid>
+
+                <!-- SUMMARY CARDS - Modern Redesign -->
+                <Grid ColumnDefinitions="*,*,*" ColumnSpacing="12">
+
+                    <!-- Total Tasks Card -->
+                    <Border BackgroundColor="{StaticResource SurfaceColor}"
+                            StrokeThickness="0"
+                            Padding="16"
+                            Grid.Column="0">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="20"/>
+                        </Border.StrokeShape>
+                        <Border.Shadow>
+                            <Shadow Brush="#20000000" Offset="0,4" Radius="8" />
+                        </Border.Shadow>
+                        <VerticalStackLayout Spacing="6">
+                            <Label Text="📋" FontSize="24" />
+                            <Label Text="Total" FontSize="12" TextColor="{StaticResource TextSecondary}"/>
+                            <Label Text="{Binding TotalTasks}"
+                                   FontSize="28"
+                                   FontAttributes="Bold"
+                                   TextColor="#2D2D2D"/>
+                        </VerticalStackLayout>
+                    </Border>
+
+                    <!-- Completed Tasks Card -->
+                    <Border BackgroundColor="{StaticResource SurfaceColor}"
+                            StrokeThickness="0"
+                            Padding="16"
+                            Grid.Column="1">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="20"/>
+                        </Border.StrokeShape>
+                        <Border.Shadow>
+                            <Shadow Brush="#20000000" Offset="0,4" Radius="8" />
+                        </Border.Shadow>
+                        <VerticalStackLayout Spacing="6">
+                            <Label Text="✅" FontSize="24" />
+                            <Label Text="Done" FontSize="12" TextColor="{StaticResource TextSecondary}"/>
+                            <Label Text="{Binding CompletedTasks}"
+                                   FontSize="28"
+                                   FontAttributes="Bold"
+                                   TextColor="{StaticResource SuccessGreen}"/>
+                        </VerticalStackLayout>
+                    </Border>
+
+                    <!-- Pending Tasks Card -->
+                    <Border BackgroundColor="{StaticResource SurfaceColor}"
+                            StrokeThickness="0"
+                            Padding="16"
+                            Grid.Column="2">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="20"/>
+                        </Border.StrokeShape>
+                        <Border.Shadow>
+                            <Shadow Brush="#20000000" Offset="0,4" Radius="8" />
+                        </Border.Shadow>
+                        <VerticalStackLayout Spacing="6">
+                            <Label Text="⏳" FontSize="24" />
+                            <Label Text="Pending" FontSize="12" TextColor="{StaticResource TextSecondary}"/>
+                            <Label Text="{Binding PendingTasks}"
+                                   FontSize="28"
+                                   FontAttributes="Bold"
+                                   TextColor="{StaticResource SoftPink}"/>
+                        </VerticalStackLayout>
+                    </Border>
+                </Grid>
+
+                <!-- AI STUDY ASSISTANT PANEL -->
+                <Border BackgroundColor="{StaticResource AILightBlue}"
+                        StrokeThickness="0"
+                        Padding="16"
+                        IsVisible="{Binding IsAIPanelVisible}">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="20"/>
+                    </Border.StrokeShape>
+                    <Border.Shadow>
+                        <Shadow Brush="#20000000" Offset="0,2" Radius="6" />
+                    </Border.Shadow>
+
+                    <VerticalStackLayout Spacing="12">
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Label Grid.Column="0" 
+                                   Text="🤖 AI STUDY ASSISTANT" 
+                                   FontSize="14" 
+                                   FontAttributes="Bold"
+                                   TextColor="{StaticResource AIBlue}" />
+                            <Button Grid.Column="1"
+                                    Text="[ OPEN ]"
+                                    Command="{Binding OpenAIChatCommand}"
+                                    BackgroundColor="Transparent"
+                                    TextColor="{StaticResource AIBlue}"
+                                    FontSize="12"
+                                    FontAttributes="Bold" />
+                        </Grid>
+
+                        <Border BackgroundColor="{StaticResource SurfaceColor}"
+                                Padding="12"
+                                StrokeThickness="0">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="12"/>
+                            </Border.StrokeShape>
+                            <VerticalStackLayout Spacing="8">
+                                <Label Text="{Binding AITip}"
+                                       FontSize="13"
+                                       TextColor="{StaticResource TextPrimary}" />
+                                <Label Text="{Binding ProductivityInsight}"
+                                       FontSize="12"
+                                       TextColor="{StaticResource TextSecondary}" />
+                                <Label Text="{Binding NextDeadlineWarning}"
+                                       FontSize="12"
+                                       TextColor="{StaticResource SoftPink}"
+                                       IsVisible="{Binding NextDeadlineWarning, Converter={StaticResource IsNotNullConverter}}" />
+                            </VerticalStackLayout>
+                        </Border>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Add Button with Icon (OPENS POPUP) -->
+                <Button Text="  + Add Study Task"
+                        Command="{Binding ShowPopupCommand}"
+                        BackgroundColor="{StaticResource PrimaryPurple}"
+                        TextColor="White"
+                        CornerRadius="16"
+                        HeightRequest="54"
+                        FontSize="16"
+                        FontAttributes="Bold"
+                        HorizontalOptions="Fill">
+                    <Button.ImageSource>
+                        <FontImageSource FontFamily="MaterialIcons" 
+                                         Glyph="&#xe145;" 
+                                         Color="White" 
+                                         Size="24"/>
+                    </Button.ImageSource>
+                </Button>
+
+            </VerticalStackLayout>
+        </Border>
+
+        <!-- TASK LIST -->
+        <ScrollView Grid.Row="1" Padding="20,10,20,20">
+            <VerticalStackLayout Spacing="15">
+
+                <!-- Priority Filter Buttons -->
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Filter by Priority:" 
+                           FontSize="14" 
+                           FontAttributes="Bold"
+                           TextColor="{StaticResource TextPrimary}" />
+
+                    <HorizontalStackLayout Spacing="8">
+                        <Button Text="All"
+                                Command="{Binding FilterByPriorityCommand}"
+                                CommandParameter="All"
+                                BackgroundColor="{Binding IsAllFilter, Converter={StaticResource FilterColorConverter}}"
+                                TextColor="White"
+                                CornerRadius="15"
+                                HeightRequest="35"
+                                FontSize="13"
+                                FontAttributes="Bold"
+                                WidthRequest="60" />
+
+                        <Button Text="High"
+                                Command="{Binding FilterByPriorityCommand}"
+                                CommandParameter="High"
+                                BackgroundColor="{Binding IsHighFilter, Converter={StaticResource FilterColorConverter}}"
+                                TextColor="White"
+                                CornerRadius="15"
+                                HeightRequest="35"
+                                FontSize="13"
+                                FontAttributes="Bold"
+                                WidthRequest="70" />
+
+                        <Button Text="Medium"
+                                Command="{Binding FilterByPriorityCommand}"
+                                CommandParameter="Medium"
+                                BackgroundColor="{Binding IsMediumFilter, Converter={StaticResource FilterColorConverter}}"
+                                TextColor="White"
+                                CornerRadius="15"
+                                HeightRequest="35"
+                                FontSize="13"
+                                FontAttributes="Bold"
+                                WidthRequest="80" />
+
+                        <Button Text="Low"
+                                Command="{Binding FilterByPriorityCommand}"
+                                CommandParameter="Low"
+                                BackgroundColor="{Binding IsLowFilter, Converter={StaticResource FilterColorConverter}}"
+                                TextColor="White"
+                                CornerRadius="15"
+                                HeightRequest="35"
+                                FontSize="13"
+                                FontAttributes="Bold"
+                                WidthRequest="70" />
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+
+                <!-- Sort Buttons -->
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Sort by:" 
+                           FontSize="14" 
+                           FontAttributes="Bold"
+                           TextColor="{StaticResource TextPrimary}" />
+
+                    <HorizontalStackLayout Spacing="8">
+                        <Button Text="Due Date"
+                                Command="{Binding SortTasksCommand}"
+                                CommandParameter="Due Date"
+                                BackgroundColor="{Binding CurrentSortBy, Converter={StaticResource SortButtonColorConverter}, ConverterParameter='Due Date'}"
+                                TextColor="White"
+                                CornerRadius="15"
+                                HeightRequest="35"
+                                FontSize="13"
+                                FontAttributes="Bold"
+                                WidthRequest="90" />
+
+                        <Button Text="Priority"
+                                Command="{Binding SortTasksCommand}"
+                                CommandParameter="Priority"
+                                BackgroundColor="{Binding CurrentSortBy, Converter={StaticResource SortButtonColorConverter}, ConverterParameter='Priority'}"
+                                TextColor="White"
+                                CornerRadius="15"
+                                HeightRequest="35"
+                                FontSize="13"
+                                FontAttributes="Bold"
+                                WidthRequest="80" />
+
+                        <Button Text="Title"
+                                Command="{Binding SortTasksCommand}"
+                                CommandParameter="Title"
+                                BackgroundColor="{Binding CurrentSortBy, Converter={StaticResource SortButtonColorConverter}, ConverterParameter='Title'}"
+                                TextColor="White"
+                                CornerRadius="15"
+                                HeightRequest="35"
+                                FontSize="13"
+                                FontAttributes="Bold"
+                                WidthRequest="70" />
+
+                        <Button Text="Urgency"
+                                Command="{Binding SortTasksCommand}"
+                                CommandParameter="Urgency"
+                                BackgroundColor="{Binding CurrentSortBy, Converter={StaticResource SortButtonColorConverter}, ConverterParameter='Urgency'}"
+                                TextColor="White"
+                                CornerRadius="15"
+                                HeightRequest="35"
+                                FontSize="13"
+                                FontAttributes="Bold"
+                                WidthRequest="80" />
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+
+                <!-- List Header with Count -->
+                <Grid ColumnDefinitions="*,Auto" Margin="0,10,0,5">
+                    <Label Grid.Column="0" 
+                           Text="📋 Your Tasks" 
+                           FontSize="18" 
+                           FontAttributes="Bold" 
+                           TextColor="{StaticResource TextPrimary}" />
+                    <Label Grid.Column="1" 
+                           Text="{Binding FilteredTasksCount, StringFormat='{0} items'}" 
+                           FontSize="14" 
+                           TextColor="{StaticResource TextSecondary}" />
+                </Grid>
+
+                <!-- TASK LIST - Using FilteredTasks -->
+                <CollectionView ItemsSource="{Binding FilteredTasks}" Margin="0,0,0,10">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Vertical" ItemSpacing="12" />
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Border BackgroundColor="{StaticResource SurfaceColor}"
+                                    StrokeThickness="0"
+                                    Padding="16">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="20"/>
+                                </Border.StrokeShape>
+                                <Border.Shadow>
+                                    <Shadow Brush="#15000000" Offset="0,2" Radius="6" />
+                                </Border.Shadow>
+
+                                <VerticalStackLayout Spacing="12">
+                                    <!-- Title and Badges Row -->
+                                    <Grid ColumnDefinitions="Auto,*,Auto">
+                                        <!-- Urgency Badge -->
+                                        <Border Grid.Column="0"
+                                                BackgroundColor="{Binding ., Converter={StaticResource UrgencyColorConverter}}"
+                                                Padding="8,4"
+                                                Margin="0,0,8,0">
+                                            <Border.StrokeShape>
+                                                <RoundRectangle CornerRadius="12" />
+                                            </Border.StrokeShape>
+                                            <Label Text="{Binding ., Converter={StaticResource UrgencyLevelConverter}}"
+                                                   FontSize="10"
+                                                   FontAttributes="Bold"
+                                                   TextColor="#2D2D2D" />
+                                        </Border>
+
+                                        <!-- Title -->
+                                        <Label Grid.Column="1" 
+                                               Text="{Binding Title}"
+                                               FontSize="16"
+                                               FontAttributes="Bold"
+                                               TextColor="#2D2D2D"
+                                               LineBreakMode="TailTruncation" />
+
+                                        <!-- Priority Badge -->
+                                        <Border Grid.Column="2"
+                                                BackgroundColor="{Binding Priority, Converter={StaticResource PriorityColorConverter}}"
+                                                Padding="10,4">
+                                            <Border.StrokeShape>
+                                                <RoundRectangle CornerRadius="20" />
+                                            </Border.StrokeShape>
+                                            <Label Text="{Binding Priority}" 
+                                                   FontSize="11" 
+                                                   FontAttributes="Bold"
+                                                   TextColor="White" />
+                                        </Border>
+                                    </Grid>
+
+                                    <!-- Description (if exists) -->
+                                    <Label Text="{Binding Description}"
+                                           FontSize="13"
+                                           TextColor="{StaticResource TextSecondary}"
+                                           IsVisible="{Binding HasDescription}" />
+
+                                    <!-- Date and Time Row -->
+                                    <HorizontalStackLayout Spacing="16">
+                                        <HorizontalStackLayout Spacing="6">
+                                            <Label Text="📅" FontSize="13" />
+                                            <Label Text="{Binding ScheduledDateTime, StringFormat='{0:MMM dd, yyyy}'}"
+                                                   FontSize="13"
+                                                   TextColor="{StaticResource TextSecondary}" />
+                                        </HorizontalStackLayout>
+                                        <HorizontalStackLayout Spacing="6">
+                                            <Label Text="⏰" FontSize="13" />
+                                            <Label Text="{Binding ScheduledDateTime, StringFormat='{0:h:mm tt}'}"
+                                                   FontSize="13"
+                                                   TextColor="{StaticResource TextSecondary}" />
+                                        </HorizontalStackLayout>
+                                    </HorizontalStackLayout>
+
+                                    <!-- Repeat and Snooze Info -->
+                                    <HorizontalStackLayout Spacing="16">
+                                        <Label Text="{Binding RepeatOption, StringFormat='🔄 {0}'}" 
+                                               FontSize="12" 
+                                               TextColor="{StaticResource TextSecondary}" />
+                                        <Label Text="{Binding SnoozeMinutes, StringFormat='⏰ {0} min'}" 
+                                               FontSize="12" 
+                                               TextColor="{StaticResource TextSecondary}" />
+                                    </HorizontalStackLayout>
+
+                                    <!-- Action Buttons -->
+                                    <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                                        <Button Grid.Column="0" 
+                                                Text="✓ Complete"
+                                                IsVisible="{Binding IsPending}"
+                                                BackgroundColor="#E8F5E9"
+                                                TextColor="{StaticResource SuccessGreen}"
+                                                CornerRadius="14"
+                                                HeightRequest="42"
+                                                FontSize="13"
+                                                FontAttributes="Bold"
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type vm:StudyTasksViewModel}},
+                                                                  Path=CompleteCommand}"
+                                                CommandParameter="{Binding .}" />
+
+                                        <Button Grid.Column="1" 
+                                                Text="🗑 Delete"
+                                                BackgroundColor="#FDECF2"
+                                                TextColor="{StaticResource SoftPink}"
+                                                CornerRadius="14"
+                                                HeightRequest="42"
+                                                FontSize="13"
+                                                FontAttributes="Bold"
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type vm:StudyTasksViewModel}},
+                                                                  Path=DeleteCommand}"
+                                                CommandParameter="{Binding .}" />
+                                    </Grid>
+                                </VerticalStackLayout>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+                <!-- Empty State - UPDATED: Changed from FilteredTasks.Count to FilteredTasksCount -->
+                <Border IsVisible="{Binding FilteredTasksCount, Converter={StaticResource IsZeroConverter}}"
+                        BackgroundColor="{StaticResource SurfaceColor}"
+                        Padding="40"
+                        Margin="0,20">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="24" />
+                    </Border.StrokeShape>
+                    <Border.Shadow>
+                        <Shadow Brush="#15000000" Offset="0,2" Radius="6" />
+                    </Border.Shadow>
+                    <VerticalStackLayout Spacing="12" HorizontalOptions="Center">
+                        <Label Text="📚" FontSize="48" HorizontalOptions="Center" />
+                        <Label Text="No tasks found" 
+                               FontSize="16" 
+                               FontAttributes="Bold" 
+                               TextColor="{StaticResource TextPrimary}" 
+                               HorizontalOptions="Center" />
+                        <Label Text="Tap the + button to add your first task!" 
+                               FontSize="14" 
+                               TextColor="{StaticResource TextSecondary}" 
+                               HorizontalOptions="Center" />
+                    </VerticalStackLayout>
+                </Border>
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- AI CHAT OVERLAY -->
+        <Grid IsVisible="{Binding IsAIChatVisible}"
+              BackgroundColor="#80000000"
+              Padding="10"
+              VerticalOptions="Fill"
+              HorizontalOptions="Fill">
+
+            <Border BackgroundColor="{StaticResource SurfaceColor}"
+                    StrokeThickness="0"
+                    Padding="0"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Fill"
+                    WidthRequest="380"
+                    MaximumHeightRequest="600">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="30" />
+                </Border.StrokeShape>
+                <Border.Shadow>
+                    <Shadow Brush="#40000000" Offset="0,4" Radius="16" />
+                </Border.Shadow>
+
+                <Grid RowDefinitions="Auto,Auto,*,Auto" RowSpacing="0">
+
+                    <!-- Chat Header -->
+                    <Border Grid.Row="0"
+                            BackgroundColor="{StaticResource AIBlue}"
+                            Padding="20,15">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="30,30,0,0" />
+                        </Border.StrokeShape>
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Label Grid.Column="0" 
+                                   Text="🤖 AI STUDY ASSISTANT" 
+                                   FontSize="18" 
+                                   FontAttributes="Bold"
+                                   TextColor="White" />
+                            <Button Grid.Column="1"
+                                    Text="✕"
+                                    Command="{Binding CloseAIChatCommand}"
+                                    BackgroundColor="Transparent"
+                                    TextColor="White"
+                                    FontSize="16" />
+                        </Grid>
+                    </Border>
+
+                    <!-- Chat Controls -->
+                    <Border Grid.Row="1"
+                            Padding="15,10"
+                            BackgroundColor="{StaticResource AILightBlue}">
+                        <ScrollView Orientation="Horizontal">
+                            <HorizontalStackLayout Spacing="8">
+                                <Button Text="📊 Progress"
+                                        Command="{Binding QuickQuestionCommand}"
+                                        CommandParameter="Show my progress"
+                                        BackgroundColor="{StaticResource AIBlue}"
+                                        TextColor="White"
+                                        CornerRadius="15"
+                                        HeightRequest="35"
+                                        FontSize="11" />
+                                <Button Text="💡 Tips"
+                                        Command="{Binding QuickQuestionCommand}"
+                                        CommandParameter="Give me study tips"
+                                        BackgroundColor="{StaticResource AIBlue}"
+                                        TextColor="White"
+                                        CornerRadius="15"
+                                        HeightRequest="35"
+                                        FontSize="11" />
+                                <Button Text="🎯 Motivate"
+                                        Command="{Binding QuickQuestionCommand}"
+                                        CommandParameter="Give me motivation"
+                                        BackgroundColor="{StaticResource AIBlue}"
+                                        TextColor="White"
+                                        CornerRadius="15"
+                                        HeightRequest="35"
+                                        FontSize="11" />
+                                <Button Text="📅 Due Today"
+                                        Command="{Binding QuickQuestionCommand}"
+                                        CommandParameter="What's due today?"
+                                        BackgroundColor="{StaticResource AIBlue}"
+                                        TextColor="White"
+                                        CornerRadius="15"
+                                        HeightRequest="35"
+                                        FontSize="11" />
+                                <Button Text="🎯 Prioritize"
+                                        Command="{Binding QuickQuestionCommand}"
+                                        CommandParameter="Prioritize my tasks"
+                                        BackgroundColor="{StaticResource AIBlue}"
+                                        TextColor="White"
+                                        CornerRadius="15"
+                                        HeightRequest="35"
+                                        FontSize="11" />
+                            </HorizontalStackLayout>
+                        </ScrollView>
+                    </Border>
+
+                    <!-- Chat Messages -->
+                    <ScrollView Grid.Row="2"
+                                Padding="15">
+                        <VerticalStackLayout Spacing="12">
+                            <CollectionView ItemsSource="{Binding ChatMessages}"
+                                          Margin="0">
+                                <CollectionView.ItemsLayout>
+                                    <LinearItemsLayout Orientation="Vertical" ItemSpacing="8" />
+                                </CollectionView.ItemsLayout>
+                                <CollectionView.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid ColumnDefinitions="Auto,*">
+                                            <Label Grid.Column="0"
+                                                   Text="{Binding Sender}"
+                                                   FontSize="12"
+                                                   FontAttributes="Bold"
+                                                   Margin="0,0,8,0">
+                                                <Label.TextColor>
+                                                    <OnPlatform x:TypeArguments="Color">
+                                                        <On Platform="All">
+                                                            <Binding Path="IsUser">
+                                                                <Binding.Converter>
+                                                                    <local:FilterColorConverter/>
+                                                                </Binding.Converter>
+                                                            </Binding>
+                                                        </On>
+                                                    </OnPlatform>
+                                                </Label.TextColor>
+                                            </Label>
+                                            <Label Grid.Column="1"
+                                                   Text="{Binding Content}"
+                                                   FontSize="13"
+                                                   TextColor="{StaticResource TextPrimary}"
+                                                   LineBreakMode="WordWrap" />
+                                        </Grid>
+                                    </DataTemplate>
+                                </CollectionView.ItemTemplate>
+                            </CollectionView>
+
+                            <ActivityIndicator IsVisible="{Binding IsAIThinking}"
+                                               IsRunning="True"
+                                               Color="{StaticResource AIBlue}"
+                                               HeightRequest="30" />
+                        </VerticalStackLayout>
+                    </ScrollView>
+
+                    <!-- Chat Input -->
+                    <Border Grid.Row="3"
+                            Padding="15"
+                            BackgroundColor="{StaticResource SurfaceColor}">
+                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="10">
+                            <Border BackgroundColor="{StaticResource AILightBlue}"
+                                    StrokeThickness="0"
+                                    Padding="10,5">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="20" />
+                                </Border.StrokeShape>
+                                <Entry Placeholder="Type your question..."
+                                       Text="{Binding UserInput}"
+                                       BackgroundColor="Transparent"
+                                       HeightRequest="40" />
+                            </Border>
+                            <Button Grid.Column="1"
+                                    Text="Send"
+                                    Command="{Binding SendMessageCommand}"
+                                    BackgroundColor="{StaticResource AIBlue}"
+                                    TextColor="White"
+                                    CornerRadius="20"
+                                    HeightRequest="40"
+                                    WidthRequest="60" />
+                        </Grid>
+                    </Border>
+
+                </Grid>
+            </Border>
+        </Grid>
+
+        <!-- ADD TASK POPUP - Modern Design with AI Subtasks -->
+        <Grid IsVisible="{Binding IsPopupVisible}"
+              BackgroundColor="#80000000"
+              Padding="20">
+
+            <Border BackgroundColor="{StaticResource SurfaceColor}"
+                    StrokeThickness="0"
+                    Padding="25"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"
+                    WidthRequest="380"
+                    MaximumHeightRequest="700">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="30" />
+                </Border.StrokeShape>
+                <Border.Shadow>
+                    <Shadow Brush="#40000000" Offset="0,8" Radius="16" />
+                </Border.Shadow>
+
+                <!-- ScrollView with fixed maximum height -->
+                <ScrollView MaximumHeightRequest="600">
+                    <VerticalStackLayout Spacing="18">
+
+                        <!-- Popup Header -->
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Label Grid.Column="0" 
+                                   Text="✨ Add Study Task" 
+                                   FontSize="22" 
+                                   FontAttributes="Bold" 
+                                   TextColor="{StaticResource PrimaryPurple}" />
+                            <Button Grid.Column="1"
+                                    Text="✕"
+                                    Command="{Binding ClosePopupCommand}"
+                                    BackgroundColor="Transparent"
+                                    TextColor="{StaticResource TextSecondary}"
+                                    FontSize="20"
+                                    Padding="10" />
+                        </Grid>
+
+                        <!-- Form Fields -->
+                        <Border BackgroundColor="#F8F4FA"
+                                StrokeThickness="0"
+                                Padding="10">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="12" />
+                            </Border.StrokeShape>
+                            <Entry Placeholder="📌 Task Title"
+                                   Text="{Binding Title}"
+                                   BackgroundColor="Transparent"
+                                   Style="{StaticResource ModernEntry}" />
+                        </Border>
+
+                        <!-- AI Suggested Subtasks -->
+                        <VerticalStackLayout IsVisible="{Binding ShowAISubtasks}" Spacing="10">
+                            <Label Text="🤖 AI SUGGESTED SUBTASKS:" 
+                                   FontSize="12"
+                                   FontAttributes="Bold"
+                                   TextColor="{StaticResource AIBlue}" />
+                            <Border BackgroundColor="{StaticResource AILightBlue}"
+                                    Padding="12"
+                                    StrokeThickness="0">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="12" />
+                                </Border.StrokeShape>
+                                <VerticalStackLayout Spacing="8">
+                                    <CollectionView ItemsSource="{Binding AISubtasks}"
+                                                  HeightRequest="150">
+                                        <CollectionView.ItemTemplate>
+                                            <DataTemplate>
+                                                <Grid ColumnDefinitions="*,Auto" Margin="0,4">
+                                                    <Label Grid.Column="0"
+                                                           Text="{Binding Title}"
+                                                           FontSize="13"
+                                                           TextColor="{StaticResource TextPrimary}"
+                                                           LineBreakMode="WordWrap" />
+                                                    <Button Grid.Column="1"
+                                                            Text="+ Add"
+                                                            Command="{Binding Source={RelativeSource AncestorType={x:Type vm:StudyTasksViewModel}},
+                                                                              Path=AddAISubtaskCommand}"
+                                                            CommandParameter="{Binding .}"
+                                                            BackgroundColor="{StaticResource AIBlue}"
+                                                            TextColor="White"
+                                                            CornerRadius="12"
+                                                            HeightRequest="30"
+                                                            FontSize="11"
+                                                            WidthRequest="60" />
+                                                </Grid>
+                                            </DataTemplate>
+                                        </CollectionView.ItemTemplate>
+                                    </CollectionView>
+
+                                    <Grid ColumnDefinitions="*,*" ColumnSpacing="8">
+                                        <Button Text="📋 Add All"
+                                                Command="{Binding AddAllAISubtasksCommand}"
+                                                BackgroundColor="{StaticResource SuccessGreen}"
+                                                TextColor="White"
+                                                CornerRadius="12"
+                                                HeightRequest="35"
+                                                FontSize="12" />
+                                        <Button Text="✨ Generate More"
+                                                Command="{Binding RegenerateSubtasksCommand}"
+                                                BackgroundColor="{StaticResource SecondaryPurple}"
+                                                TextColor="White"
+                                                CornerRadius="12"
+                                                HeightRequest="35"
+                                                FontSize="12" />
+                                    </Grid>
+                                </VerticalStackLayout>
+                            </Border>
+                        </VerticalStackLayout>
+
+                        <Border BackgroundColor="#F8F4FA"
+                                StrokeThickness="0"
+                                Padding="10">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="12" />
+                            </Border.StrokeShape>
+                            <Editor Placeholder="📝 Description"
+                                    HeightRequest="80"
+                                    Text="{Binding Description}"
+                                    BackgroundColor="Transparent"
+                                    Style="{StaticResource ModernEditor}" />
+                        </Border>
+
+                        <!-- Date and Time with AI Advice -->
+                        <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                            <Border BackgroundColor="#F8F4FA"
+                                    Padding="10"
+                                    StrokeThickness="0"
+                                    Grid.Column="0">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="12" />
+                                </Border.StrokeShape>
+                                <DatePicker Date="{Binding SelectedDate}"
+                                           Style="{StaticResource ModernDatePicker}"
+                                           BackgroundColor="Transparent" />
+                            </Border>
+
+                            <Border BackgroundColor="#F8F4FA"
+                                    Padding="10"
+                                    StrokeThickness="0"
+                                    Grid.Column="1">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="12" />
+                                </Border.StrokeShape>
+                                <TimePicker Time="{Binding SelectedTime}"
+                                           Style="{StaticResource ModernTimePicker}"
+                                           BackgroundColor="Transparent" />
+                            </Border>
+                        </Grid>
+
+                        <Label Text="{Binding AIBestTimeAdvice}"
+                               FontSize="11"
+                               TextColor="{StaticResource AIBlue}"
+                               IsVisible="{Binding AIBestTimeAdvice, Converter={StaticResource IsNotNullConverter}}" />
+
+                        <!-- Priority with AI Advice -->
+                        <Border BackgroundColor="#F8F4FA"
+                                Padding="10"
+                                StrokeThickness="0">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="12" />
+                            </Border.StrokeShape>
+                            <Picker Title="⚡ Priority Level"
+                                    ItemsSource="{Binding Priorities}"
+                                    SelectedItem="{Binding Priority}"
+                                    BackgroundColor="Transparent"
+                                    Style="{StaticResource ModernPicker}" />
+                        </Border>
+
+                        <Label Text="{Binding AIPriorityAdvice}"
+                               FontSize="11"
+                               TextColor="{StaticResource SoftPink}"
+                               IsVisible="{Binding AIPriorityAdvice, Converter={StaticResource IsNotNullConverter}}" />
+
+                        <!-- Repeat and Snooze -->
+                        <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                            <Border BackgroundColor="#F8F4FA"
+                                    Padding="10"
+                                    StrokeThickness="0"
+                                    Grid.Column="0">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="12" />
+                                </Border.StrokeShape>
+                                <Picker Title="🔄 Repeat"
+                                        ItemsSource="{Binding RepeatOptions}"
+                                        SelectedItem="{Binding RepeatOption}"
+                                        BackgroundColor="Transparent"
+                                        Style="{StaticResource ModernPicker}" />
+                            </Border>
+
+                            <Border BackgroundColor="#F8F4FA"
+                                    Padding="10"
+                                    StrokeThickness="0"
+                                    Grid.Column="1">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="12" />
+                                </Border.StrokeShape>
+                                <Picker Title="⏰ Snooze"
+                                        ItemsSource="{Binding SnoozeOptions}"
+                                        SelectedItem="{Binding SnoozeMinutes}"
+                                        BackgroundColor="Transparent"
+                                        Style="{StaticResource ModernPicker}" />
+                            </Border>
+                        </Grid>
+
+                        <!-- Action Buttons - Save and Cancel -->
+                        <Grid ColumnDefinitions="*,*" ColumnSpacing="10" Margin="0,10,0,0">
+                            <Button Grid.Column="0" 
+                                    Text="Cancel"
+                                    Command="{Binding ClosePopupCommand}"
+                                    BackgroundColor="#F3F4F6"
+                                    TextColor="{StaticResource TextSecondary}"
+                                    CornerRadius="14"
+                                    HeightRequest="50"
+                                    FontSize="15"
+                                    FontAttributes="Bold" />
+                            <Button Grid.Column="1" 
+                                    Text="Save Task"
+                                    Command="{Binding AddTaskCommand}"
+                                    BackgroundColor="{StaticResource PrimaryPurple}"
+                                    TextColor="White"
+                                    CornerRadius="14"
+                                    HeightRequest="50"
+                                    FontSize="15"
+                                    FontAttributes="Bold" />
+                        </Grid>
+
+                        <!-- Helper text -->
+                        <Label Text="💡 AI Tip: Based on your study pattern, schedule important tasks in the morning for best focus!"
+                               FontSize="11"
+                               TextColor="{StaticResource TextSecondary}"
+                               HorizontalOptions="Center" 
+                               Margin="0,0,0,10"/>
+
+                    </VerticalStackLayout>
+                </ScrollView>
+            </Border>
+        </Grid>
+
+    </Grid>
+</ContentPage>

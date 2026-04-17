@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SmartScheduler.Views.LoadingPage"
+             BackgroundColor="#6B32A1"
+             NavigationPage.HasNavigationBar="False">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Animated Gradient Background -->
+        <Grid Grid.RowSpan="3" BackgroundColor="#6B32A1">
+            <Grid.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                    <GradientStop Color="#8B5CF6" Offset="0.0" />
+                    <GradientStop Color="#D946EF" Offset="0.5" />
+                    <GradientStop Color="#F472B6" Offset="1.0" />
+                </LinearGradientBrush>
+            </Grid.Background>
+        </Grid>
+
+        <!-- Content -->
+        <VerticalStackLayout Grid.Row="1" Spacing="30" HorizontalOptions="Center" VerticalOptions="Center">
+
+            <!-- App Logo - Border Removed and Made Larger -->
+            <Image Source="smart_logo.png" 
+                   HeightRequest="160" 
+                   WidthRequest="160"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"/>
+
+            <!-- App Name -->
+            <Label Text="Smart Scheduler"
+                   FontSize="28"
+                   FontAttributes="Bold"
+                   TextColor="White"
+                   HorizontalOptions="Center"/>
+
+            <!-- Loading Spinner -->
+            <ActivityIndicator x:Name="LoadingSpinner"
+                              IsRunning="True"
+                              Color="White"
+                              Scale="1.5"/>
+
+            <!-- Loading Text -->
+            <Label x:Name="LoadingText"
+                   Text="Loading..."
+                   FontSize="14"
+                   TextColor="White"
+                   Opacity="0.8"
+                   HorizontalOptions="Center"/>
+        </VerticalStackLayout>
+    </Grid>
+</ContentPage>

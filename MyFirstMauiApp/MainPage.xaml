@@ -1,0 +1,205 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MyFirstMauiApp.MainPage"
+             BackgroundColor="#F0F2F5"
+             NavigationPage.HasNavigationBar="False">
+
+    <Grid>
+
+        <!-- Gradient Background -->
+        <Grid.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                <GradientStop Color="#667EEA" Offset="0.0"/>
+                <GradientStop Color="#764BA2" Offset="1.0"/>
+            </LinearGradientBrush>
+        </Grid.Background>
+
+        <ScrollView>
+
+            <VerticalStackLayout Padding="30,60,30,30"
+                                 Spacing="25">
+
+                <!-- APP TITLE -->
+                <VerticalStackLayout HorizontalOptions="Center"
+                                     Spacing="8">
+
+                    <Border BackgroundColor="White"
+                            WidthRequest="90"
+                            HeightRequest="90"
+                            StrokeShape="RoundRectangle 45">
+
+                        <Label Text="📅"
+                               FontSize="40"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center"/>
+                    </Border>
+
+                    <Label Text="SmartSchedule"
+                           FontSize="30"
+                           FontAttributes="Bold"
+                           TextColor="White"
+                           HorizontalOptions="Center"/>
+
+                    <Label Text="Organize your time smarter"
+                           FontSize="15"
+                           TextColor="#EAEAF0"
+                           HorizontalOptions="Center"/>
+                </VerticalStackLayout>
+
+                <!-- LOGIN CARD -->
+                <Border StrokeShape="RoundRectangle 30"
+                        BackgroundColor="White"
+                        Padding="25">
+
+                    <Border.Shadow>
+                        <Shadow Brush="Black"
+                                Offset="0,4"
+                                Radius="15"
+                                Opacity="0.2"/>
+                    </Border.Shadow>
+
+                    <VerticalStackLayout Spacing="20">
+
+                        <Label Text="Welcome Back"
+                               FontSize="24"
+                               FontAttributes="Bold"
+                               TextColor="#1A1F36"
+                               HorizontalOptions="Center"/>
+
+                        <!-- USERNAME -->
+                        <VerticalStackLayout Spacing="6">
+
+                            <Label Text="Username"
+                                   FontAttributes="Bold"
+                                   FontSize="14"
+                                   TextColor="#4A5568"/>
+
+                            <Border StrokeShape="RoundRectangle 15"
+                                    BackgroundColor="#F7FAFC"
+                                    Stroke="#E2E8F0">
+
+                                <Grid ColumnDefinitions="40,*">
+
+                                    <Label Text="👤"
+                                           FontSize="18"
+                                           VerticalOptions="Center"
+                                           HorizontalOptions="Center"/>
+
+                                    <Entry Grid.Column="1"
+                                           x:Name="UsernameEntry"
+                                           Placeholder="Enter username"
+                                           BackgroundColor="Transparent"
+                                           Margin="0,0,10,0"/>
+                                </Grid>
+                            </Border>
+                        </VerticalStackLayout>
+
+                        <!-- PASSWORD -->
+                        <VerticalStackLayout Spacing="6">
+
+                            <Label Text="Password"
+                                   FontAttributes="Bold"
+                                   FontSize="14"
+                                   TextColor="#4A5568"/>
+
+                            <Border StrokeShape="RoundRectangle 15"
+                                    BackgroundColor="#F7FAFC"
+                                    Stroke="#E2E8F0">
+
+                                <Grid ColumnDefinitions="40,*">
+
+                                    <Label Text="🔒"
+                                           FontSize="18"
+                                           VerticalOptions="Center"
+                                           HorizontalOptions="Center"/>
+
+                                    <Entry Grid.Column="1"
+                                           x:Name="PasswordEntry"
+                                           Placeholder="Enter password"
+                                           IsPassword="True"
+                                           BackgroundColor="Transparent"
+                                           Margin="0,0,10,0"/>
+                                </Grid>
+                            </Border>
+                        </VerticalStackLayout>
+
+                        <!-- FORGOT -->
+                        <Label Text="Forgot Password?"
+                               FontSize="14"
+                               TextColor="#667EEA"
+                               HorizontalOptions="End">
+
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnForgotPasswordTapped"/>
+                            </Label.GestureRecognizers>
+
+                        </Label>
+
+                        <!-- LOGIN BUTTON -->
+                        <Button Text="Sign In"
+                                HeightRequest="55"
+                                CornerRadius="25"
+                                FontAttributes="Bold"
+                                FontSize="16"
+                                Clicked="OnLoginClicked">
+
+                            <Button.Background>
+                                <LinearGradientBrush StartPoint="0,0"
+                                                     EndPoint="1,0">
+                                    <GradientStop Color="#667EEA" Offset="0.0"/>
+                                    <GradientStop Color="#764BA2" Offset="1.0"/>
+                                </LinearGradientBrush>
+                            </Button.Background>
+
+                        </Button>
+
+                        <!-- DEMO INFO -->
+                        <VerticalStackLayout Spacing="5">
+
+                            <BoxView HeightRequest="1"
+                                     Color="#E2E8F0"/>
+
+                            <Label Text="Demo Account"
+                                   FontSize="13"
+                                   HorizontalOptions="Center"
+                                   TextColor="#777"/>
+
+                            <Label Text="demo / demo123"
+                                   FontAttributes="Bold"
+                                   HorizontalOptions="Center"
+                                   FontSize="13"/>
+
+                        </VerticalStackLayout>
+
+                    </VerticalStackLayout>
+
+                </Border>
+
+                <!-- SIGNUP -->
+                <HorizontalStackLayout HorizontalOptions="Center"
+                                       Spacing="5">
+
+                    <Label Text="Don't have an account?"
+                           TextColor="White"
+                           FontSize="14"/>
+
+                    <Label Text="Sign Up"
+                           FontAttributes="Bold"
+                           TextColor="#FFD700">
+
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnSignUpTapped"/>
+                        </Label.GestureRecognizers>
+
+                    </Label>
+
+                </HorizontalStackLayout>
+
+            </VerticalStackLayout>
+
+        </ScrollView>
+
+    </Grid>
+
+</ContentPage>

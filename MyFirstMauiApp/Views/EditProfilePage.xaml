@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SmartScheduler.Views.EditProfilePage"
+             Title="Edit Profile"
+             BackgroundColor="#F5F5F5">
+
+    <ScrollView>
+        <VerticalStackLayout Spacing="20" Padding="20">
+
+            <!-- Profile Picture Section -->
+            <VerticalStackLayout Spacing="15" HorizontalOptions="Center">
+                <Border StrokeThickness="2"
+                        Stroke="#6B32A1"
+                        Padding="5"
+                        HeightRequest="160"
+                        WidthRequest="160"
+                        HorizontalOptions="Center">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="80"/>
+                    </Border.StrokeShape>
+                    <Image x:Name="ProfileImage"
+                           Source="default_avatar.png"
+                           HeightRequest="150"
+                           WidthRequest="150"
+                           Aspect="AspectFill"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center">
+                        <Image.Clip>
+                            <EllipseGeometry Center="75,75" RadiusX="75" RadiusY="75"/>
+                        </Image.Clip>
+                    </Image>
+                </Border>
+
+                <Grid ColumnDefinitions="Auto,Auto" 
+                      ColumnSpacing="15"
+                      HorizontalOptions="Center">
+                    <Button Text="📸 Take Photo"
+                            BackgroundColor="#6B32A1"
+                            TextColor="White"
+                            CornerRadius="20"
+                            Padding="15,10"
+                            Clicked="OnTakePhotoClicked"/>
+
+                    <Button Text="🖼️ Choose from Gallery"
+                            Grid.Column="1"
+                            BackgroundColor="#D946EF"
+                            TextColor="White"
+                            CornerRadius="20"
+                            Padding="15,10"
+                            Clicked="OnPickImageClicked"/>
+                </Grid>
+
+                <Button Text="🗑️ Remove Picture"
+                        BackgroundColor="Transparent"
+                        TextColor="#FF4444"
+                        FontSize="14"
+                        Clicked="OnRemovePictureClicked"
+                        IsVisible="False"
+                        x:Name="RemoveButton"/>
+            </VerticalStackLayout>
+
+            <!-- User Info Section -->
+            <Border StrokeThickness="0"
+                   BackgroundColor="White"
+                   Padding="20"
+                   Margin="0,20,0,0">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="15"/>
+                </Border.StrokeShape>
+
+                <VerticalStackLayout Spacing="15">
+                    <Label Text="User Information" 
+                           FontSize="18" 
+                           FontAttributes="Bold"
+                           TextColor="#6B32A1"/>
+
+                    <!-- Username Field with Edit/Save/Cancel Buttons -->
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="Username" 
+                               FontSize="12" 
+                               TextColor="#6B32A1" 
+                               FontAttributes="Bold"/>
+
+                        <!-- Display Mode (Normal) -->
+                        <Grid x:Name="DisplayModeGrid" ColumnDefinitions="*,Auto" ColumnSpacing="10">
+                            <Label Grid.Column="0"
+                                   x:Name="UsernameLabel"
+                                   FontSize="16"
+                                   TextColor="#333"
+                                   VerticalOptions="Center"/>
+
+                            <Button Grid.Column="1"
+                                    x:Name="EditUsernameButton"
+                                    Text="✏️ Edit"
+                                    BackgroundColor="#6B32A1"
+                                    TextColor="White"
+                                    CornerRadius="15"
+                                    Padding="15,8"
+                                    FontSize="12"
+                                    Clicked="OnEditUsernameClicked"/>
+                        </Grid>
+
+                        <!-- Edit Mode (Hidden initially) -->
+                        <Grid x:Name="EditModeGrid" IsVisible="False" ColumnDefinitions="*,Auto,Auto" ColumnSpacing="10">
+                            <Entry Grid.Column="0"
+                                   x:Name="UsernameEntry"
+                                   FontSize="16"
+                                   BackgroundColor="#F0F0F0"
+                                   Placeholder="Enter new username"
+                                   TextColor="#333"
+                                   HeightRequest="45"/>
+
+                            <Button Grid.Column="1"
+                                    x:Name="SaveUsernameButton"
+                                    Text="✓ Save"
+                                    BackgroundColor="#4CAF50"
+                                    TextColor="White"
+                                    CornerRadius="15"
+                                    Padding="15,8"
+                                    FontSize="12"
+                                    Clicked="OnSaveUsernameClicked"/>
+
+                            <Button Grid.Column="2"
+                                    x:Name="CancelUsernameButton"
+                                    Text="✗ Cancel"
+                                    BackgroundColor="#FF4444"
+                                    TextColor="White"
+                                    CornerRadius="15"
+                                    Padding="15,8"
+                                    FontSize="12"
+                                    Clicked="OnCancelUsernameClicked"/>
+                        </Grid>
+                    </VerticalStackLayout>
+
+                    <!-- Email Field (Read Only) -->
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="Email" 
+                               FontSize="12" 
+                               TextColor="#6B32A1" 
+                               FontAttributes="Bold"/>
+
+                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="10">
+                            <Label Grid.Column="0"
+                                   x:Name="EmailLabel"
+                                   FontSize="16"
+                                   TextColor="#666"
+                                   VerticalOptions="Center"/>
+
+                            <Label Grid.Column="1"
+                                   Text="🔒"
+                                   FontSize="16"
+                                   TextColor="#999"
+                                   VerticalOptions="Center"/>
+                        </Grid>
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+            </Border>
+
+            <ActivityIndicator x:Name="LoadingIndicator" 
+                              IsRunning="False" 
+                              IsVisible="False"
+                              Color="#6B32A1"/>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

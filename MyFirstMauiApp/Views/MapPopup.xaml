@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:maps="clr-namespace:Microsoft.Maui.Controls.Maps;assembly=Microsoft.Maui.Controls.Maps"
+             x:Class="MyFirstMauiApp.Views.MapPopup"
+             Title="Event Location"
+             BackgroundColor="#FFFFFF">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <Border Grid.Row="0"
+                BackgroundColor="#6366F1"
+                StrokeThickness="0"
+                Padding="20,15">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <Label Grid.Column="0"
+                       Text="{Binding EventTitle}"
+                       FontSize="18"
+                       FontAttributes="Bold"
+                       TextColor="White"
+                       VerticalOptions="Center" />
+
+                <Button Grid.Column="1"
+                        Text="✕"
+                        BackgroundColor="Transparent"
+                        TextColor="White"
+                        FontSize="20"
+                        Command="{Binding CloseCommand}"
+                        WidthRequest="40"
+                        HeightRequest="40" />
+            </Grid>
+        </Border>
+
+        <!-- Map View -->
+        <maps:Map Grid.Row="1"
+                  x:Name="EventMap"
+                  IsShowingUser="True"
+                  MapType="Street" />
+
+        <!-- Location Info -->
+        <Border Grid.Row="2"
+                BackgroundColor="White"
+                StrokeThickness="0"
+                Padding="20,15"
+                StrokeShape="RoundRectangle 16,16,0,0">
+            <Border.Shadow>
+                <Shadow Brush="#1A000000"
+                        Offset="0,-2"
+                        Radius="8"
+                        Opacity="0.08" />
+            </Border.Shadow>
+
+            <VerticalStackLayout Spacing="8">
+                <Label Text="📍 Location Details"
+                       FontSize="14"
+                       FontAttributes="Bold"
+                       TextColor="#111827" />
+
+                <Label Text="{Binding EventLocation}"
+                       FontSize="14"
+                       TextColor="#374151"
+                       LineBreakMode="WordWrap" />
+
+                <Button Text="Open in Google Maps"
+                        BackgroundColor="#6366F1"
+                        TextColor="White"
+                        FontSize="14"
+                        FontAttributes="Bold"
+                        CornerRadius="12"
+                        HeightRequest="44"
+                        Command="{Binding OpenExternalMapCommand}"
+                        Margin="0,8,0,0" />
+            </VerticalStackLayout>
+        </Border>
+    </Grid>
+</ContentPage>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="MyFirstMauiApp.NotificationsPage"
+    Title="Notifications">
+
+    <StackLayout Padding="10" Spacing="10">
+
+        <Button
+            Text="Clear All Notifications"
+            BackgroundColor="#FF6B6B"
+            TextColor="White"
+            CornerRadius="8"
+            Clicked="OnClearAllClicked" />
+
+        <CollectionView
+            x:Name="NotificationsList"
+            SelectionMode="Single"
+            SelectionChanged="NotificationsList_SelectionChanged">
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Border Stroke="#FFD700"
+                            StrokeThickness="1"
+                            BackgroundColor="#FFF3E0"
+                            Padding="10"
+                            Margin="5">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="8"/>
+                        </Border.StrokeShape>
+
+                        <StackLayout>
+                            <Label Text="{Binding Title}" FontAttributes="Bold" FontSize="Medium"/>
+                            <Label Text="{Binding Description}" FontSize="Small" TextColor="Gray"/>
+                            <Label Text="{Binding ScheduledDateTime, StringFormat='Scheduled: {0:MMM dd, yyyy HH:mm}'}"
+                                   FontSize="Small" TextColor="DarkGray"/>
+                        </StackLayout>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+
+        </CollectionView>
+    </StackLayout>
+</ContentPage>

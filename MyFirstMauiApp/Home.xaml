@@ -1,0 +1,452 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:MyFirstMauiApp.Converters"
+             x:Class="MyFirstMauiApp.Home"
+             BackgroundColor="#F8F4FE">
+
+    <ContentPage.Resources>
+        <!-- Add Converter -->
+        <local:GreaterThanZeroConverter x:Key="GreaterThanZeroConverter"/>
+        <local:InvertedBoolConverter x:Key="InvertedBoolConverter"/>
+        <local:IsNotNullConverter x:Key="IsNotNullConverter"/>
+
+        <!-- Enhanced Color Resources -->
+        <Color x:Key="Primary">#9D4EDD</Color>
+        <Color x:Key="PrimaryLight">#B983FF</Color>
+        <Color x:Key="PrimaryDark">#6D28A5</Color>
+        <Color x:Key="PrimarySoft">#F3E8FF</Color>
+        <Color x:Key="PrimaryGradientStart">#9D4EDD</Color>
+        <Color x:Key="PrimaryGradientEnd">#B983FF</Color>
+        <Color x:Key="Background">#F8F4FE</Color>
+        <Color x:Key="Surface">#FFFFFF</Color>
+        <Color x:Key="TextPrimary">#1E0B36</Color>
+        <Color x:Key="TextSecondary">#6B4E8C</Color>
+        <Color x:Key="Success">#10B981</Color>
+        <Color x:Key="Warning">#F59E0B</Color>
+        <Color x:Key="Error">#EF4444</Color>
+        <Color x:Key="Info">#3B82F6</Color>
+
+        <!-- Shared Styles -->
+        <Style x:Key="SectionHeader" TargetType="Label">
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="FontAttributes" Value="Bold"/>
+            <Setter Property="TextColor" Value="{StaticResource TextPrimary}"/>
+            <Setter Property="Margin" Value="0,8,0,16"/>
+        </Style>
+
+        <!-- Enhanced Card Border with better shadow and subtle gradient -->
+        <Style x:Key="CardBorder" TargetType="Border">
+            <Setter Property="StrokeThickness" Value="0.5"/>
+            <Setter Property="Stroke" Value="#20D0C0E0"/>
+            <Setter Property="BackgroundColor" Value="{StaticResource Surface}"/>
+            <Setter Property="Padding" Value="16"/>
+            <Setter Property="Shadow">
+                <Shadow Brush="#1A000000" Offset="0,4" Radius="12" Opacity="0.08"/>
+            </Setter>
+            <Setter Property="StrokeShape">
+                <RoundRectangle CornerRadius="24"/>
+            </Setter>
+        </Style>
+
+        <!-- New: Gradient Card Style -->
+        <Style x:Key="GradientCardBorder" TargetType="Border">
+            <Setter Property="StrokeThickness" Value="0"/>
+            <Setter Property="Padding" Value="16"/>
+            <Setter Property="Shadow">
+                <Shadow Brush="#1A000000" Offset="0,6" Radius="16" Opacity="0.1"/>
+            </Setter>
+            <Setter Property="StrokeShape">
+                <RoundRectangle CornerRadius="24"/>
+            </Setter>
+        </Style>
+
+        <Style x:Key="CategoryIcon" TargetType="Label">
+            <Setter Property="FontSize" Value="36"/>
+            <Setter Property="Margin" Value="0,0,0,8"/>
+        </Style>
+
+        <!-- Enhanced Header Border with gradient and better shadow -->
+        <Style x:Key="HeaderBorder" TargetType="Border">
+            <Setter Property="StrokeThickness" Value="0"/>
+            <Setter Property="BackgroundColor" Value="{StaticResource Surface}"/>
+            <Setter Property="Padding" Value="20"/>
+            <Setter Property="Shadow">
+                <Shadow Brush="#1A000000" Offset="0,4" Radius="12" Opacity="0.08"/>
+            </Setter>
+            <Setter Property="StrokeShape">
+                <RoundRectangle CornerRadius="0,0,30,30"/>
+            </Setter>
+        </Style>
+
+        <!-- New: Micro interaction style for buttons -->
+        <Style x:Key="InteractiveBorder" TargetType="Border">
+            <Setter Property="StrokeThickness" Value="0"/>
+            <Setter Property="BackgroundColor" Value="{StaticResource PrimarySoft}"/>
+            <Setter Property="Padding" Value="12"/>
+            <Setter Property="Shadow">
+                <Shadow Brush="#1A000000" Offset="0,2" Radius="6" Opacity="0.05"/>
+            </Setter>
+            <Setter Property="StrokeShape">
+                <RoundRectangle CornerRadius="20"/>
+            </Setter>
+        </Style>
+    </ContentPage.Resources>
+
+    <ScrollView VerticalScrollBarVisibility="Never">
+        <VerticalStackLayout Spacing="0">
+
+            <!-- Enhanced Header Border with App Name and User -->
+            <Border Style="{StaticResource HeaderBorder}" Padding="24,20,24,20">
+                <Grid ColumnDefinitions="Auto, *, Auto" RowDefinitions="Auto, Auto" ColumnSpacing="12" RowSpacing="4">
+                    <!-- App Icon with gradient -->
+                    <Border Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" 
+                            BackgroundColor="{StaticResource PrimaryGradientStart}"
+                            WidthRequest="52" HeightRequest="52">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="18"/>
+                        </Border.StrokeShape>
+                        <Border.Background>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                <GradientStop Color="{StaticResource PrimaryGradientStart}" Offset="0.0"/>
+                                <GradientStop Color="{StaticResource PrimaryGradientEnd}" Offset="1.0"/>
+                            </LinearGradientBrush>
+                        </Border.Background>
+                        <Label Text="⚡" FontSize="30" TextColor="White"
+                               HorizontalOptions="Center" VerticalOptions="Center"
+                               FontAttributes="Bold"/>
+                    </Border>
+
+                    <!-- App Name -->
+                    <Label Grid.Row="0" Grid.Column="1" 
+                           Text="SmartScheduler" 
+                           FontSize="26" 
+                           FontAttributes="Bold"
+                           TextColor="{StaticResource TextPrimary}"
+                           VerticalOptions="End"/>
+
+                    <!-- Notification Icon with badge indicator -->
+                    <Border Grid.Row="0" Grid.Column="2" 
+                            BackgroundColor="{StaticResource PrimarySoft}"
+                            WidthRequest="44" HeightRequest="44"
+                            HorizontalOptions="End">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="14"/>
+                        </Border.StrokeShape>
+                        <Grid>
+                            <Label Text="🔔" FontSize="22" 
+                                   HorizontalOptions="Center" VerticalOptions="Center"/>
+                            <!-- Notification badge -->
+                            <Border BackgroundColor="{StaticResource Error}"
+                                    WidthRequest="10" HeightRequest="10"
+                                    HorizontalOptions="End" VerticalOptions="Start"
+                                    Margin="6,6,0,0">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="5"/>
+                                </Border.StrokeShape>
+                            </Border>
+                        </Grid>
+                    </Border>
+
+                    <!-- User Name with wave animation effect - Dynamic from logged in user -->
+                    <Label Grid.Row="1" Grid.Column="1" 
+                           Text="{Binding WelcomeMessage}" 
+                                     FontSize="15"
+                                   TextColor="{StaticResource TextSecondary}"
+                                   VerticalOptions="Start"/>
+
+                    <!-- Date with gradient background -->
+                    <Border Grid.Row="1" Grid.Column="2" 
+                            BackgroundColor="{StaticResource PrimarySoft}"
+                            Padding="10,4"
+                            HorizontalOptions="End">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="20"/>
+                        </Border.StrokeShape>
+                        <Label Text="{Binding CurrentDate, StringFormat='{0:MMM dd}'}" 
+                               FontSize="12"
+                               TextColor="{StaticResource PrimaryDark}"
+                               FontAttributes="Bold"
+                               CharacterSpacing="1"/>
+                    </Border>
+                </Grid>
+            </Border>
+
+            <!-- Main Content -->
+            <VerticalStackLayout Padding="24,24,24,24" Spacing="24" 
+                                 BackgroundColor="{StaticResource Background}">
+
+                <!-- Categories Header with improved design -->
+                <Grid ColumnDefinitions="Auto, *, Auto">
+                    <Label Grid.Column="0" Text="📋" FontSize="24" Margin="0,0,8,0"/>
+                    <Label Grid.Column="1" Text="Categories" Style="{StaticResource SectionHeader}"/>
+                    <Border Grid.Column="2" Style="{StaticResource InteractiveBorder}" Padding="8,4">
+                        <Label Text="See All →" 
+                               TextColor="{StaticResource PrimaryDark}"
+                               FontSize="13"
+                               FontAttributes="Bold"
+                               VerticalOptions="Center"/>
+                    </Border>
+                </Grid>
+
+                <!-- Task Categories Grid with enhanced cards and real data -->
+                <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto"
+                      ColumnSpacing="16" RowSpacing="16">
+
+                    <!-- Study Tasks - With Real Data -->
+                    <Border Grid.Row="0" Grid.Column="0" Style="{StaticResource CardBorder}">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnStudyTapped"/>
+                        </Border.GestureRecognizers>
+                        <VerticalStackLayout Spacing="8">
+                            <Border BackgroundColor="{StaticResource PrimarySoft}"
+                                    WidthRequest="50" HeightRequest="50"
+                                    HorizontalOptions="Center">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="16"/>
+                                </Border.StrokeShape>
+                                <Label Text="📚" FontSize="28" 
+                                       HorizontalOptions="Center" VerticalOptions="Center"/>
+                            </Border>
+                            <Label Text="Study" FontSize="18" FontAttributes="Bold" 
+                                   TextColor="{StaticResource TextPrimary}"
+                                   HorizontalOptions="Center"/>
+                            <Grid ColumnDefinitions="*, Auto" Margin="0,4,0,0">
+                                <Label Grid.Column="0" Text="{Binding StudyViewModel.TotalTasks, StringFormat='{0} tasks'}" 
+                                       FontSize="12" 
+                                       TextColor="{StaticResource TextSecondary}"/>
+                                <Border Grid.Column="1" BackgroundColor="{StaticResource PrimarySoft}"
+                                        Padding="6,2" IsVisible="{Binding StudyViewModel.PendingTasks, Converter={StaticResource GreaterThanZeroConverter}}">
+                                    <Border.StrokeShape>
+                                        <RoundRectangle CornerRadius="10"/>
+                                    </Border.StrokeShape>
+                                    <Label Text="{Binding StudyViewModel.PendingTasks, StringFormat='{0} due'}" 
+                                           FontSize="10" 
+                                           TextColor="{StaticResource PrimaryDark}"
+                                           FontAttributes="Bold"/>
+                                </Border>
+                            </Grid>
+                        </VerticalStackLayout>
+                    </Border>
+
+                    <!-- Wishlist - With Real Data -->
+                    <Border Grid.Row="0" Grid.Column="1" Style="{StaticResource CardBorder}">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnWishlistTapped"/>
+                        </Border.GestureRecognizers>
+                        <VerticalStackLayout Spacing="8">
+                            <Border BackgroundColor="{StaticResource PrimarySoft}"
+                                    WidthRequest="50" HeightRequest="50"
+                                    HorizontalOptions="Center">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="16"/>
+                                </Border.StrokeShape>
+                                <Label Text="🎁" FontSize="28" 
+                                       HorizontalOptions="Center" VerticalOptions="Center"/>
+                            </Border>
+                            <Label Text="Wishlist" FontSize="18" FontAttributes="Bold" 
+                                   TextColor="{StaticResource TextPrimary}"
+                                   HorizontalOptions="Center"/>
+                            <Border BackgroundColor="{StaticResource PrimarySoft}"
+                                    Padding="8,2" HorizontalOptions="Center">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="10"/>
+                                </Border.StrokeShape>
+                                <Label Text="{Binding WishlistViewModel.TotalWishlist, StringFormat='{0} items'}" 
+                                       FontSize="11" 
+                                       TextColor="{StaticResource PrimaryDark}"/>
+                            </Border>
+                        </VerticalStackLayout>
+                    </Border>
+
+                    <!-- Personal - With Real Data -->
+                    <Border Grid.Row="1" Grid.Column="0" Style="{StaticResource CardBorder}">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnPersonalTapped"/>
+                        </Border.GestureRecognizers>
+                        <VerticalStackLayout Spacing="8">
+                            <Border BackgroundColor="{StaticResource PrimarySoft}"
+                                    WidthRequest="50" HeightRequest="50"
+                                    HorizontalOptions="Center">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="16"/>
+                                </Border.StrokeShape>
+                                <Label Text="🧍" FontSize="28" 
+                                       HorizontalOptions="Center" VerticalOptions="Center"/>
+                            </Border>
+                            <Label Text="Personal" FontSize="18" FontAttributes="Bold" 
+                                   TextColor="{StaticResource TextPrimary}"
+                                   HorizontalOptions="Center"/>
+                            <Border BackgroundColor="{StaticResource PrimarySoft}"
+                                    Padding="8,2" HorizontalOptions="Center">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="10"/>
+                                </Border.StrokeShape>
+                                <Label Text="{Binding PersonalViewModel.PendingCount, StringFormat='{0} tasks'}" 
+                                       FontSize="11" 
+                                       TextColor="{StaticResource PrimaryDark}"/>
+                            </Border>
+                        </VerticalStackLayout>
+                    </Border>
+
+                    <!-- Events - With Real Data -->
+                    <Border Grid.Row="1" Grid.Column="1" Style="{StaticResource CardBorder}">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnEventsTapped"/>
+                        </Border.GestureRecognizers>
+                        <VerticalStackLayout Spacing="8">
+                            <Border BackgroundColor="{StaticResource PrimarySoft}"
+                                    WidthRequest="50" HeightRequest="50"
+                                    HorizontalOptions="Center">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="16"/>
+                                </Border.StrokeShape>
+                                <Label Text="📅" FontSize="28" 
+                                       HorizontalOptions="Center" VerticalOptions="Center"/>
+                            </Border>
+                            <Label Text="Events" FontSize="18" FontAttributes="Bold" 
+                                   TextColor="{StaticResource TextPrimary}"
+                                   HorizontalOptions="Center"/>
+                            <Border BackgroundColor="{StaticResource PrimarySoft}"
+                                    Padding="8,2" 
+                                    HorizontalOptions="Center">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="10"/>
+                                </Border.StrokeShape>
+                                <Label Text="{Binding EventViewModel.UpcomingEvents.Count, StringFormat='{0} upcoming'}" 
+                                       FontSize="11" 
+                                       TextColor="{StaticResource PrimaryDark}"
+                                       FontAttributes="Bold"/>
+                            </Border>
+                        </VerticalStackLayout>
+                    </Border>
+                </Grid>
+
+                <!-- Reminders Section with improved header -->
+                <Grid ColumnDefinitions="Auto, *, Auto">
+                    <Label Grid.Column="0" Text="⏰" FontSize="24" Margin="0,0,8,0"/>
+                    <Label Grid.Column="1" Text="Today's Schedule" Style="{StaticResource SectionHeader}"/>
+                    <Border Grid.Column="2" Style="{StaticResource InteractiveBorder}" Padding="8,4">
+                        <Label Text="View All" 
+                               TextColor="{StaticResource PrimaryDark}"
+                               FontSize="13"
+                               FontAttributes="Bold"/>
+                    </Border>
+                </Grid>
+
+                <!-- Enhanced Reminders List with Real Data - Only 4 items visible initially -->
+                <VerticalStackLayout Spacing="12">
+
+                    <!-- Show message when no tasks -->
+                    <Border Style="{StaticResource CardBorder}" Padding="24" 
+                            IsVisible="{Binding HasTodayTasks, Converter={StaticResource InvertedBoolConverter}}">
+                        <VerticalStackLayout Spacing="12" HorizontalOptions="Center">
+                            <Label Text="📅" FontSize="48" HorizontalOptions="Center"/>
+                            <Label Text="No tasks scheduled for today" 
+                                   FontSize="16" 
+                                   TextColor="{StaticResource TextSecondary}"
+                                   HorizontalOptions="Center"/>
+                            <Label Text="Tap + to add a new task" 
+                                   FontSize="13" 
+                                   TextColor="{StaticResource PrimaryDark}"
+                                   HorizontalOptions="Center"/>
+                        </VerticalStackLayout>
+                    </Border>
+
+                    <!-- Bind to TodaySchedule collection - Shows only 4 items initially -->
+                    <CollectionView ItemsSource="{Binding TodaySchedule}" 
+                                    IsVisible="{Binding HasTodayTasks}"
+                                    VerticalScrollBarVisibility="Never"
+                                    HeightRequest="360">
+                        <!-- Height to show exactly 4 items -->
+                        <CollectionView.ItemsLayout>
+                            <LinearItemsLayout Orientation="Vertical" ItemSpacing="12"/>
+                        </CollectionView.ItemsLayout>
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Border Style="{StaticResource CardBorder}" Padding="16">
+                                    <Grid ColumnDefinitions="Auto, *, Auto" ColumnSpacing="12">
+                                        <!-- Icon with dynamic background -->
+                                        <Border Grid.Column="0" 
+                                                BackgroundColor="{Binding BackgroundColor}"
+                                                WidthRequest="52" HeightRequest="52">
+                                            <Border.StrokeShape>
+                                                <RoundRectangle CornerRadius="18"/>
+                                            </Border.StrokeShape>
+                                            <Label Text="{Binding Icon}" FontSize="26" 
+                                                   HorizontalOptions="Center" VerticalOptions="Center"/>
+                                        </Border>
+
+                                        <!-- Title and Description -->
+                                        <VerticalStackLayout Grid.Column="1" Spacing="4">
+                                            <Label Text="{Binding Title}" FontSize="16" FontAttributes="Bold"
+                                                   TextColor="{StaticResource TextPrimary}"/>
+                                            <Label Text="{Binding Description}" FontSize="12" 
+                                                   TextColor="{StaticResource TextSecondary}"
+                                                   LineBreakMode="TailTruncation"/>
+                                            <!-- Show type badge -->
+                                            <Border BackgroundColor="{Binding BackgroundColor}"
+                                                    Padding="8,3" 
+                                                    HorizontalOptions="Start"
+                                                    Margin="0,4,0,0">
+                                                <Border.StrokeShape>
+                                                    <RoundRectangle CornerRadius="8"/>
+                                                </Border.StrokeShape>
+                                                <Label Text="{Binding Type}" FontSize="9" 
+                                                       TextColor="{Binding Color}"
+                                                       FontAttributes="Bold"
+                                                       CharacterSpacing="0.5"/>
+                                            </Border>
+                                        </VerticalStackLayout>
+
+                                        <!-- Time and Status -->
+                                        <VerticalStackLayout Grid.Column="2" Spacing="4" HorizontalOptions="End">
+                                            <Label Text="{Binding TimeDisplay}" FontSize="15" FontAttributes="Bold"
+                                                   TextColor="{StaticResource PrimaryDark}"/>
+                                            <Border BackgroundColor="{Binding BackgroundColor}"
+                                                    Padding="8,3">
+                                                <Border.StrokeShape>
+                                                    <RoundRectangle CornerRadius="8"/>
+                                                </Border.StrokeShape>
+                                                <Label Text="{Binding TimeUntil}" FontSize="10" 
+                                                       TextColor="{Binding TimeUntilColor}"
+                                                       FontAttributes="Bold"/>
+                                            </Border>
+                                        </VerticalStackLayout>
+
+                                        <!-- Optional: Show priority indicator for study tasks -->
+                                        <Border Grid.ColumnSpan="3" 
+                                                BackgroundColor="{Binding Color}"
+                                                HeightRequest="3"
+                                                HorizontalOptions="Fill"
+                                                VerticalOptions="End"
+                                                Margin="0,8,0,-16"
+                                                IsVisible="{Binding Priority, Converter={StaticResource IsNotNullConverter}}">
+                                            <Border.StrokeShape>
+                                                <RoundRectangle CornerRadius="0,0,24,24"/>
+                                            </Border.StrokeShape>
+                                        </Border>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+
+                    <!-- Visual indicator that there are more items to scroll -->
+                    <Border Style="{StaticResource InteractiveBorder}" 
+                            Padding="12,6" 
+                            HorizontalOptions="Center"
+                            IsVisible="{Binding HasMoreThanFourTasks}">
+                        <HorizontalStackLayout Spacing="6">
+                            <Label Text="👇" FontSize="14"/>
+                            <Label Text="Scroll for more schedule items" 
+                                   FontSize="12" 
+                                   TextColor="{StaticResource TextSecondary}"/>
+                            <Label Text="👇" FontSize="14"/>
+                        </HorizontalStackLayout>
+                    </Border>
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

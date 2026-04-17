@@ -1,0 +1,33 @@
+<api>
+  <jcw-types>
+    <type name="GeofenceTransitionsIntentReceiver" package="plugin.LocalNotification" application_java_class="android.app.Application" mono_runtime_initialization="mono.MonoPackageManager.LoadApplication (context);" extends_type="android.content.BroadcastReceiver" partial_assembly_qualified_name="Plugin.LocalNotification.Platforms.GeofenceTransitionsIntentReceiver, Plugin.LocalNotification">
+      <constructors>
+        <constructor name="GeofenceTransitionsIntentReceiver" method="n_.ctor:()V:" jni_signature="()V" managed_parameters="" retval="void" is_dynamically_registered="True" />
+      </constructors>
+      <methods>
+        <method name="onReceive" method="n_onReceive:(Landroid/content/Context;Landroid/content/Intent;)V:GetOnReceive_Landroid_content_Context_Landroid_content_Intent_Handler" jni_signature="(Landroid/content/Context;Landroid/content/Intent;)V" params="android.content.Context p0, android.content.Intent p1" retval="void" super_call="p0, p1" activate_call="p0, p1" />
+      </methods>
+    </type>
+    <type name="NotificationActionReceiver" package="plugin.LocalNotification" application_java_class="android.app.Application" mono_runtime_initialization="mono.MonoPackageManager.LoadApplication (context);" extends_type="android.content.BroadcastReceiver" partial_assembly_qualified_name="Plugin.LocalNotification.Platforms.NotificationActionReceiver, Plugin.LocalNotification">
+      <constructors>
+        <constructor name="NotificationActionReceiver" method="n_.ctor:()V:" jni_signature="()V" managed_parameters="" retval="void" is_dynamically_registered="True" />
+      </constructors>
+      <methods>
+        <method name="onReceive" method="n_onReceive:(Landroid/content/Context;Landroid/content/Intent;)V:GetOnReceive_Landroid_content_Context_Landroid_content_Intent_Handler" jni_signature="(Landroid/content/Context;Landroid/content/Intent;)V" params="android.content.Context p0, android.content.Intent p1" retval="void" super_call="p0, p1" activate_call="p0, p1" />
+      </methods>
+    </type>
+    <type name="ScheduledAlarmReceiver" package="plugin.LocalNotification" application_java_class="android.app.Application" mono_runtime_initialization="mono.MonoPackageManager.LoadApplication (context);" extends_type="android.content.BroadcastReceiver" partial_assembly_qualified_name="Plugin.LocalNotification.Platforms.ScheduledAlarmReceiver, Plugin.LocalNotification">
+      <constructors>
+        <constructor name="ScheduledAlarmReceiver" method="n_.ctor:()V:" jni_signature="()V" managed_parameters="" retval="void" is_dynamically_registered="True" />
+      </constructors>
+      <methods>
+        <method name="onReceive" method="n_onReceive:(Landroid/content/Context;Landroid/content/Intent;)V:GetOnReceive_Landroid_content_Context_Landroid_content_Intent_Handler" jni_signature="(Landroid/content/Context;Landroid/content/Intent;)V" params="android.content.Context p0, android.content.Intent p1" retval="void" super_call="p0, p1" activate_call="p0, p1" />
+      </methods>
+    </type>
+  </jcw-types>
+  <acw-types partial-assembly-name="Plugin.LocalNotification" module-name="Plugin.LocalNotification.dll">
+    <type assembly-qualified-name="Plugin.LocalNotification.Platforms.GeofenceTransitionsIntentReceiver, Plugin.LocalNotification, Version=13.0.0.0, Culture=neutral, PublicKeyToken=null" compat-jni-name="plugin.LocalNotification.GeofenceTransitionsIntentReceiver" java-key="plugin.LocalNotification.GeofenceTransitionsIntentReceiver" managed-key="Plugin.LocalNotification.Platforms.GeofenceTransitionsIntentReceiver" partial-assembly-qualified-name="Plugin.LocalNotification.Platforms.GeofenceTransitionsIntentReceiver, Plugin.LocalNotification" />
+    <type assembly-qualified-name="Plugin.LocalNotification.Platforms.NotificationActionReceiver, Plugin.LocalNotification, Version=13.0.0.0, Culture=neutral, PublicKeyToken=null" compat-jni-name="plugin.LocalNotification.NotificationActionReceiver" java-key="plugin.LocalNotification.NotificationActionReceiver" managed-key="Plugin.LocalNotification.Platforms.NotificationActionReceiver" partial-assembly-qualified-name="Plugin.LocalNotification.Platforms.NotificationActionReceiver, Plugin.LocalNotification" />
+    <type assembly-qualified-name="Plugin.LocalNotification.Platforms.ScheduledAlarmReceiver, Plugin.LocalNotification, Version=13.0.0.0, Culture=neutral, PublicKeyToken=null" compat-jni-name="plugin.LocalNotification.ScheduledAlarmReceiver" java-key="plugin.LocalNotification.ScheduledAlarmReceiver" managed-key="Plugin.LocalNotification.Platforms.ScheduledAlarmReceiver" partial-assembly-qualified-name="Plugin.LocalNotification.Platforms.ScheduledAlarmReceiver, Plugin.LocalNotification" />
+  </acw-types>
+</api>
