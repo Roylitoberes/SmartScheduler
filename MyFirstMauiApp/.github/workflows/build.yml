@@ -8,6 +8,10 @@ jobs:
   build:
     runs-on: windows-latest
 
+    defaults:
+      run:
+        working-directory: MyFirstMauiApp/MyFirstMauiApp
+
     steps:
     - name: Checkout
       uses: actions/checkout@v4
@@ -21,20 +25,20 @@ jobs:
       run: dotnet workload install maui
 
     - name: Restore dependencies
-      run: dotnet restore MyFirstMauiApp/SmartScheduler.csproj
+      run: dotnet restore SmartScheduler.csproj
 
     - name: Decode Keystore
       shell: pwsh
       run: |
         $bytes = [Convert]::FromBase64String("${{ secrets.ANDROID_KEYSTORE_BASE64 }}")
-        [IO.File]::WriteAllBytes("MyFirstMauiApp/keystore.keystore", $bytes)
+        [IO.File]::WriteAllBytes("keystore.keystore", $bytes)
 
     - name: Build APK (Signed)
       run: |
-        dotnet publish MyFirstMauiApp/SmartScheduler.csproj -f net10.0-android -c Release `
+        dotnet publish SmartScheduler.csproj -f net10.0-android -c Release `
           -p:AndroidPackageFormat=apk `
           -p:AndroidKeyStore=true `
-          -p:AndroidSigningKeyStore=MyFirstMauiApp/keystore.keystore `
+          -p:AndroidSigningKeyStore=keystore.keystore `
           -p:AndroidSigningKeyAlias=${{ secrets.ANDROID_KEY_ALIAS }} `
           -p:AndroidSigningKeyPass=${{ secrets.ANDROID_KEY_ALIAS_PASSWORD }} `
           -p:AndroidSigningStorePass=${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
@@ -43,4 +47,4 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: SmartScheduler-APK
-        path: MyFirstMauiApp/bin/Release/net10.0-android/*.apk
+        path: MyFirstMauiApp/MyFirstMauiApp/bin/Release/net10.0-android/*.apk
