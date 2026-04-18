@@ -8,14 +8,15 @@ SMARTSCHEDULER is a .NET MAUI cross-platform scheduling application designed to 
 
 ### ⚠️ Important: You must be logged into GitHub to download
 
-[![Download APK](https://img.shields.io/badge/Download-APK-green?style=for-the-badge&logo=android)](https://github.com/Roylitoberes/SmartScheduler/actions/runs/24574476959)
+[![Download APK](https://img.shields.io/badge/Download-APK-green?style=for-the-badge&logo=android)](https://github.com/Roylitoberes/SmartScheduler/releases/tag/v1.0))
 
 ### Instructions:
-1. **Click the button above** or [this link](https://github.com/Roylitoberes/SmartScheduler/actions/runs/24574476959)
-2. Scroll down to **"Artifacts"** section
+1. **Click the button above** or [this link](https://github.com/Roylitoberes/SmartScheduler/releases/tag/v1.0))
+2. Scroll down to "Assets" section
 3. Click **"SmartScheduler-APK"** to download
-4. **Enable "Unknown Sources"** on your Android device if prompted
-5. Open the downloaded APK file to install
+4. Unzip the file after the download is complete
+5. Enable "Unknown Sources" on your Android device if prompted
+6. Open the extracted APK file to install
 
 ### System Requirements:
 - Android 5.0 (API 21) or higher
